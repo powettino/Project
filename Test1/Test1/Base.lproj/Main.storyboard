@@ -203,6 +203,12 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="777-vi-TR8">
+                                        <rect key="frame" x="57" y="113" width="47" height="30"/>
+                                        <state key="normal" title="Fading">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.34574071507312876" green="1" blue="0.50617942494061041" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -211,6 +217,7 @@
                     </view>
                     <connections>
                         <outlet property="ButtonLayer" destination="qo5-od-aIg" id="hng-oR-Cip"/>
+                        <outlet property="FadingButton" destination="777-vi-TR8" id="IW5-tX-1kG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZW-LN-hxw" userLabel="First Responder" sceneMemberID="firstResponder"/>
