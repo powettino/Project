@@ -9,6 +9,11 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *fileName;
+@property (weak, nonatomic) IBOutlet UILabel *numeroColonne;
+@property (weak, nonatomic) IBOutlet UILabel *totaleElementi;
+@property (weak, nonatomic) IBOutlet UILabel *numCol;
+@property (weak, nonatomic) IBOutlet UILabel *totElem;
 
 @end
 
