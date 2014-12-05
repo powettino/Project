@@ -25,6 +25,7 @@
     l.path=CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 10, 10), nil);
     l.strokeColor = [UIColor blackColor].CGColor;
     l.lineWidth = 2;
+    
     l.fillColor = [UIColor whiteColor].CGColor;
     self.FadingButton.alpha =0;
     [UIView animateWithDuration:2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{self.FadingButton.alpha=1;} completion:^(BOOL finished){}];
