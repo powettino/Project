@@ -14,6 +14,7 @@
 		52E972871A31BF5800608F03 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E972861A31BF5800608F03 /* Images.xcassets */; };
 		52E9728A1A31BF5800608F03 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E972881A31BF5800608F03 /* LaunchScreen.xib */; };
 		52E972961A31BF5800608F03 /* Test2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E972951A31BF5800608F03 /* Test2Tests.m */; };
+		52E972D81A31D31600608F03 /* CircularView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E972D71A31D31600608F03 /* CircularView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		52E9728F1A31BF5800608F03 /* Test2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E972941A31BF5800608F03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52E972951A31BF5800608F03 /* Test2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test2Tests.m; sourceTree = "<group>"; };
+		52E972D61A31D31600608F03 /* CircularView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularView.h; sourceTree = "<group>"; };
+		52E972D71A31D31600608F03 /* CircularView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				52E972861A31BF5800608F03 /* Images.xcassets */,
 				52E972881A31BF5800608F03 /* LaunchScreen.xib */,
 				52E972791A31BF5800608F03 /* Supporting Files */,
+				52E972D61A31D31600608F03 /* CircularView.h */,
+				52E972D71A31D31600608F03 /* CircularView.m */,
 			);
 			path = Test2;
 			sourceTree = "<group>";
@@ -220,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52E972821A31BF5800608F03 /* ViewController.m in Sources */,
+				52E972D81A31D31600608F03 /* CircularView.m in Sources */,
 				52E9727F1A31BF5800608F03 /* AppDelegate.m in Sources */,
 				52E9727C1A31BF5800608F03 /* main.m in Sources */,
 			);
@@ -414,6 +420,7 @@
 				52E9729B1A31BF5800608F03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52E9729C1A31BF5800608F03 /* Build configuration list for PBXNativeTarget "Test2Tests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +429,7 @@
 				52E9729E1A31BF5800608F03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
