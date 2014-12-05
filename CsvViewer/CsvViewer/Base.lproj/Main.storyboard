@@ -8,7 +8,8 @@
         <scene sceneID="I83-Yi-Opx">
             <objects>
                 <navigationController id="Dr6-kM-6IB" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cUT-aC-6fF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -19,7 +20,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O8C-tZ-wKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="157" y="50"/>
+            <point key="canvasLocation" x="-43.5" y="50"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
