@@ -9,6 +9,7 @@
 #import "SlideMenu.h"
 
 @interface SlideMenu ()
+@property (weak, nonatomic) IBOutlet UIButton *ButtonLayer;
 
 @end
 
@@ -16,6 +17,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.ButtonLayer.layer setBackgroundColor:[UIColor colorWithRed:0.0 green:0.8 blue:0.8 alpha:1.0].CGColor];
+    [self.ButtonLayer.layer setCornerRadius:5];
+    
+    CAShapeLayer *l = [CAShapeLayer layer];
+    l.path=CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 10, 10), nil);
+    l.strokeColor = [UIColor blackColor].CGColor;
+    l.lineWidth = 2;
+    l.fillColor = [UIColor whiteColor].CGColor;
+    
     // Do any additional setup after loading the view.
 }
 
