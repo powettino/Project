@@ -24,6 +24,7 @@
     UIView *coveringDrawView;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self roundLabel:self.fileName];
