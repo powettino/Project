@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "GraphBarView.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
@@ -14,10 +15,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *totaleElementi;
 @property (weak, nonatomic) IBOutlet UILabel *numCol;
 @property (weak, nonatomic) IBOutlet UILabel *totElem;
+@property (weak, nonatomic) IBOutlet GraphBarView *graphView;
+
 
 @end
 
-@implementation ViewController
+@implementation ViewController{
+    UIView *coveringDrawView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,7 +31,25 @@
     [self roundLabel:self.totaleElementi];
     [self roundLabel:self.numCol];
     [self roundLabel:self.totElem];
+    coveringDrawView = [[UIView alloc] initWithFrame:CGRectMake(self.graphView.frame.origin.x
+                                               ,self.graphView.frame.origin.y
+                                               ,self.graphView.frame.size.width,self.graphView.frame.size.height)];
+    [coveringDrawView setBackgroundColor:[UIColor blackColor]];
+    [coveringDrawView setAlpha:0.0];
+
+    [self.view addSubview:coveringDrawView];
     
+    [UIView animateWithDuration:1 animations:^{
+        [coveringDrawView setAlpha:0.5];
+    }];
+
+    
+    //    [UIView animateWithDuration:1 animations:^{
+//        [self.overlay setAlpha:0.5];
+//        [self.overlay setFrame:fra];
+//    }];
+    
+
     
     //    CAShapeLayer *l = [CAShapeLayer layer];
     //    l.path=CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 10, 10), nil);
@@ -45,6 +68,7 @@
     [label.layer setCornerRadius:5];
     [label.layer setBorderWidth:1.0];
     [label.layer setBorderColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.5].CGColor];
+    
 }
 
 - (void)didReceiveMemoryWarning {

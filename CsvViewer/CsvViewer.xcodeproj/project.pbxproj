@@ -14,6 +14,7 @@
 		52E973251A31D90100608F03 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E973241A31D90100608F03 /* Images.xcassets */; };
 		52E973281A31D90100608F03 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E973261A31D90100608F03 /* LaunchScreen.xib */; };
 		52E973341A31D90100608F03 /* CsvViewerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E973331A31D90100608F03 /* CsvViewerTests.m */; };
+		610445971A37964100466ECA /* GraphBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 610445961A37964100466ECA /* GraphBarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		52E9732D1A31D90100608F03 /* CsvViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CsvViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E973321A31D90100608F03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52E973331A31D90100608F03 /* CsvViewerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CsvViewerTests.m; sourceTree = "<group>"; };
+		610445951A37964100466ECA /* GraphBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphBarView.h; sourceTree = "<group>"; };
+		610445961A37964100466ECA /* GraphBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphBarView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				52E973241A31D90100608F03 /* Images.xcassets */,
 				52E973261A31D90100608F03 /* LaunchScreen.xib */,
 				52E973171A31D90100608F03 /* Supporting Files */,
+				610445951A37964100466ECA /* GraphBarView.h */,
+				610445961A37964100466ECA /* GraphBarView.m */,
 			);
 			path = CsvViewer;
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				52E973201A31D90100608F03 /* ViewController.m in Sources */,
 				52E9731D1A31D90100608F03 /* AppDelegate.m in Sources */,
 				52E9731A1A31D90100608F03 /* main.m in Sources */,
+				610445971A37964100466ECA /* GraphBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +420,7 @@
 				52E973391A31D90100608F03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52E9733A1A31D90100608F03 /* Build configuration list for PBXNativeTarget "CsvViewerTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +429,7 @@
 				52E9733C1A31D90100608F03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
