@@ -64,3 +64,31 @@ baseOptUnwrappaing = nil //corretto ma solo il valore inserito, senza l'oggetto 
 //baseOptUnwrappaing! //errata questa chiamata perchè in questo momento la variabile è definita "nil" e non si può usare il ! perchè nil non è un valore
 
 
+//Si può definire un array esplicito con i valori o solo il tipo
+var aresplicito = [ 1, 2]
+var artipatovuoto = [String]()
+var artipato : [String] = ["1", "2"]
+artipato += ["aggiunto"]
+// si può usare il range sugli item array sia per leggere sia per cambiarli (come se fossero tanti assegnamenti diversi)
+//Questo metodo funziona solo su elementi già definiti, se lo fai con elementi che non esistono (scrivi in posizioni nil) devi fare l'append esplicito
+artipato[0...1]
+artipato[1...2] = ["nuovo2", "nuovo3"]
+artipato
+//artipato[2...3] = ["nuovo4"] //errato perchè accedo a posizioni non esistenti dell'array
+artipato += ["nuovo4"] //append corretto
+//si possono anche stringere array o allargare sempre con il range
+artipato[1...2] = ["2espanso" , "3espanso", "4espanso"] //ora ho 5 elementi dentro perchè le posizioni 1 e 2 sono diventate con 3 elementi
+artipato
+artipato[1...3] = ["contratto2", "contratto2"] //ora siamo tornati a 4 elemento perchè ho rimosso quello che era in posizione 3 (4espanso)
+artipato
+
+
+
+
+
+
+
+
+
+
+
