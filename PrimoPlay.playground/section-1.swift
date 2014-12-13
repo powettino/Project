@@ -21,3 +21,5 @@ var three = 3
 var digits = 0.123456
 var  pi = Double(three) + digits
 var pi2 = three + Int(digits)
+
+
