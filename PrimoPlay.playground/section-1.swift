@@ -7,12 +7,12 @@ var str = "Hello, playground"
 let veg = "red pepper"
 
 switch veg {
-    case "prova":
-        let vegt="schifio"
-    case let x where x.hasSuffix("pepper"):
-        let vegt2 = "ciao2 \(veg)"
-    default:
-        let vegt = "def"
+case "prova":
+    let vegt="schifio"
+case let x where x.hasSuffix("pepper"):
+    let vegt2 = "ciao2 \(veg)"
+default:
+    let vegt = "def"
 }
 
 /*i valori devono essere castati allo stesso tipo altrimenti da errore
@@ -48,16 +48,19 @@ if let f = mionumOpt {
     f
 }
 
-/* PEr gli optional abbiamo i segnatori ? e !. Il ? definisce la variabile come nullable e ti ritorno l'oggetto opzionale (some o none), se si usa ! si definisce 
+/* Per gli optional abbiamo i segnatori ? e !. Il ? definisce la variabile come nullable e ti ritorno l'oggetto opzionale (some o none), se si usa ! si definisce
 sempre opzionale ma facendo unwrapping forzato al contenuto. Se non si usa nessuno dei due si definisce la variabile non Nullabel*/
-var base = "2"
-base = nil //errore
+//var base = "2"
+//base = nil //errore
 
-var baseSpecifica : String = "2"
-baseSpecifica = nil //errore
+//var baseSpecifica : String = "2"
+//baseSpecifica = nil //errore
 
 var baseOptGenerica : String? = "2"
 baseOptGenerica = nil //corretto e opzionale completo
 
 var baseOptUnwrappaing : String! = "2"
 baseOptUnwrappaing = nil //corretto ma solo il valore inserito, senza l'oggetto opzionale
+//baseOptUnwrappaing! //errata questa chiamata perchè in questo momento la variabile è definita "nil" e non si può usare il ! perchè nil non è un valore
+
+
