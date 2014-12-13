@@ -14,3 +14,10 @@ switch veg {
     default:
         let vegt = "def"
 }
+
+/*i valori devono essere castati allo stesso tipo altrimenti da errore
+Volendo potremmo scriverci una funzione + che fa overload e prende due valori eterogenei*/
+var three = 3
+var digits = 0.123456
+var  pi = Double(three) + digits
+var pi2 = three + Int(digits)
