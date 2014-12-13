@@ -34,6 +34,7 @@ var err = tuplamista.1
 var var2 = coderr
 
 /* il toint fa il casta  optional che poi si può controllare se è diverso da nil. Questa pratica èp sconsigliata, in realta si dovrebbe fare qualcosa con il let e il costrutto*/
+/* i tipi opzionali sostanzialmente rappresentano i tipi "nullable" di c#, cioè elementi base a cui si aggiugne il tipo null (nil) che normalmente non ci sarebbe */
 let miacostante = "1"
 var mionumeroOpt = miacostante.toInt()
 var mionumeroInt = mionumeroOpt!
@@ -46,3 +47,17 @@ let mionumOpt = mia2.toInt()
 if let f = mionumOpt {
     f
 }
+
+/* PEr gli optional abbiamo i segnatori ? e !. Il ? definisce la variabile come nullable e ti ritorno l'oggetto opzionale (some o none), se si usa ! si definisce 
+sempre opzionale ma facendo unwrapping forzato al contenuto. Se non si usa nessuno dei due si definisce la variabile non Nullabel*/
+var base = "2"
+base = nil //errore
+
+var baseSpecifica : String = "2"
+baseSpecifica = nil //errore
+
+var baseOptGenerica : String? = "2"
+baseOptGenerica = nil //corretto e opzionale completo
+
+var baseOptUnwrappaing : String! = "2"
+baseOptUnwrappaing = nil //corretto ma solo il valore inserito, senza l'oggetto opzionale
