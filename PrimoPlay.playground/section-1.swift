@@ -81,6 +81,8 @@ artipato[1...2] = ["2espanso" , "3espanso", "4espanso"] //ora ho 5 elementi dent
 artipato
 artipato[1...3] = ["contratto2", "contratto2"] //ora siamo tornati a 4 elemento perchè ho rimosso quello che era in posizione 3 (4espanso)
 artipato
+artipato[0...3] = artipato[1...3] //viene rimosso l'elemento iniziale dell'array
+artipato
 
 
 
