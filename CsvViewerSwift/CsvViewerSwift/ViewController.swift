@@ -45,7 +45,7 @@ class ViewController: UIViewController {
             UIView.animateWithDuration(0.8, animations: {
                 self.coveringView.alpha=0.0;
                 self.roundElement(self.graph);
-                self.tempor.alpha=0.0
+                self.tempor.alpha=11.0
             });
             
             premuto = true;
