@@ -28,8 +28,7 @@ class ViewController: UIViewController {
     var premuto:Bool = false;
     
     @IBAction func premuto(sender: AnyObject) {
-        if(!premuto){
-            
+        if !premuto {
             filename.text=filePath!;
             
             if let data = splitData(splitLines(loadDati())) {
@@ -43,7 +42,13 @@ class ViewController: UIViewController {
                 elementi.text = String(somma);
             }
             
-            UIView.animateWithDuration(0.8, animations: {self.coveringView.alpha=0.0;  self.roundElement(self.graph); });
+            UIView.animateWithDuration(0.8, animations: {
+                self.coveringView.alpha=0.0;
+                self.roundElement(self.graph);
+                self.tempor.alpha=0.0
+            });
+            
+            premuto = true;
         }
     }
     
@@ -57,13 +62,16 @@ class ViewController: UIViewController {
         roundElement(numCol);
         roundElement(filename);
         
-        coveringView = UIView(frame: CGRectMake(0, 0, self.graph.frame.size.width, self.graph.frame.size.height));
+        coveringView = UIView(frame: CGRectMake(0, self.graph.frame.size.height, self.graph.frame.size.width, 0));
         coveringView.backgroundColor = UIColor.blackColor();
         coveringView.alpha=0.0;
         
         self.graph.addSubview(coveringView);
         
-        UIView.animateWithDuration(0.8, animations: {self.coveringView.alpha=0.5;});
+        UIView.animateWithDuration(0.8, animations: {
+            self.coveringView.frame = CGRectMake(0, 0, self.graph.frame.size.width, self.graph.frame.size.height);
+            self.coveringView.alpha=0.5;
+        });
         
     }
     
@@ -98,10 +106,10 @@ class ViewController: UIViewController {
         label.layer.borderColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5).CGColor;
     }
     
-    func loadDati()->String?->[String]?{
+    func loadDati()->String?{
         if let fp = self.filePath {
             var lines = NSString(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding, error: nil);
-            return splitLines();
+            return lines;
         }
         return nil;
     }
