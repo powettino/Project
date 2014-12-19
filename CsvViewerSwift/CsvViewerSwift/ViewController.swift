@@ -25,15 +25,37 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempor: UILabel!
     var coveringView:UIView!;
     
+    var premuto:Bool = false;
+    
+    @IBAction func premuto(sender: AnyObject) {
+        if(!premuto){
+            
+            filename.text=filePath!;
+            
+            if let data = splitData(splitLines(loadDati())) {
+                var somma = 0;
+                for (val1, val2) in data {
+                    tempor.text = tempor.text! + "\n" + val1 + " - " + val2;
+                    somma += val2.toInt()!;
+                }
+                
+                colonne.text = String(data.count);
+                elementi.text = String(somma);
+            }
+            
+            UIView.animateWithDuration(0.8, animations: {self.coveringView.alpha=0.0;  self.roundElement(self.graph); });
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        roundLabel(elementi);
-        roundLabel(colonne);
-        roundLabel(numEl);
-        roundLabel(numCol);
-        roundLabel(filename);
+        roundElement(elementi);
+        roundElement(colonne);
+        roundElement(numEl);
+        roundElement(numCol);
+        roundElement(filename);
         
         coveringView = UIView(frame: CGRectMake(0, 0, self.graph.frame.size.width, self.graph.frame.size.height));
         coveringView.backgroundColor = UIColor.blackColor();
@@ -43,18 +65,6 @@ class ViewController: UIViewController {
         
         UIView.animateWithDuration(0.8, animations: {self.coveringView.alpha=0.5;});
         
-        filename.text=filePath!;
-        
-        if let data = splitData(splitLines(loadDati())) {
-            var somma = 0;
-            for (val1, val2) in data {
-                tempor.text = tempor.text! + "\n" + val1 + " - " + val2;
-                somma += val2.toInt()!;
-            }
-            
-            colonne.text = String(data.count);
-            elementi.text = String(somma);
-        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,8 +74,6 @@ class ViewController: UIViewController {
     
     func splitData(lines:[String]?)->[(String,String)]?{
         if let values = lines {
-            var x:[String]=[String]();
-            var y:[String]=[String]();
             var array:[(String, String)]=[(String, String)]();
             for line in values {
                 array.append(line.componentsSeparatedByString(",")[0], line.componentsSeparatedByString(",")[1]);
@@ -82,7 +90,7 @@ class ViewController: UIViewController {
         return nil;
     }
     
-    func roundLabel(label:UILabel){
+    func roundElement(label:UIView){
         label.backgroundColor=UIColor.clearColor();
         label.layer.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.3).CGColor;
         label.layer.cornerRadius = 5;
@@ -90,10 +98,10 @@ class ViewController: UIViewController {
         label.layer.borderColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5).CGColor;
     }
     
-    func loadDati()->String?{
+    func loadDati()->String?->[String]?{
         if let fp = self.filePath {
             var lines = NSString(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding, error: nil);
-            return lines;
+            return splitLines();
         }
         return nil;
     }
