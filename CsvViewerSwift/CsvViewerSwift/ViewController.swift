@@ -50,6 +50,7 @@ class ViewController: UIViewController {
             
             premuto = true;
         }
+
     }
     
     override func viewDidLoad() {
