@@ -77,15 +77,53 @@ var b = 0;
 foo2(&b)
 
 
+//Si può definire una funziona come una variabile e assegnarli una funzione particolare. In questo modo si può cambiare la semantica della funzione
+func add(a:Int, b:Int)->Int{
+    return a+b
+}
+func mult(a:Int, b:Int)->Int{
+    return a*b
+}
+var math: (Int, Int) -> Int = add
+math(2,3)
+math = mult
+math(2,3)
 
 
+//Si possono passare anche le funzioni come parametri di altri funzioni
+func base(fuffa: (Int) -> Int, a: Int){
+    println("Applico fuffa ad a dentro: \(fuffa(a))")
+}
+
+func standard(v:Int)->Int{
+    return 0
+}
+
+var res: () = base(standard, 1)
 
 
+//Si possono anche annidare funzioni e definire e ottenere come ritorno
+func avanti(f: Int) -> Int{
+    return f+1
+}
+func indietro(f:Int) -> Int{
+    return f-1
+}
+//questa funzione sceglie la funzione risultante in base ad un valore di ingresso
+func scegli(boh: Bool)->(Int)->Int{
+    return boh ? avanti : indietro
+}
+//il tipo di "scelto" è una funzione che viene chiamata in base alla condizione x > y
+var scelto = scegli(1 > 0)
+scelto(1)
 
 
-
-
-
-
-
+//Si può definire la cosa precedente ma direttamente annidata all'interno della funzione preservarndo lo scope
+func scegli2(scelta: Bool) -> (Int) -> Int{
+    func avanti(f:Int)->Int{return f+1}
+    func indietro(f:Int)->Int{return f-1}
+    return scelta ? avanti : indietro
+}
+var scelta2 = scegli2(true);
+scelta2(1)
 
