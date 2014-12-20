@@ -94,11 +94,9 @@ math(2,3)
 func base(fuffa: (Int) -> Int, a: Int){
     println("Applico fuffa ad a dentro: \(fuffa(a))")
 }
-
 func standard(v:Int)->Int{
     return 0
 }
-
 var res: () = base(standard, 1)
 
 
@@ -126,4 +124,48 @@ func scegli2(scelta: Bool) -> (Int) -> Int{
 }
 var scelta2 = scegli2(true);
 scelta2(1)
+
+
+//versione compressa del passaggio di funzioni, fare riferimento al manuale a pagina 350 circa
+var rev = sorted(["a", "b"],  { $0 > $1 } )
+
+
+//Proviamo a vedere le chiusure
+func incrementor(value: Int)-> () -> Int {
+    var counter=0
+    //in questo momento viene chiuso il reference type (clonando la variabile) al momento della creazione
+    func incr() -> Int {
+        counter += value
+        return counter
+    }
+    return incr
+}
+//Sostanzialmente viene mantenuto lo stato interno di counter che però è solo locale alla funzione definita
+var inc1 = incrementor(10)
+inc1()
+inc1()
+var inc2 = incrementor(4)
+inc2()
+inc2()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
