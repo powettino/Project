@@ -1,4 +1,4 @@
-// Playground - noun: a place where people can play
+\// Playground - noun: a place where people can play
 
 import UIKit
 
@@ -150,12 +150,21 @@ inc2()
 
 
 
-
-
-
-
-
-
+//Le enumerazioni sono insieme di valori che poerò possono avere proprietà diverse tra di loro
+enum ProvaEnum{
+    case primo(Int, Int, Int)
+    case secondo(String)
+}
+var mah = ProvaEnum.primo(1, 1, 1)
+mah = .secondo("ciao")
+mah = .primo(2, 2, 2)
+//Si può utilizzare per estrarre informazioni (si possono passare e salvare anche funzioni)
+switch mah {
+case let .primo(p, s, t):
+    println("V \(p, s, t)")
+case let .secondo(uff):
+    println("f \(uff)")
+}
 
 
 
