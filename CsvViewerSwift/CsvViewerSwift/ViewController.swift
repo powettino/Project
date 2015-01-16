@@ -20,8 +20,8 @@ class ViewController: UIViewController {
     let x = [1,2,3,4,5,6];
     let y = [1,2,3,4,5,6];
     
-    var filePath:String? = "/Users/iacopo.peri/workspace/Project/CsvViewerSwift/CsvViewerSwift/punti.csv";
-    
+//    var filePath:String? = "/Users/iacopo.peri/workspace/Project/CsvViewerSwift/CsvViewerSwift/punti.csv";
+    var filePath:String? = "/var/root/MasterApp/Project/CsvViewerSwift/CsvViewerSwift/punti.csv";
     @IBOutlet weak var tempor: UILabel!
     var coveringView:UIView!;
     
@@ -50,6 +50,34 @@ class ViewController: UIViewController {
             
             premuto = true;
         }
+        
+    }
+    
+   @IBAction func premuto2(reco : UITapGestureRecognizer)
+    {
+        if !premuto {
+            filename.text=filePath!;
+            
+            if let data = splitData(splitLines(loadDati())) {
+                var somma = 0;
+                for (val1, val2) in data {
+                    tempor.text = tempor.text! + "\n" + val1 + " - " + val2;
+                    somma += val2.toInt()!;
+                }
+                
+                colonne.text = String(data.count);
+                elementi.text = String(somma);
+            }
+            
+            UIView.animateWithDuration(0.8, animations: {
+                self.coveringView.alpha=0.0;
+                self.roundElement(self.graph);
+                self.tempor.alpha=11.0
+            });
+            
+            premuto = true;
+        }
+        
 
     }
     
@@ -73,6 +101,9 @@ class ViewController: UIViewController {
             self.coveringView.frame = CGRectMake(0, 0, self.graph.frame.size.width, self.graph.frame.size.height);
             self.coveringView.alpha=0.5;
         });
+        
+        var tap = UITapGestureRecognizer(target: self, action: "premuto:");
+        graph.addGestureRecognizer(tap);
         
     }
     
