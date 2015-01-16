@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EBBC62311A69ACD8006A0E50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC62301A69ACD8006A0E50 /* AppDelegate.swift */; };
+		EBBC62331A69ACD8006A0E50 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC62321A69ACD8006A0E50 /* ViewController.swift */; };
+		EBBC62361A69ACD8006A0E50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBBC62341A69ACD8006A0E50 /* Main.storyboard */; };
+		EBBC62381A69ACD8006A0E50 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC62371A69ACD8006A0E50 /* Images.xcassets */; };
+		EBBC623B1A69ACD8006A0E50 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBBC62391A69ACD8006A0E50 /* LaunchScreen.xib */; };
+		EBBC62471A69ACD8006A0E50 /* BurracoScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC62461A69ACD8006A0E50 /* BurracoScoreTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EBBC62411A69ACD8006A0E50 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EBBC62231A69ACD8006A0E50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EBBC622A1A69ACD8006A0E50;
+			remoteInfo = BurracoScore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EBBC622B1A69ACD8006A0E50 /* BurracoScore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BurracoScore.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBBC622F1A69ACD8006A0E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBBC62301A69ACD8006A0E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EBBC62321A69ACD8006A0E50 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EBBC62351A69ACD8006A0E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EBBC62371A69ACD8006A0E50 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EBBC623A1A69ACD8006A0E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		EBBC62401A69ACD8006A0E50 /* BurracoScoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BurracoScoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBBC62451A69ACD8006A0E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBBC62461A69ACD8006A0E50 /* BurracoScoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurracoScoreTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EBBC62281A69ACD8006A0E50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBBC623D1A69ACD8006A0E50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EBBC62221A69ACD8006A0E50 = {
+			isa = PBXGroup;
+			children = (
+				EBBC622D1A69ACD8006A0E50 /* BurracoScore */,
+				EBBC62431A69ACD8006A0E50 /* BurracoScoreTests */,
+				EBBC622C1A69ACD8006A0E50 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EBBC622C1A69ACD8006A0E50 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EBBC622B1A69ACD8006A0E50 /* BurracoScore.app */,
+				EBBC62401A69ACD8006A0E50 /* BurracoScoreTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EBBC622D1A69ACD8006A0E50 /* BurracoScore */ = {
+			isa = PBXGroup;
+			children = (
+				EBBC62301A69ACD8006A0E50 /* AppDelegate.swift */,
+				EBBC62321A69ACD8006A0E50 /* ViewController.swift */,
+				EBBC62341A69ACD8006A0E50 /* Main.storyboard */,
+				EBBC62371A69ACD8006A0E50 /* Images.xcassets */,
+				EBBC62391A69ACD8006A0E50 /* LaunchScreen.xib */,
+				EBBC622E1A69ACD8006A0E50 /* Supporting Files */,
+			);
+			path = BurracoScore;
+			sourceTree = "<group>";
+		};
+		EBBC622E1A69ACD8006A0E50 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EBBC622F1A69ACD8006A0E50 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EBBC62431A69ACD8006A0E50 /* BurracoScoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				EBBC62461A69ACD8006A0E50 /* BurracoScoreTests.swift */,
+				EBBC62441A69ACD8006A0E50 /* Supporting Files */,
+			);
+			path = BurracoScoreTests;
+			sourceTree = "<group>";
+		};
+		EBBC62441A69ACD8006A0E50 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EBBC62451A69ACD8006A0E50 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EBBC622A1A69ACD8006A0E50 /* BurracoScore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBBC624A1A69ACD8006A0E50 /* Build configuration list for PBXNativeTarget "BurracoScore" */;
+			buildPhases = (
+				EBBC62271A69ACD8006A0E50 /* Sources */,
+				EBBC62281A69ACD8006A0E50 /* Frameworks */,
+				EBBC62291A69ACD8006A0E50 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BurracoScore;
+			productName = BurracoScore;
+			productReference = EBBC622B1A69ACD8006A0E50 /* BurracoScore.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EBBC623F1A69ACD8006A0E50 /* BurracoScoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBBC624D1A69ACD8006A0E50 /* Build configuration list for PBXNativeTarget "BurracoScoreTests" */;
+			buildPhases = (
+				EBBC623C1A69ACD8006A0E50 /* Sources */,
+				EBBC623D1A69ACD8006A0E50 /* Frameworks */,
+				EBBC623E1A69ACD8006A0E50 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EBBC62421A69ACD8006A0E50 /* PBXTargetDependency */,
+			);
+			name = BurracoScoreTests;
+			productName = BurracoScoreTests;
+			productReference = EBBC62401A69ACD8006A0E50 /* BurracoScoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EBBC62231A69ACD8006A0E50 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = YeApp;
+				TargetAttributes = {
+					EBBC622A1A69ACD8006A0E50 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					EBBC623F1A69ACD8006A0E50 = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = EBBC622A1A69ACD8006A0E50;
+					};
+				};
+			};
+			buildConfigurationList = EBBC62261A69ACD8006A0E50 /* Build configuration list for PBXProject "BurracoScore" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EBBC62221A69ACD8006A0E50;
+			productRefGroup = EBBC622C1A69ACD8006A0E50 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EBBC622A1A69ACD8006A0E50 /* BurracoScore */,
+				EBBC623F1A69ACD8006A0E50 /* BurracoScoreTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EBBC62291A69ACD8006A0E50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBBC62361A69ACD8006A0E50 /* Main.storyboard in Resources */,
+				EBBC623B1A69ACD8006A0E50 /* LaunchScreen.xib in Resources */,
+				EBBC62381A69ACD8006A0E50 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBBC623E1A69ACD8006A0E50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EBBC62271A69ACD8006A0E50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBBC62331A69ACD8006A0E50 /* ViewController.swift in Sources */,
+				EBBC62311A69ACD8006A0E50 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBBC623C1A69ACD8006A0E50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBBC62471A69ACD8006A0E50 /* BurracoScoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EBBC62421A69ACD8006A0E50 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EBBC622A1A69ACD8006A0E50 /* BurracoScore */;
+			targetProxy = EBBC62411A69ACD8006A0E50 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EBBC62341A69ACD8006A0E50 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EBBC62351A69ACD8006A0E50 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EBBC62391A69ACD8006A0E50 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EBBC623A1A69ACD8006A0E50 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EBBC62481A69ACD8006A0E50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EBBC62491A69ACD8006A0E50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EBBC624B1A69ACD8006A0E50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BurracoScore/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EBBC624C1A69ACD8006A0E50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BurracoScore/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		EBBC624E1A69ACD8006A0E50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BurracoScoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BurracoScore.app/BurracoScore";
+			};
+			name = Debug;
+		};
+		EBBC624F1A69ACD8006A0E50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BurracoScoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BurracoScore.app/BurracoScore";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EBBC62261A69ACD8006A0E50 /* Build configuration list for PBXProject "BurracoScore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBBC62481A69ACD8006A0E50 /* Debug */,
+				EBBC62491A69ACD8006A0E50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EBBC624A1A69ACD8006A0E50 /* Build configuration list for PBXNativeTarget "BurracoScore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBBC624B1A69ACD8006A0E50 /* Debug */,
+				EBBC624C1A69ACD8006A0E50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		EBBC624D1A69ACD8006A0E50 /* Build configuration list for PBXNativeTarget "BurracoScoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBBC624E1A69ACD8006A0E50 /* Debug */,
+				EBBC624F1A69ACD8006A0E50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EBBC62231A69ACD8006A0E50 /* Project object */;
+}

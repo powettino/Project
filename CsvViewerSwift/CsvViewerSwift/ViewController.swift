@@ -17,14 +17,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var filename: UILabel!
     
     @IBOutlet weak var graph: UIView!
-    let x = [1,2,3,4,5,6];
-    let y = [1,2,3,4,5,6];
+//    let x = [1,2,3,4,5,6];
+//    let y = [1,2,3,4,5,6];
     
-    var filePath:String? = "/Users/iacopo.peri/workspace/Project/CsvViewerSwift/CsvViewerSwift/punti.csv";
+    var filePath:String? = "/Users/iacopo/Desktop/Project/CsvViewerSwift/CsvViewerSwift/punti.csv";
     
     @IBOutlet weak var tempor: UILabel!
     var coveringView:UIView!;
-    
     var premuto:Bool = false;
     
     @IBAction func premuto(sender: AnyObject) {
@@ -63,17 +62,18 @@ class ViewController: UIViewController {
         roundElement(numCol);
         roundElement(filename);
         
-        coveringView = UIView(frame: CGRectMake(0, self.graph.frame.size.height, self.graph.frame.size.width, 0));
+        coveringView = UIView(frame: CGRectMake(1, self.graph.frame.size.height-1, self.graph.frame.size.width-1, 1));
         coveringView.backgroundColor = UIColor.blackColor();
         coveringView.alpha=0.0;
+        self.graph.layer.borderWidth = 1.0;
+        self.graph.layer.borderColor = UIColor.blackColor().CGColor;
         
-        self.graph.addSubview(coveringView);
+          self.graph.addSubview(coveringView);
         
         UIView.animateWithDuration(0.8, animations: {
             self.coveringView.frame = CGRectMake(0, 0, self.graph.frame.size.width, self.graph.frame.size.height);
             self.coveringView.alpha=0.5;
         });
-        
     }
     
     override func didReceiveMemoryWarning() {
