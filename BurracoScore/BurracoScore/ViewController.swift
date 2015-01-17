@@ -21,12 +21,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func partito(sender: AnyObject) {
-        var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: false)
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         
     }
     
     func update() {
-      self.figo.setnewTickerAngle(newAngle: self.figo.getTickerAngle()+1)
+      self.figo.setnewTickerAngle(newAngle: self.figo.getTickerAngle()+0.0055)
     }
     
     override func didReceiveMemoryWarning() {
