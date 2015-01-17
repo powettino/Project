@@ -13,6 +13,7 @@
 		EBBC62381A69ACD8006A0E50 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC62371A69ACD8006A0E50 /* Images.xcassets */; };
 		EBBC623B1A69ACD8006A0E50 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBBC62391A69ACD8006A0E50 /* LaunchScreen.xib */; };
 		EBBC62471A69ACD8006A0E50 /* BurracoScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC62461A69ACD8006A0E50 /* BurracoScoreTests.swift */; };
+		EBF93EF51A69DE00006CAF18 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF93EF41A69DE00006CAF18 /* CircleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		EBBC62401A69ACD8006A0E50 /* BurracoScoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BurracoScoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBC62451A69ACD8006A0E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBBC62461A69ACD8006A0E50 /* BurracoScoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurracoScoreTests.swift; sourceTree = "<group>"; };
+		EBF93EF41A69DE00006CAF18 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				EBBC62371A69ACD8006A0E50 /* Images.xcassets */,
 				EBBC62391A69ACD8006A0E50 /* LaunchScreen.xib */,
 				EBBC622E1A69ACD8006A0E50 /* Supporting Files */,
+				EBF93EF41A69DE00006CAF18 /* CircleView.swift */,
 			);
 			path = BurracoScore;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBF93EF51A69DE00006CAF18 /* CircleView.swift in Sources */,
 				EBBC62331A69ACD8006A0E50 /* ViewController.swift in Sources */,
 				EBBC62311A69ACD8006A0E50 /* AppDelegate.swift in Sources */,
 			);
@@ -405,6 +409,7 @@
 				EBBC624C1A69ACD8006A0E50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EBBC624D1A69ACD8006A0E50 /* Build configuration list for PBXNativeTarget "BurracoScoreTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +418,7 @@
 				EBBC624F1A69ACD8006A0E50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
