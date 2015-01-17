@@ -55,6 +55,8 @@ class CircleView: UIView {
     let offsetCircle: CGFloat = 40
     let precision: Int = 5
     let maxValueTick: Int = 270
+    let pi : Int = 180
+    let pi2 : Int = 360
     
     var puntiCerchio = puntiCirconferenza()
     
@@ -93,16 +95,16 @@ class CircleView: UIView {
         let centerY = frame.size.height/2
         let r = CGFloat((frame.size.width-offsetCircle)/2)
         for index in (0...(maxValueTick/precision)){
-            let angolo = (CGFloat)(360 * (index * precision)) / CGFloat(M_PI*2)
-            let puntoX = centerX + (r * cos(CGFloat((Double(index * precision))/180*M_PI)))
-            let puntoY = centerY + (r * sin(CGFloat((Double(index * precision))/180*M_PI)))
+            let angolo = (CGFloat)(pi2 * (index * precision)) / CGFloat(M_PI*2)
+            let puntoX = centerX + (r * cos(CGFloat((Double((index * precision)+160)/(Double(pi*M_PI))))))
+            let puntoY = centerY + (r * sin(CGFloat((Double((index * precision)+160)/(Double(pi*M_PI))))))
             puntiCerchio.addPointXY(puntoX, pointY: puntoY)
         }
         
         for index in (0...(maxValueTick/precision)){
             let angolo = (CGFloat)(360 * (index * precision)) / CGFloat(M_PI*2)
-            let puntoX = centerX + ((r-10) * cos(CGFloat((Double(index * precision))/180*M_PI)))
-            let puntoY = centerY + ((r-10) * sin(CGFloat((Double(index * precision))/180*M_PI)))
+            let puntoX = centerX + ((r-10) * cos(CGFloat((Double((index * precision)+160))/180*M_PI)))
+            let puntoY = centerY + ((r-10) * sin(CGFloat((Double((index * precision)+160))/180*M_PI)))
             puntiCerchio.addSubPointXY(puntoX, pointY: puntoY)
         }
         
