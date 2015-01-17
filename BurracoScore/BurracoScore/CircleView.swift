@@ -155,20 +155,11 @@ class CircleView: UIView {
             
         }
     }
-    func animate(){
-        UIView.animateWithDuration(20, delay: 1.0, options: nil, animations: {
-            self.setnewTickerAngle(newAngle: (self.getTickerAngle()+1))
-            self.setNeedsDisplay()
-            //            println("%d",self.figo.getTickerAngle())
-            }, completion: { finished in
-                println("Basket doors opened!")
-        })
-
-    }
     
     func setnewTickerAngle(newAngle angle: CGFloat){
         tickerAngle = angle;
-        
+        self.setNeedsDisplay()
+        println("ciaoi")
         
     }
     
