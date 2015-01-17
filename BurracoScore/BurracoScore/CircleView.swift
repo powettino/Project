@@ -12,51 +12,68 @@ class CircleView: UIView {
     
     struct puntiCirconferenza
     {
+        var overPuntiBaseX : [CGFloat];
+        var overPuntiBaseY : [CGFloat];
+        
         var puntiBaseX : [CGFloat];
         var puntiBaseY : [CGFloat];
         
-        var subPuntiBaseX : [CGFloat]
-        var subPuntiBaseY : [CGFloat]
+        var underPuntiBaseX : [CGFloat]
+        var underPuntiBaseY : [CGFloat]
         init(){
             puntiBaseX = []
             puntiBaseY = []
-            subPuntiBaseX = []
-            subPuntiBaseY = []
+            overPuntiBaseX = []
+            overPuntiBaseY = []
+            underPuntiBaseX = []
+            underPuntiBaseY = []
         }
         
-        mutating func addPointXY(pointX : CGFloat, pointY : CGFloat){
+        mutating func addPointXY(x pointX : CGFloat,y pointY : CGFloat){
             puntiBaseX.append(pointX)
             puntiBaseY.append(pointY)
         }
         
-        mutating func addSubPointXY(pointX: CGFloat, pointY: CGFloat){
-            subPuntiBaseY.append(pointY)
-            subPuntiBaseX.append(pointX)
+        mutating func addUnderPointXY(x pointX: CGFloat,y pointY: CGFloat){
+            underPuntiBaseY.append(pointY)
+            underPuntiBaseX.append(pointX)
         }
         
-        func getPointXY(position: Int) -> (CGFloat, CGFloat)?{
-            if(!puntiBaseX.isEmpty){
-                return (puntiBaseX[position], puntiBaseY[position])
-            }else{
-                return nil
-            }
+        mutating func addOverPointXY(x pointX: CGFloat,y pointY: CGFloat){
+            overPuntiBaseY.append(pointY)
+            overPuntiBaseX.append(pointX)
         }
         
-        func getSubPointXY(position:Int) -> (CGFloat, CGFloat)?{
+        func getPointXY(position: Int) -> (CGFloat, CGFloat){
+            return (puntiBaseX[position], puntiBaseY[position])
+        }
+        
+        func getOverPointXY(position:Int) -> (CGFloat, CGFloat){
             
-            if(!subPuntiBaseX.isEmpty){
-                return (subPuntiBaseX[position], subPuntiBaseY[position])
-            }else{
-                return nil
-            }
+            return (overPuntiBaseX[position], overPuntiBaseY[position])
+            
+        }
+        
+        func getUnderPointXY(position:Int) -> (CGFloat, CGFloat){
+            
+            return (underPuntiBaseX[position], underPuntiBaseY[position])
+            
         }
     }
     
     let offsetCircle: CGFloat = 40
-    let precision: Int = 5
-    let maxValueTick: Int = 270
-    let pi : Int = 180
-    let pi2 : Int = 360
+    let precision: CGFloat = ((1/36)*CGFloat(M_PI))
+    let maxValueTick: CGFloat = ((25/18)*CGFloat(M_PI))
+    let pi : CGFloat = CGFloat(M_PI)
+    let pi2 : CGFloat = (2*CGFloat(M_PI))
+    let offsetAngle : CGFloat = (5/6) * CGFloat(M_PI)
+    var externalRadius:CGFloat = 0
+    var radius : CGFloat = 0
+    var internalRadius:CGFloat = 0
+    var minRadius:CGFloat = 0
+    var centerX: CGFloat = 0
+    var centerY:CGFloat = 0
+    var tickerAngle: CGFloat = 0
     
     var puntiCerchio = puntiCirconferenza()
     
@@ -69,6 +86,33 @@ class CircleView: UIView {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder )
         calcolaPuntiBase(frame)
+    }
+    
+    private func drawTicker(inCanvas canvas: CGContext)
+    {
+        CGContextSaveGState(canvas)
+        
+       CGContextSetStrokeColorWithColor(canvas, UIColor.blackColor().CGColor)
+       CGContextSetFillColorWithColor(canvas, UIColor.grayColor().CGColor)
+        
+        CGContextMoveToPoint(canvas, centerX, centerY)
+        CGContextAddLineToPoint(canvas, puntiCerchio.getPointXY(Int(tickerAngle/precision)).0, puntiCerchio.getPointXY(Int(tickerAngle/precision)).1)
+        var puntoX = centerX + (minRadius * cos((1/4)*pi))
+        var puntoY = centerY + (minRadius * sin((1/4)*pi))
+        CGContextAddLineToPoint(canvas, puntoX, puntoY)
+        CGContextAddLineToPoint(canvas, centerX, centerY)
+        
+       CGContextDrawPath(canvas, kCGPathFillStroke)
+        
+        CGContextSetFillColorWithColor(canvas, UIColor.lightGrayColor().CGColor)
+        CGContextMoveToPoint(canvas, centerX, centerY)
+        CGContextAddLineToPoint(canvas, puntiCerchio.getPointXY(Int(tickerAngle/precision)).0, puntiCerchio.getPointXY(Int(tickerAngle/precision)).1)
+        puntoX = centerX + (minRadius * cos((5/4)*pi))
+        puntoY = centerY + (minRadius * sin((5/4)*pi))
+        CGContextAddLineToPoint(canvas, puntoX, puntoY)
+        CGContextAddLineToPoint(canvas, centerX, centerY)
+        CGContextDrawPath(canvas, kCGPathFillStroke)
+        CGContextRestoreGState(canvas)
     }
     
     override func drawRect(rect: CGRect) {
@@ -86,44 +130,77 @@ class CircleView: UIView {
         CGContextMoveToPoint(canvas, width/2, 0)
         CGContextAddLineToPoint(canvas, width/2, height)
         CGContextStrokePath(canvas)
-        //        drawExternalCircle(canvas, sizeX: width, sizeY: height)
+        drawTicker(inCanvas: canvas)
+        drawVisibleCircle(canvas, sizeX: width, sizeY: height)
         drawLinee(canvas)
     }
     
     final func calcolaPuntiBase(frame: CGRect){
-        let centerX = frame.size.width/2
-        let centerY = frame.size.height/2
-        let r = CGFloat((frame.size.width-offsetCircle)/2)
-        for index in (0...(maxValueTick/precision)){
-            let angolo = (CGFloat)(pi2 * (index * precision)) / CGFloat(M_PI*2)
-            let puntoX = centerX + (r * cos(CGFloat((Double((index * precision)+160)/(Double(pi*M_PI))))))
-            let puntoY = centerY + (r * sin(CGFloat((Double((index * precision)+160)/(Double(pi*M_PI))))))
-            puntiCerchio.addPointXY(puntoX, pointY: puntoY)
-        }
-        
-        for index in (0...(maxValueTick/precision)){
-            let angolo = (CGFloat)(360 * (index * precision)) / CGFloat(M_PI*2)
-            let puntoX = centerX + ((r-10) * cos(CGFloat((Double((index * precision)+160))/180*M_PI)))
-            let puntoY = centerY + ((r-10) * sin(CGFloat((Double((index * precision)+160))/180*M_PI)))
-            puntiCerchio.addSubPointXY(puntoX, pointY: puntoY)
-        }
-        
-        
-    }
-    
-    private func drawLinee(canvas: CGContext){
-        for index in (0...(maxValueTick/precision)){
-            puntiCerchio.getPointXY(index)
-            CGContextMoveToPoint(canvas, puntiCerchio.getPointXY(index)!.0, puntiCerchio.getPointXY(index)!.1)
-            CGContextAddLineToPoint(canvas, puntiCerchio.getSubPointXY(index)!.0, puntiCerchio.getSubPointXY(index)!.1)
-            CGContextStrokePath(canvas)
+        self.radius = (frame.size.width-offsetCircle)/2
+        self.externalRadius = radius + 3
+        self.internalRadius = externalRadius-10
+        self.minRadius = internalRadius-(radius*(5/6))
+        centerX = frame.size.width/2
+        centerY = frame.size.height/2
+        for index in (0...Int(maxValueTick/precision)){
+            let puntoX = centerX + (radius * cos((CGFloat(index) * precision)+offsetAngle))
+            let puntoY = centerY + (radius * sin((CGFloat(index) * precision)+offsetAngle))
+            puntiCerchio.addPointXY(x: puntoX, y: puntoY)
+            let underPuntoX = centerX + (internalRadius * cos((CGFloat(index) * precision)+offsetAngle))
+            let underPuntoY = centerY + (internalRadius * sin((CGFloat(index) * precision)+offsetAngle))
+            puntiCerchio.addUnderPointXY(x: underPuntoX, y: underPuntoY)
+            let overPuntoX = centerX + (externalRadius * cos((CGFloat(index) * precision)+offsetAngle))
+            let overPuntoY = centerY + (externalRadius * sin((CGFloat(index) * precision)+offsetAngle))
+            puntiCerchio.addOverPointXY(x: overPuntoX, y: overPuntoY)
             
         }
     }
+    func animate(){
+        UIView.animateWithDuration(20, delay: 1.0, options: nil, animations: {
+            self.setnewTickerAngle(newAngle: (self.getTickerAngle()+1))
+            self.setNeedsDisplay()
+            //            println("%d",self.figo.getTickerAngle())
+            }, completion: { finished in
+                println("Basket doors opened!")
+        })
+
+    }
     
-    private func drawExternalCircle(canvas: CGContext, sizeX: CGFloat , sizeY: CGFloat ) {
-        CGContextAddArc(canvas, sizeX/2, sizeY/2, (sizeX-offsetCircle)/2, CGFloat(M_PI*(8/9)), CGFloat(M_PI*(1/9)),0)
+    func setnewTickerAngle(newAngle angle: CGFloat){
+        tickerAngle = angle;
+        
+        
+    }
+    
+    func getTickerAngle() -> CGFloat{
+        return tickerAngle
+    }
+    
+    private func drawLinee(canvas: CGContext){
+        CGContextSaveGState(canvas)
+        for index in (0...Int(maxValueTick/precision)){
+            if(index % 4 == 0){
+                CGContextSetStrokeColorWithColor(canvas, UIColor.redColor().CGColor)
+            }else{
+                CGContextSetStrokeColorWithColor(canvas, UIColor.blackColor().CGColor)
+            }
+            CGContextSetLineWidth(canvas, 2.0);
+            CGContextMoveToPoint(canvas, puntiCerchio.getOverPointXY(index).0, puntiCerchio.getOverPointXY(index).1)
+            CGContextAddLineToPoint(canvas, puntiCerchio.getUnderPointXY(index).0, puntiCerchio.getUnderPointXY(index).1)
+            CGContextStrokePath(canvas)
+        }
+        CGContextRestoreGState(canvas)
+    }
+    
+    private func drawVisibleCircle(canvas: CGContext, sizeX: CGFloat , sizeY: CGFloat ) {
+        CGContextSaveGState(canvas)
+        CGContextAddArc(canvas, centerX, centerY, radius, offsetAngle, offsetAngle + (maxValueTick-precision),0)
         CGContextStrokePath(canvas)
+        CGContextSetFillColorWithColor(canvas, UIColor.blackColor().CGColor)
+        CGContextAddArc(canvas, centerX, centerY, minRadius, offsetAngle, pi2 + (maxValueTick-precision),0)
+        CGContextFillPath(canvas)
+        CGContextStrokePath(canvas)
+        CGContextRestoreGState(canvas)
     }
     
     

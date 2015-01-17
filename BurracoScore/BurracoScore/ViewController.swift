@@ -9,22 +9,27 @@
 import UIKit
 
 class ViewController: UIViewController {
-
     
-    @IBOutlet weak var canvas: CircleView!
+    
+    @IBOutlet weak var start: UIButton!
+    
+    @IBOutlet weak var figo: CircleView!
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         
-       
         
     }
-
+    
+    @IBAction func partito(sender: AnyObject) {
+//        var mytimer : NSTimer = NSTimer .scheduledTimerWithTimeInterval(2.0, target: self, selector: "restart", userInfo: nil, repeats: false)
+        figo.animate()
+                    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
