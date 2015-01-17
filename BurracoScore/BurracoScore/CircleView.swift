@@ -74,6 +74,7 @@ class CircleView: UIView {
     var centerX: CGFloat = 0
     var centerY:CGFloat = 0
     var tickerAngle: CGFloat = 0
+    let tickerAnglePlus : CGFloat = (1/180) * CGFloat(M_PI)
     
     var puntiCerchio = puntiCirconferenza()
     
@@ -92,8 +93,8 @@ class CircleView: UIView {
     {
         CGContextSaveGState(canvas)
         
-       CGContextSetStrokeColorWithColor(canvas, UIColor.blackColor().CGColor)
-       CGContextSetFillColorWithColor(canvas, UIColor.grayColor().CGColor)
+        CGContextSetStrokeColorWithColor(canvas, UIColor.blackColor().CGColor)
+        CGContextSetFillColorWithColor(canvas, UIColor.grayColor().CGColor)
         
         CGContextMoveToPoint(canvas, centerX, centerY)
         CGContextAddLineToPoint(canvas, puntiCerchio.getPointXY(Int(tickerAngle/precision)).0, puntiCerchio.getPointXY(Int(tickerAngle/precision)).1)
@@ -102,7 +103,7 @@ class CircleView: UIView {
         CGContextAddLineToPoint(canvas, puntoX, puntoY)
         CGContextAddLineToPoint(canvas, centerX, centerY)
         
-       CGContextDrawPath(canvas, kCGPathFillStroke)
+        CGContextDrawPath(canvas, kCGPathFillStroke)
         
         CGContextSetFillColorWithColor(canvas, UIColor.lightGrayColor().CGColor)
         CGContextMoveToPoint(canvas, centerX, centerY)
@@ -157,10 +158,22 @@ class CircleView: UIView {
     }
     
     func setnewTickerAngle(newAngle angle: CGFloat){
-        tickerAngle = angle;
-        self.setNeedsDisplay()
-        println("ciaoi")
-        
+        if(angle>=maxValueTick){
+            
+        }else{
+            tickerAngle = angle;
+            
+            self.setNeedsDisplay()
+            println("ciaoi")
+        }
+    }
+    
+    func addTickerAngle() -> Void{
+        if((tickerAngle + tickerAnglePlus) <= maxValueTick){
+            tickerAngle += tickerAnglePlus
+            self.setNeedsDisplay()
+            println("ciaoi")
+        }
     }
     
     func getTickerAngle() -> CGFloat{
