@@ -13,6 +13,7 @@
 		EB22B0B11A6BD2E000FED987 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB22B0B01A6BD2E000FED987 /* Images.xcassets */; };
 		EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB22B0B21A6BD2E000FED987 /* LaunchScreen.xib */; };
 		EB22B0C01A6BD2E000FED987 /* CatchTheSpeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0BF1A6BD2E000FED987 /* CatchTheSpeedTests.swift */; };
+		EB22B0CE1A6C1D5500FED987 /* AcceleratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		EB22B0B91A6BD2E000FED987 /* CatchTheSpeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatchTheSpeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22B0BE1A6BD2E000FED987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB22B0BF1A6BD2E000FED987 /* CatchTheSpeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchTheSpeedTests.swift; sourceTree = "<group>"; };
+		EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceleratorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				EB22B0B01A6BD2E000FED987 /* Images.xcassets */,
 				EB22B0B21A6BD2E000FED987 /* LaunchScreen.xib */,
 				EB22B0A71A6BD2E000FED987 /* Supporting Files */,
+				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
 			);
 			path = CatchTheSpeed;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB22B0CE1A6C1D5500FED987 /* AcceleratorView.swift in Sources */,
 				EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */,
 				EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */,
 			);

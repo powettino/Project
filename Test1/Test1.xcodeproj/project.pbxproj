@@ -15,7 +15,6 @@
 		5290FF6D1A28B8D300FEF712 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5290FF6B1A28B8D300FEF712 /* LaunchScreen.xib */; };
 		5290FF791A28B8D300FEF712 /* Test1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5290FF781A28B8D300FEF712 /* Test1Tests.m */; };
 		5290FF841A28BE7200FEF712 /* OrangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5290FF831A28BE7200FEF712 /* OrangeViewController.m */; };
-		5290FF861A28D9B700FEF712 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5290FF851A28D9B700FEF712 /* Lato-Light.ttf */; };
 		5290FF891A28E0F700FEF712 /* SlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5290FF881A28E0F700FEF712 /* SlideMenu.m */; };
 		5290FF8F1A28E88D00FEF712 /* SmoothView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5290FF8E1A28E88D00FEF712 /* SmoothView.m */; };
 /* End PBXBuildFile section */
@@ -46,7 +45,6 @@
 		5290FF781A28B8D300FEF712 /* Test1Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test1Tests.m; sourceTree = "<group>"; };
 		5290FF821A28BE7200FEF712 /* OrangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrangeViewController.h; sourceTree = "<group>"; };
 		5290FF831A28BE7200FEF712 /* OrangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrangeViewController.m; sourceTree = "<group>"; };
-		5290FF851A28D9B700FEF712 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Light.ttf"; path = "../../../../Downloads/Lato/Lato-Light.ttf"; sourceTree = "<group>"; };
 		5290FF871A28E0F700FEF712 /* SlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenu.h; sourceTree = "<group>"; };
 		5290FF881A28E0F700FEF712 /* SlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenu.m; sourceTree = "<group>"; };
 		5290FF8D1A28E88D00FEF712 /* SmoothView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothView.h; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 		5290FF5C1A28B8D300FEF712 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5290FF851A28D9B700FEF712 /* Lato-Light.ttf */,
 				5290FF5D1A28B8D300FEF712 /* Info.plist */,
 				5290FF5E1A28B8D300FEF712 /* main.m */,
 			);
@@ -220,7 +217,6 @@
 				5290FF681A28B8D300FEF712 /* Main.storyboard in Resources */,
 				5290FF6D1A28B8D300FEF712 /* LaunchScreen.xib in Resources */,
 				5290FF6A1A28B8D300FEF712 /* Images.xcassets in Resources */,
-				5290FF861A28D9B700FEF712 /* Lato-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +432,7 @@
 				5290FF7E1A28B8D300FEF712 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5290FF7F1A28B8D300FEF712 /* Build configuration list for PBXNativeTarget "Test1Tests" */ = {
 			isa = XCConfigurationList;
@@ -444,6 +441,7 @@
 				5290FF811A28B8D300FEF712 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
