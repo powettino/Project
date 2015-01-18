@@ -36,7 +36,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Plk-uc-4ou" customClass="CircleView" customModule="BurracoScore" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="248" width="320" height="320"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.059621290814465766" green="0.66666666666666663" blue="0.073157736001375165" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="muL-Z3-V8n">
                                 <rect key="frame" x="137" y="119" width="33" height="30"/>
