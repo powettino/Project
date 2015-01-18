@@ -21,40 +21,19 @@ class CircleView: UIView {
         var underPuntiBaseX : [CGFloat]
         var underPuntiBaseY : [CGFloat]
         
-        var tickerPuntiBaseX : [CGFloat]
-        var tickerPuntiBaseY : [CGFloat]
-        
-        var coloredPuntiBaseX : [CGFloat]
-        var coloredPuntiBaseY : [CGFloat]
         init(){
-            tickerPuntiBaseX=[]
-            tickerPuntiBaseY=[]
             puntiBaseX = []
             puntiBaseY = []
             overPuntiBaseX = []
             overPuntiBaseY = []
             underPuntiBaseX = []
             underPuntiBaseY = []
-            coloredPuntiBaseX = []
-            coloredPuntiBaseY = []
         }
         
         mutating func addPointXY(x pointX : CGFloat,y pointY : CGFloat){
             puntiBaseX.append(pointX)
             puntiBaseY.append(pointY)
         }
-        
-        mutating func addColoredPointXY(x pointX : CGFloat,y pointY : CGFloat){
-            puntiBaseX.append(pointX)
-            puntiBaseY.append(pointY)
-        }
-        
-        
-        mutating func addTickerPointXY(x pointX : CGFloat,y pointY : CGFloat){
-            tickerPuntiBaseX.append(pointX)
-            tickerPuntiBaseY.append(pointY)
-        }
-        
         mutating func addUnderPointXY(x pointX: CGFloat,y pointY: CGFloat){
             underPuntiBaseY.append(pointY)
             underPuntiBaseX.append(pointX)
@@ -82,25 +61,28 @@ class CircleView: UIView {
         }
     }
     
-    let offsetCircle: CGFloat = 30
-    let precision: CGFloat = ((1/36)*CGFloat(M_PI))
-    let maxValueTick: CGFloat = ((4/3)*CGFloat(M_PI))
-    let pi : CGFloat = CGFloat(M_PI)
-    let pi2 : CGFloat = (2*CGFloat(M_PI))
-    let offsetAngle : CGFloat = (5/6) * CGFloat(M_PI)
-    var externalRadius:CGFloat = 0
-    var radius : CGFloat = 0
-    var internalRadius:CGFloat = 0
-    var minRadius:CGFloat = 0
-    var tickerRadius : CGFloat = 0
-    var centerX: CGFloat = 0
-    var centerY:CGFloat = 0
-    var tickerAngle: CGFloat = 0
-    let tickerAnglePlus : CGFloat = (1/18) * CGFloat(M_PI)
-    var multiplier: CGFloat = 1
-    var coloredRadius :CGFloat = 0
+    private let offsetCircle: CGFloat = 30
+    private let precision: CGFloat = ((1/36)*CGFloat(M_PI))
+    private    let maxValueTick: CGFloat = ((4/3)*CGFloat(M_PI))
+    private    let pi : CGFloat = CGFloat(M_PI)
+    private    let pi2 : CGFloat = (2*CGFloat(M_PI))
+    private    let offsetAngle : CGFloat = (5/6) * CGFloat(M_PI)
+    private    var externalRadius:CGFloat = 0
+    private    var radius : CGFloat = 0
+    private    var internalRadius:CGFloat = 0
+    private    var minRadius:CGFloat = 0
+    private    var tickerRadius : CGFloat = 0
+    private    var centerX: CGFloat = 0
+    private    var centerY:CGFloat = 0
+    private    var tickerAngle: CGFloat = 0
+    private    let tickerAnglePlus : CGFloat = (1/18) * CGFloat(M_PI)
+    private    var multiplier: CGFloat = 1
+    private    var coloredRadius :CGFloat = 0
+    private    var coloredStartingAngle: CGFloat = 0
+    private    var coloredEndingAngle : CGFloat = 0
+    private var enableColored: Bool = false
     
-    var puntiCerchio = puntiCirconferenza()
+    private   var puntiCerchio = puntiCirconferenza()
     
     
     override init(frame: CGRect) {
@@ -119,7 +101,7 @@ class CircleView: UIView {
         
         CGContextSetLineWidth(canvas, 1.0)
         CGContextSetStrokeColorWithColor(canvas, UIColor.blackColor().CGColor)
-        CGContextSetFillColorWithColor(canvas, UIColor.grayColor().CGColor)
+        CGContextSetFillColorWithColor(canvas, UIColor.redColor().CGColor)
         
         CGContextMoveToPoint(canvas, centerX, centerY)
         
@@ -131,7 +113,7 @@ class CircleView: UIView {
         
         CGContextDrawPath(canvas, kCGPathFillStroke)
         
-        CGContextSetFillColorWithColor(canvas, UIColor.lightGrayColor().CGColor)
+        CGContextSetFillColorWithColor(canvas, UIColor(red: CGFloat(255), green: CGFloat(127), blue: CGFloat(10), alpha: 1.0).CGColor)
         CGContextMoveToPoint(canvas, centerX, centerY)
         CGContextAddLineToPoint(canvas, puntiExt.0, puntiExt.1)
         
@@ -158,11 +140,26 @@ class CircleView: UIView {
         CGContextAddLineToPoint(canvas, width/2, height)
         CGContextStrokePath(canvas)
         drawExternalCircle(canvas, sizeX: width, sizeY: height)
-        drawColored(canvas)
+        if (enableColored){
+            drawColored(canvas)
+        }
         drawLinee(canvas)
         drawCenterCircle(canvas, sizeX: width, sizeY: height)
         drawTicker(inCanvas: canvas)
-        
+    }
+    
+    
+    func enableYellowSection(startingAngle : CGFloat, endingAngle:CGFloat){
+        coloredStartingAngle = startingAngle
+        coloredEndingAngle = endingAngle
+        enableColored = true
+    }
+    
+    func disableYellowSection()
+    {
+        enableColored=false
+        coloredEndingAngle=0
+        coloredStartingAngle=0
     }
     
     func calcolaPuntiBase(frame: CGRect){
@@ -182,11 +179,6 @@ class CircleView: UIView {
             puntiCerchio.addUnderPointXY(x: punti.0, y: punti.1)
             punti = findXY(externalRadius, centerX: centerX, centerY: centerY, angle: (CGFloat(index)*precision)+offsetAngle)
             puntiCerchio.addOverPointXY(x: punti.0, y: punti.1)
-            punti = findXY(tickerRadius, centerX: centerX, centerY: centerY, angle: (CGFloat(index)*precision)+offsetAngle)
-            puntiCerchio.addTickerPointXY(x: punti.0, y: punti.1)
-            punti = findXY(coloredRadius, centerX: centerX, centerY: centerY, angle: (CGFloat(index)*precision)+offsetAngle)
-            puntiCerchio.addTickerPointXY(x: punti.0, y: punti.1)
-            
         }
     }
     
@@ -194,7 +186,7 @@ class CircleView: UIView {
         if( multiplier > 0){
             if((tickerAngle + (tickerAnglePlus * multiplier)) <= (maxValueTick + offsetAngle)){
                 tickerAngle += tickerAnglePlus * multiplier
-                self.setNeedsDisplay()
+                //                self.setNeedsDisplay()
             }else{
                 tickerAngle = maxValueTick + offsetAngle
                 multiplier = -1
@@ -202,7 +194,7 @@ class CircleView: UIView {
         }else{
             if((tickerAngle + (tickerAnglePlus * multiplier)) >= offsetAngle){
                 tickerAngle += tickerAnglePlus * multiplier
-                self.setNeedsDisplay()
+                //                self.setNeedsDisplay()
             }else{
                 tickerAngle = offsetAngle
                 multiplier = 1
@@ -218,10 +210,10 @@ class CircleView: UIView {
     {
         CGContextSaveGState(canvas)
         
-        CGContextSetFillColorWithColor(canvas, UIColor.yellowColor().CGColor)
+        CGContextSetFillColorWithColor(canvas, UIColor.yellowColor().colorWithAlphaComponent(0.6).CGColor)
         CGContextSetLineWidth(canvas, 0.0)
         CGContextMoveToPoint(canvas, centerX, centerY)
-        CGContextAddArc(canvas, centerX, centerY, radius, offsetAngle + ((1/2)*pi), offsetAngle + ((3/2)*pi),0)
+        CGContextAddArc(canvas, centerX, centerY, radius, coloredStartingAngle, coloredEndingAngle ,0)
         
         var punti = findXY(radius, centerX: centerX, centerY: centerY, angle: offsetAngle)
         CGContextMoveToPoint(canvas,  punti.0, punti.1)
