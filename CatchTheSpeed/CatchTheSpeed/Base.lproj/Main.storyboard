@@ -111,13 +111,19 @@
                                 <rect key="frame" x="0.0" y="207" width="320" height="298"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="scR-hz-rh7">
-                                        <rect key="frame" x="13" y="37" width="294" height="214"/>
+                                        <rect key="frame" x="13" y="35" width="294" height="214"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGK-1e-Ytx">
-                                                <rect key="frame" x="33" y="0.0" width="228" height="214"/>
+                                                <rect key="frame" x="33" y="0.0" width="228" height="139"/>
                                                 <string key="text">Congrats!
-Next level in 
-.. 0</string>
+Next level
+in ... </string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpY-At-1eQ">
+                                                <rect key="frame" x="129" y="147" width="37" height="51"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="37"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -158,6 +164,7 @@ Next level in
                         <outlet property="acceleratorView" destination="6SP-Wf-V6S" id="HPK-pd-dDU"/>
                         <outlet property="fadingView" destination="scR-hz-rh7" id="2Ef-M6-Hqy"/>
                         <outlet property="labelCongrats" destination="wGK-1e-Ytx" id="112-4k-flZ"/>
+                        <outlet property="labelCount" destination="mpY-At-1eQ" id="KEb-Nw-bEl"/>
                         <outlet property="levelText" destination="FB4-0f-hOQ" id="MER-my-A0U"/>
                         <outlet property="modalita" destination="Yxu-iV-6QS" id="XZa-3Y-JUd"/>
                         <outlet property="nomePlayer" destination="gNh-CS-7wn" id="f0Y-Ia-9ua"/>
