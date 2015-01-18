@@ -9,7 +9,7 @@
 import UIKit
 
 class AcceleratorView: UIView {
-
+    
     
     struct puntiCirconferenza
     {
@@ -64,23 +64,23 @@ class AcceleratorView: UIView {
     
     private let offsetCircle: CGFloat = 30
     private let precision: CGFloat = ((1/36)*CGFloat(M_PI))
-    private    let maxValueTick: CGFloat = ((4/3)*CGFloat(M_PI))
-    private    let pi : CGFloat = CGFloat(M_PI)
-    private    let pi2 : CGFloat = (2*CGFloat(M_PI))
-    private    let offsetAngle : CGFloat = (5/6) * CGFloat(M_PI)
-    private    var externalRadius:CGFloat = 0
-    private    var radius : CGFloat = 0
-    private    var internalRadius:CGFloat = 0
-    private    var minRadius:CGFloat = 0
-    private    var tickerRadius : CGFloat = 0
-    private    var centerX: CGFloat = 0
-    private    var centerY:CGFloat = 0
-    private    var tickerAngle: CGFloat = 0
-    private    let tickerAnglePlus : CGFloat = (1/18) * CGFloat(M_PI)
-    private    var multiplier: CGFloat = 1
-    private    var coloredRadius :CGFloat = 0
-    private    var coloredStartingAngle: CGFloat = 0
-    private    var coloredEndingAngle : CGFloat = 0
+    private let maxValueTick: CGFloat = ((4/3)*CGFloat(M_PI))
+    private let pi : CGFloat = CGFloat(M_PI)
+    private let pi2 : CGFloat = (2*CGFloat(M_PI))
+    private let offsetAngle : CGFloat = (5/6) * CGFloat(M_PI)
+    private var externalRadius:CGFloat = 0
+    private var radius : CGFloat = 0
+    private var internalRadius:CGFloat = 0
+    private var minRadius:CGFloat = 0
+    private var tickerRadius : CGFloat = 0
+    private var centerX: CGFloat = 0
+    private var centerY:CGFloat = 0
+    private var tickerAngle: CGFloat = 0
+    private let tickerAnglePlus : CGFloat = (1/18) * CGFloat(M_PI)
+    private var multiplier: CGFloat = 1
+    private var coloredRadius :CGFloat = 0
+    private var coloredStartingAngle: CGFloat = 0
+    private var coloredEndingAngle : CGFloat = 0
     private var enableColored: Bool = false
     
     private   var puntiCerchio = puntiCirconferenza()
@@ -149,6 +149,10 @@ class AcceleratorView: UIView {
         drawTicker(inCanvas: canvas)
     }
     
+    func getReferenceAngleValue() -> (min: CGFloat, max: CGFloat){
+        return (offsetAngle ,self.maxValueTick)
+    }
+    
     
     func enableYellowSection(startingAngle : CGFloat, endingAngle:CGFloat){
         coloredStartingAngle = startingAngle
@@ -163,7 +167,7 @@ class AcceleratorView: UIView {
         coloredStartingAngle=0
     }
     
-    func calcolaPuntiBase(frame: CGRect){
+    private func calcolaPuntiBase(frame: CGRect){
         var minDim = frame.size.width < frame.size.height ? frame.size.width : frame.size.height
         self.radius = (minDim-offsetCircle)/2
         self.externalRadius = radius + 1
