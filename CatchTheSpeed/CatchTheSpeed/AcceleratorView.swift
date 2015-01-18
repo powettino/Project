@@ -126,7 +126,6 @@ class AcceleratorView: UIView {
     }
     
     override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
         let canvas = UIGraphicsGetCurrentContext()
         
         let centerX = frame.size.width/2
@@ -150,11 +149,11 @@ class AcceleratorView: UIView {
     }
     
     func getReferenceAngleValue() -> (min: CGFloat, max: CGFloat){
-        return (offsetAngle ,self.maxValueTick)
+        return (self.offsetAngle ,self.maxValueTick+self.offsetAngle)
     }
     
     
-    func enableYellowSection(startingAngle : CGFloat, endingAngle:CGFloat){
+    func enableYellowSection(startingAngle: CGFloat, endingAngle:CGFloat){
         coloredStartingAngle = startingAngle
         coloredEndingAngle = endingAngle
         enableColored = true
@@ -192,7 +191,7 @@ class AcceleratorView: UIView {
         if( multiplier > 0){
             if((tickerAngle + (tickerAnglePlus * multiplier)) <= (maxValueTick + offsetAngle)){
                 tickerAngle += tickerAnglePlus * multiplier
-                //                self.setNeedsDisplay()
+                self.setNeedsDisplay()
             }else{
                 tickerAngle = maxValueTick + offsetAngle
                 multiplier = -1
@@ -200,12 +199,18 @@ class AcceleratorView: UIView {
         }else{
             if((tickerAngle + (tickerAnglePlus * multiplier)) >= offsetAngle){
                 tickerAngle += tickerAnglePlus * multiplier
-                //                self.setNeedsDisplay()
+                self.setNeedsDisplay()
             }else{
                 tickerAngle = offsetAngle
                 multiplier = 1
             }
         }
+     //   println("\(tickerAngle)")
+    }
+    
+    func resetTicker() -> Void {
+        tickerAngle = offsetAngle;
+        self.setNeedsDisplay()
     }
     
     func getTickerAngle() -> CGFloat{
@@ -216,7 +221,7 @@ class AcceleratorView: UIView {
     {
         CGContextSaveGState(canvas)
         
-        CGContextSetFillColorWithColor(canvas, UIColor.yellowColor().colorWithAlphaComponent(0.6).CGColor)
+        CGContextSetFillColorWithColor(canvas, UIColor.orangeColor().colorWithAlphaComponent(0.6).CGColor)
         CGContextSetLineWidth(canvas, 0.0)
         CGContextMoveToPoint(canvas, centerX, centerY)
         CGContextAddArc(canvas, centerX, centerY, radius, coloredStartingAngle, coloredEndingAngle ,0)

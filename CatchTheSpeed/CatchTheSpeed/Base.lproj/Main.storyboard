@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6UQ-7P-TyN">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -72,6 +73,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="938-wC-2eI">
+                                <rect key="frame" x="177" y="114" width="101" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Soft" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yxu-iV-6QS">
                                 <rect key="frame" x="110" y="178" width="101" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -88,9 +95,6 @@
                                     <action selector="startGame:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1wV-q1-rbd"/>
                                 </connections>
                             </button>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6SP-Wf-V6S" customClass="AcceleratorView" customModule="CatchTheSpeed" customModuleProvider="target">
-                                <color key="backgroundColor" red="1" green="0.98800751460921776" blue="0.021670761362232782" alpha="0.0" colorSpace="calibratedRGB"/>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7c-Wc-4Dp">
                                 <rect key="frame" x="212" y="149" width="92" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -103,14 +107,33 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="938-wC-2eI">
-                                <rect key="frame" x="177" y="114" width="101" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6SP-Wf-V6S" customClass="AcceleratorView" customModule="CatchTheSpeed" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="207" width="320" height="298"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="scR-hz-rh7">
+                                        <rect key="frame" x="13" y="37" width="294" height="214"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGK-1e-Ytx">
+                                                <rect key="frame" x="33" y="0.0" width="228" height="214"/>
+                                                <string key="text">Congrats!
+Next level in 
+.. 0</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.98800751460921776" blue="0.021670761362232782" alpha="0.0" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.98258107760931612" blue="0.031420802847271112" alpha="0.87" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="6SP-Wf-V6S" secondAttribute="trailing" constant="-16" id="Cna-Ks-byq"/>
+                            <constraint firstAttribute="centerX" secondItem="6SP-Wf-V6S" secondAttribute="centerX" constant="2.5" id="kla-c7-TRu"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5Tr-fu-U7b">
@@ -133,6 +156,9 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="acceleratorView" destination="6SP-Wf-V6S" id="HPK-pd-dDU"/>
+                        <outlet property="fadingView" destination="scR-hz-rh7" id="2Ef-M6-Hqy"/>
+                        <outlet property="labelCongrats" destination="wGK-1e-Ytx" id="112-4k-flZ"/>
+                        <outlet property="levelText" destination="FB4-0f-hOQ" id="MER-my-A0U"/>
                         <outlet property="modalita" destination="Yxu-iV-6QS" id="XZa-3Y-JUd"/>
                         <outlet property="nomePlayer" destination="gNh-CS-7wn" id="f0Y-Ia-9ua"/>
                         <outlet property="puntiAttuali" destination="KKV-eO-xB1" id="cjy-Ba-3nQ"/>
@@ -142,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1702" y="-89"/>
+            <point key="canvasLocation" x="-1679" y="-89"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ad9-Yb-Whw">
