@@ -157,6 +157,7 @@ class AcceleratorView: UIView {
         coloredStartingAngle = startingAngle
         coloredEndingAngle = endingAngle
         enableColored = true
+        self.setNeedsDisplay()
     }
     
     func disableYellowSection()
