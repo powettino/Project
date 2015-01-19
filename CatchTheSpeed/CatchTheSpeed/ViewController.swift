@@ -175,7 +175,7 @@ class ViewController: UIViewController {
                     )
                     
                 }else{
-                    self.showLostAlert("OH NO!!!", "Omg, you have lost! LOSER!", "Sadness...")
+                    self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness...")
                 }
             default :
                 started = !started
@@ -189,90 +189,90 @@ class ViewController: UIViewController {
         if(self.counterTime == 0){
             self.timerMod.invalidate()
             if(self.recordPoint == self.currentPoint){
-                self.showEndAlert("Congrats", message: "You have dona a new record!", action: "Improve it!")}
-        }else{
-            self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
-        }
-    }else{
-    self.counterTime--
-    self.timeLabel.text = String(counterTime)
-    }
-}
-
-func updateRecord(){
-    if(self.currentPoint > self.recordPoint){
-        self.recordPoint = self.currentPoint
-        self.record.text = String(self.recordPoint)
-    }
-    
-}
-
-func showEndAlert(title : String, message : String, action: String){
-    var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-    alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler: {finished in
-        self.resetGame()
-        self.started = !self.started
-    }))
-    self.presentViewController(alert, animated: true, completion: {})
-}
-
-func messageGame(){
-    //        println("uff \(self.counter)")
-    if(self.counter == 1){
-        self.timerEndGame.invalidate()
-        UIView.animateWithDuration(0.2, animations: {
-            
-            self.fadingView.alpha = 0
-            self.fadingView.hidden = false
-            self.labelCongrats.alpha=0
-            self.labelCount.alpha=0
-            self.acceleratorView.alpha=1
-            self.calcAngleOnLevel()
-            }, completion: {finished in
-                self.counter=3
-                self.labelCount.text = String(self.counter)
+                self.showEndAlert("Congrats", message: "You have dona a new record!", action: "Improve it!")
+            }else{
+                self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
             }
-        )
-        //            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-        var time  = timeTicker.quite.rawValue
-        if(self.dimAngle == minAngle){
-            time -= 0.002
+        }else{
+            self.counterTime--
+            self.timeLabel.text = String(counterTime)
         }
-        self.schedulaGame(time)
-        self.startButton.enabled=true
-    }else{
-        self.counter -= 1
     }
-    self.labelCount.text = String(self.counter)
-}
-
-private func randomFloat(min : CGFloat , max : CGFloat) -> CGFloat{
-    return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (max-min) + min
-}
-
-private func resetCoordinates(){
-    let angles = self.acceleratorView.getReferenceAngleValue()
-    self.minAngle = angles.min
-    self.maxAngle = angles.max
     
-}
-
-private func calcAngleOnLevel(){
-    self.resetCoordinates()
-    self.dimAngle = (self.maxAngle - self.minAngle) / CGFloat((self.level + 1))
-    if( self.dimAngle < minDimAngle){
-        self.dimAngle = minDimAngle
+    func updateRecord(){
+        if(self.currentPoint > self.recordPoint){
+            self.recordPoint = self.currentPoint
+            self.record.text = String(self.recordPoint)
+        }
+        
     }
-    var rnd: CGFloat = self.randomFloat(self.minAngle, max: (self.maxAngle - dimAngle))
     
-    minAngle = rnd
-    maxAngle = minAngle + dimAngle
-    self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
-}
-
-
-func updateGame(){
-    self.acceleratorView.addTickerAngle()
-}
+    func showEndAlert(title : String, message : String, action: String){
+        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler: {finished in
+            self.resetGame()
+            self.started = !self.started
+        }))
+        self.presentViewController(alert, animated: true, completion: {})
+    }
+    
+    func messageGame(){
+        //        println("uff \(self.counter)")
+        if(self.counter == 1){
+            self.timerEndGame.invalidate()
+            UIView.animateWithDuration(0.2, animations: {
+                
+                self.fadingView.alpha = 0
+                self.fadingView.hidden = false
+                self.labelCongrats.alpha=0
+                self.labelCount.alpha=0
+                self.acceleratorView.alpha=1
+                self.calcAngleOnLevel()
+                }, completion: {finished in
+                    self.counter=3
+                    self.labelCount.text = String(self.counter)
+                }
+            )
+            //            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
+            var time  = timeTicker.quite.rawValue
+            if(self.dimAngle == minAngle){
+                time -= 0.002
+            }
+            self.schedulaGame(time)
+            self.startButton.enabled=true
+        }else{
+            self.counter -= 1
+        }
+        self.labelCount.text = String(self.counter)
+    }
+    
+    private func randomFloat(min : CGFloat , max : CGFloat) -> CGFloat{
+        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (max-min) + min
+    }
+    
+    private func resetCoordinates(){
+        let angles = self.acceleratorView.getReferenceAngleValue()
+        self.minAngle = angles.min
+        self.maxAngle = angles.max
+        
+    }
+    
+    private func calcAngleOnLevel(){
+        self.resetCoordinates()
+        self.dimAngle = (self.maxAngle - self.minAngle) / CGFloat((self.level + 1))
+        if( self.dimAngle < minDimAngle){
+            self.dimAngle = minDimAngle
+        }
+        var rnd: CGFloat = self.randomFloat(self.minAngle, max: (self.maxAngle - dimAngle))
+        
+        minAngle = rnd
+        maxAngle = minAngle + dimAngle
+        self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
+    }
+    
+    
+    func updateGame(){
+        self.acceleratorView.addTickerAngle()
+    }
 }
 
