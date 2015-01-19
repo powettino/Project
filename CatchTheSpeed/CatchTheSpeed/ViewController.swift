@@ -21,11 +21,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var nomePlayer: UILabel!
     @IBOutlet weak var levelText: UILabel!
     
-    enum modalita : String {
-        case soft = "soft"
-        case stressing = "streeessing"
-        case survival = "SURVIVAL"
-        case astonishing = "!!ASTONISHING!!"
+    enum modalita : Int {
+        case soft = 100
+        case stressing = 200
+        case survival = 300
+        case astonishing = 400
     }
     
     enum buttonLabel : String {
@@ -38,9 +38,10 @@ class ViewController: UIViewController {
     var level : Int = 1
     var minAngle: CGFloat = 0
     var maxAngle : CGFloat = 0
-    var counter = 3;
+    var counter = 3
     var timerEndGame = NSTimer()
-    
+    var currentPoint = 0
+    var recordPoint = 0
     
     @IBOutlet weak var acceleratorView: AcceleratorView!
     var timer = NSTimer();
@@ -51,6 +52,7 @@ class ViewController: UIViewController {
         self.fadingView.hidden=true
         self.labelCongrats.hidden=true
         self.labelCount.hidden=true
+        //FIXME: andranno caricati da risorsa i punti del record
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -82,11 +84,12 @@ class ViewController: UIViewController {
             self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
             started = !started
         default:
-            switch mod {
+            switch self.mod {
             case modalita.stressing:
                 self.counter=1
             case modalita.soft:
                 self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
+                self.startButton.enabled=false
                 self.timer.invalidate()
                 started = !started
                 var stoppedAngle = self.acceleratorView.getTickerAngle()
@@ -95,13 +98,15 @@ class ViewController: UIViewController {
                     var origFrame = self.fadingView.frame
                     self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
                     self.level++
+                    self.currentPoint += self.mod.rawValue
                     UIView.animateWithDuration(0.5, animations: {
                         self.fadingView.frame = origFrame
                         self.fadingView.alpha = 0.7
                         self.fadingView.hidden = false
-                        self.levelText.text = String(self.level)
                         }, completion: { finished in
                             UIView.animateWithDuration(1, animations: {
+                                self.levelText.text = String(self.level)
+                                self.puntiAttuali.text = String(self.currentPoint)
                                 self.labelCount.hidden = false
                                 self.labelCongrats.hidden = false}, completion: {
                                     finished in
@@ -116,10 +121,14 @@ class ViewController: UIViewController {
                     alert.addAction(UIAlertAction(title: "F**K", style: UIAlertActionStyle.Destructive, handler: {finished in
                         self.resetGame()
                         self.level=1
+                        self.currentPoint=0
+                        self.puntiAttuali.text = String(self.currentPoint)
                         self.levelText.text = String(self.level)
+                        self.startButton.enabled=true
                     }))
                     self.presentViewController(alert, animated: true, completion: {})
                 }
+               
             default :
                 started = !started
             }
@@ -141,6 +150,7 @@ class ViewController: UIViewController {
                     self.labelCount.text = String(self.counter)
                 }
             )
+            self.startButton.enabled=true
         }else{
             self.counter -= 1
         }
