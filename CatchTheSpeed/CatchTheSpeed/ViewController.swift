@@ -28,6 +28,13 @@ class ViewController: UIViewController {
         case astonishing = 400
     }
     
+    enum timeTicker : NSTimeInterval{
+        case quite = 0.05
+        case low = 0.04
+        case medium = 0.03
+        case wow = 0.009
+    }
+    
     enum buttonLabel : String {
         case start = "Start"
         case stop = "Stop"
@@ -73,6 +80,17 @@ class ViewController: UIViewController {
     private func resetGame(){
         self.acceleratorView.resetTicker()
         self.calcAngleOnLevel()
+        self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
+        self.level=1
+        self.currentPoint=0
+        self.puntiAttuali.text = String(self.currentPoint)
+        self.levelText.text = String(self.level)
+        self.startButton.enabled=true
+
+    }
+    
+    func schedulaGame(tick: NSTimeInterval){
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
     }
     
     
@@ -81,17 +99,17 @@ class ViewController: UIViewController {
         case false:
             self.counter=3
             self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
+            self.schedulaGame(timeTicker.quite.rawValue)
             started = !started
         default:
             switch self.mod {
             case modalita.stressing:
                 self.counter=1
             case modalita.soft:
-                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
+                //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
                 self.startButton.enabled=false
                 self.timer.invalidate()
-                started = !started
+                
                 var stoppedAngle = self.acceleratorView.getTickerAngle()
                 if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
                     
@@ -99,6 +117,7 @@ class ViewController: UIViewController {
                     self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
                     self.level++
                     self.currentPoint += self.mod.rawValue
+                   
                     UIView.animateWithDuration(0.5, animations: {
                         self.fadingView.frame = origFrame
                         self.fadingView.alpha = 0.7
@@ -107,6 +126,7 @@ class ViewController: UIViewController {
                             UIView.animateWithDuration(1, animations: {
                                 self.levelText.text = String(self.level)
                                 self.puntiAttuali.text = String(self.currentPoint)
+                                 self.updateRecord()
                                 self.labelCount.hidden = false
                                 self.labelCongrats.hidden = false}, completion: {
                                     finished in
@@ -117,24 +137,32 @@ class ViewController: UIViewController {
                     )
                     
                 }else{
-                    var alert = UIAlertController(title: "OH NO!!!", message: "Omg, you have lost! LOSER!", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "F**K", style: UIAlertActionStyle.Destructive, handler: {finished in
-                        self.resetGame()
-                        self.level=1
-                        self.currentPoint=0
-                        self.puntiAttuali.text = String(self.currentPoint)
-                        self.levelText.text = String(self.level)
-                        self.startButton.enabled=true
-                    }))
-                    self.presentViewController(alert, animated: true, completion: {})
+                    self.showLostAlert()
                 }
-               
             default :
                 started = !started
             }
             
             
         }
+    }
+    
+    func updateRecord(){
+        if(self.currentPoint > self.recordPoint){
+            self.recordPoint = self.currentPoint
+            self.record.text = String(self.recordPoint)
+        }
+        
+    }
+    
+    func showLostAlert(){
+        var alert = UIAlertController(title: "OH NO!!!", message: "Omg, you have lost! LOSER!", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "F**K", style: UIAlertActionStyle.Destructive, handler: {finished in
+            self.resetGame()
+                      self.started = !self.started
+        }))
+        self.presentViewController(alert, animated: true, completion: {})
+        
     }
     
     func messageGame(){
@@ -150,6 +178,8 @@ class ViewController: UIViewController {
                     self.labelCount.text = String(self.counter)
                 }
             )
+            //            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
+            self.schedulaGame(timeTicker.quite.rawValue)
             self.startButton.enabled=true
         }else{
             self.counter -= 1
@@ -163,6 +193,7 @@ class ViewController: UIViewController {
         maxAngle = angles.max
         self.acceleratorView.enableYellowSection( minAngle, endingAngle: angles.max)
     }
+    
     
     func updateGame(){
         self.acceleratorView.addTickerAngle()
