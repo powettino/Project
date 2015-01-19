@@ -22,9 +22,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var nomePlayer: UILabel!
     @IBOutlet weak var levelText: UILabel!
     
-    enum modalita : Int {
+    enum mod : Int {
         case soft = 100
-        case stressing = 200
+        case stressing = 50
         case survival = 300
         case astonishing = 400
     }
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     }
     
     var started : Bool = false
-    var mod : modalita = modalita.stressing
+    var modGame : mod = mod.stressing
     var level : Int = 1
     var minAngle: CGFloat = 0
     var maxAngle : CGFloat = 0
@@ -67,7 +67,24 @@ class ViewController: UIViewController {
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.calcAngleOnLevel()
-        if(self.mod==modalita.stressing || self.mod==modalita.astonishing){
+        switch self.modGame {
+        case mod.stressing:
+            self.timeLabel.text = String(self.counterTime)
+            self.modalita.text = "Stressing"
+        case mod.soft:
+            self.modalita.text = "Soft"
+            self.timeLabel.text = "."
+        case mod.survival:
+            self.modalita.text = "Survival"
+            self.timeLabel.text = "-"
+        case mod.astonishing :
+            self.modalita.text = "Astonishing!!"
+            self.timeLabel.text = String(self.counterTime)
+            
+        default:
+            break
+        }
+        if(self.modGame==mod.stressing || self.modGame==mod.astonishing){
             self.timeLabel.text = String(counterTime)
         }else{
             self.timeLabel.text = "-"
@@ -85,11 +102,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func increaseLevel(){
-        self.level += self.level++
-        self.levelText.text! = String(self.level)
-    }
-    
     private func resetGame(){
         self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
         self.level=1
@@ -98,8 +110,12 @@ class ViewController: UIViewController {
         self.levelText.text = String(self.level)
         self.startButton.enabled=true
         self.acceleratorView.resetTicker()
-        
+        self.counterTime = 60
+        if(self.modGame == mod.stressing || self.modGame == mod.astonishing){
+            self.timeLabel.text = String(self.counterTime)
+        }
         self.calcAngleOnLevel()
+        self.counter=3
         
     }
     
@@ -114,33 +130,35 @@ class ViewController: UIViewController {
     @IBAction func startGame(sender: AnyObject) {
         switch started  {
         case false:
-            self.counter=3
+            
             self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-            switch(self.mod){
-            case modalita.soft:
+            switch(self.modGame){
+            case mod.soft:
+                self.counter=3
                 self.schedulaGame(timeTicker.quite.rawValue)
-            case modalita.stressing:
+            case mod.stressing:
                 self.schedulaContatore()
-                self.counterTime = 60
                 self.timeLabel.text = String(counterTime)
                 self.schedulaGame(timeTicker.quite.rawValue)
+                
             default:
-                self.schedulaGame(timeTicker.medium.rawValue)
+                break
             }
             started = !started
         default:
-            switch self.mod {
-            case modalita.stressing:
+            switch self.modGame {
+            case mod.stressing:
                 var stoppedAngle = self.acceleratorView.getTickerAngle()
                 println("min \(minAngle) - max \(maxAngle) - stoppd \(stoppedAngle)")
                 if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
                     self.level++
-                    self.currentPoint += self.mod.rawValue
+                    self.currentPoint += self.modGame.rawValue
                     self.updateRecord()
                     self.puntiAttuali.text = String(self.currentPoint)
                     self.calcAngleOnLevel()
+                     self.levelText.text = String(self.level)
                 }
-            case modalita.soft:
+            case mod.soft:
                 //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
                 self.startButton.enabled=false
                 self.timer.invalidate()
@@ -151,7 +169,7 @@ class ViewController: UIViewController {
                     var origFrame = self.fadingView.frame
                     self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
                     self.level++
-                    self.currentPoint += self.mod.rawValue
+                    self.currentPoint += self.modGame.rawValue
                     
                     UIView.animateWithDuration(0.5, animations: {
                         self.fadingView.frame = origFrame
@@ -189,10 +207,11 @@ class ViewController: UIViewController {
         if(self.counterTime == 0){
             self.timerMod.invalidate()
             if(self.recordPoint == self.currentPoint){
-                self.showEndAlert("Congrats", message: "You have dona a new record!", action: "Improve it!")
+                self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!")
             }else{
                 self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
             }
+            self.timer.invalidate()
         }else{
             self.counterTime--
             self.timeLabel.text = String(counterTime)

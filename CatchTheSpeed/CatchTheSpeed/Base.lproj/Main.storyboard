@@ -8,7 +8,8 @@
         <!--Navigation Controller-->
         <scene sceneID="IGw-BA-Dom">
             <objects>
-                <navigationController modalTransitionStyle="flipHorizontal" id="6UQ-7P-TyN" sceneMemberID="viewController">
+                <navigationController autoresizesArchivedViewToFullSize="NO" modalTransitionStyle="flipHorizontal" id="6UQ-7P-TyN" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" id="KlT-Lo-sqR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
