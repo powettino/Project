@@ -94,7 +94,7 @@ class ViewController: UIViewController {
         default:
             break;
         }
-
+        
     }
     
     
@@ -111,11 +111,11 @@ class ViewController: UIViewController {
                 self.labelCount.alpha=0
                 self.acceleratorView.alpha=1
             }
-            var newFrame =  CGRectMake(0, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
+            var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
             
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
                 self.slidingMenu.frame = newFrame;
-            })
+                } , completion:(nil))
             self.optionOpened=true
         }else{
             self.closeMenu()
@@ -125,12 +125,11 @@ class ViewController: UIViewController {
     private func closeMenu(){
         var currentFrame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(0.5,delay:0, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {
             self.slidingMenu.frame = currentFrame;
-        })
+        }, completion:(nil))
         self.optionOpened = false
         self.changeModView()
-        
     }
     
     @IBAction func closingMenu(sender: AnyObject) {
@@ -155,7 +154,7 @@ class ViewController: UIViewController {
         default:
             break
         }
-
+        
     }
     
     override func viewDidLoad() {
@@ -167,7 +166,15 @@ class ViewController: UIViewController {
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.calcAngleOnLevel()
-                       //FIXME: andranno caricati da risorsa i punti del record
+        
+        self.slidingMenu.layer.cornerRadius=30
+        	self.slidingMenu.layer.borderColor=UIColor.redColor().CGColor
+        self.slidingMenu.layer.borderWidth=1.5
+        self.slidingMenu.layer.shadowColor = UIColor.blackColor().CGColor
+        self.slidingMenu.layer.shadowOffset = CGSize()
+        self.slidingMenu.layer.shadowOpacity = 0.8
+        self.slidingMenu.layer.shadowRadius=5.0
+        //FIXME: andranno caricati da risorsa i punti del record
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -210,21 +217,22 @@ class ViewController: UIViewController {
     @IBAction func startGame(sender: AnyObject) {
         switch started  {
         case false:
-            
-            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-            switch(self.modGame){
-            case mod.soft:
-                self.counter=3
-                self.schedulaGame(timeTicker.quite.rawValue)
-            case mod.stressing:
-                self.schedulaContatore()
-                self.timeLabel.text = String(counterTime)
-                self.schedulaGame(timeTicker.quite.rawValue)
-                
-            default:
-                break
+            if(!self.optionOpened){
+                self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
+                switch(self.modGame){
+                case mod.soft:
+                    self.counter=3
+                    self.schedulaGame(timeTicker.quite.rawValue)
+                case mod.stressing:
+                    self.schedulaContatore()
+                    self.timeLabel.text = String(counterTime)
+                    self.schedulaGame(timeTicker.quite.rawValue)
+                    
+                default:
+                    break
+                }
+                started = !started
             }
-            started = !started
         default:
             switch self.modGame {
             case mod.stressing:
@@ -251,7 +259,7 @@ class ViewController: UIViewController {
                     self.level++
                     self.currentPoint += self.modGame.rawValue
                     
-                    UIView.animateWithDuration(0.5, animations: {
+                    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                         self.fadingView.frame = origFrame
                         self.fadingView.alpha = 1
                         self.fadingView.hidden = false
@@ -276,10 +284,8 @@ class ViewController: UIViewController {
                     self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness...")
                 }
             default :
-                started = !started
+                break
             }
-            
-            
         }
     }
     
