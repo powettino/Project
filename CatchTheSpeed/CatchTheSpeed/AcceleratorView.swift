@@ -76,7 +76,7 @@ class AcceleratorView: UIView {
     private var centerX: CGFloat = 0
     private var centerY:CGFloat = 0
     private var tickerAngle: CGFloat = 0
-    private let tickerAnglePlus : CGFloat = (1/18) * CGFloat(M_PI)
+    private var tickerAnglePlus : CGFloat = (1/90) * CGFloat(M_PI)
     private var multiplier: CGFloat = 1
     private var coloredRadius :CGFloat = 0
     private var coloredStartingAngle: CGFloat = 0
@@ -127,7 +127,7 @@ class AcceleratorView: UIView {
     
     override func drawRect(rect: CGRect) {
         let canvas = UIGraphicsGetCurrentContext()
-        
+        CGContextSaveGState(canvas)
         let centerX = frame.size.width/2
         let centerY = frame.size.height/2
         let width = frame.size.width
@@ -146,6 +146,7 @@ class AcceleratorView: UIView {
         drawLinee(canvas)
         drawCenterCircle(canvas)
         drawTicker(inCanvas: canvas)
+        CGContextRestoreGState(canvas)
     }
     
     func getReferenceAngleValue() -> (min: CGFloat, max: CGFloat){
@@ -218,6 +219,14 @@ class AcceleratorView: UIView {
         return tickerAngle
     }
     
+    func setTickerAngleMov(angle: CGFloat){
+        self.tickerAnglePlus = angle
+    }
+    
+    func getTickerAngleMov() -> CGFloat {
+        return tickerAnglePlus
+    }
+    
     private func drawColored(canvas :CGContext)
     {
         CGContextSaveGState(canvas)
@@ -263,11 +272,12 @@ class AcceleratorView: UIView {
         CGContextAddArc(canvas, centerX, (centerY+radius), radius, ((7/6)*pi), (11/6)*pi,0)
         CGContextSetFillColorWithColor(canvas, UIColor.grayColor().CGColor)
         CGContextFillPath(canvas)
-        
+        CGContextRestoreGState(canvas)
         
     }
     
     private func drawCenterCircle(canvas :CGContext){
+        CGContextSaveGState(canvas)
         CGContextSetFillColorWithColor(canvas, UIColor.blackColor().CGColor)
         CGContextAddArc(canvas, centerX, centerY, minRadius, offsetAngle, pi2 + (maxValueTick),0)
         CGContextFillPath(canvas)

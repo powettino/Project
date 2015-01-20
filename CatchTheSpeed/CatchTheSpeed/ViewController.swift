@@ -34,19 +34,22 @@ class ViewController: UIViewController {
         case soft = 100
         case stressing = 50
         case survival = 300
-        case astonishing = 400
+        case astonishing = 500
     }
     
     enum timeTicker : NSTimeInterval{
-        case quite = 0.09
-        case low = 0.04
+        case fast = 0.01
         case medium = 0.03
-        case wow = 0.009
+        case low = 0.05
     }
     
     enum buttonLabel : String {
         case start = "Start"
         case stop = "Stop"
+    }
+    
+    enum tickerAngleMov {
+        case low, medium, high, higher
     }
     
     var started : Bool = false
@@ -57,7 +60,7 @@ class ViewController: UIViewController {
     var counter = 3
     var timerEndGame = NSTimer()
     var currentPoint = 0
-    let minDimAngle : CGFloat = (1/90) * CGFloat(M_PI)
+    var minDimAngle :CGFloat = 0
     var recordPoint = 0
     var dimAngle : CGFloat = 0
     var counterTime = 60
@@ -65,6 +68,25 @@ class ViewController: UIViewController {
     var optionOpened :Bool = false
     var timer = NSTimer();
     
+    
+    private func getTickerMov(definition : tickerAngleMov) -> CGFloat{
+        switch definition {
+        case tickerAngleMov.low:
+            return (1/180)*CGFloat(M_PI)
+        case tickerAngleMov.medium:
+            return (1/90)*CGFloat(M_PI)
+        case tickerAngleMov.high :
+            return (1/45)*CGFloat(M_PI)
+        case tickerAngleMov.higher:
+            return (1/30)*CGFloat(M_PI)
+        default:
+            break;
+        }
+    }
+    
+    @IBAction func resetClick(sender: AnyObject) {
+        self.superReset()
+    }
     
     @IBAction func changingSurvival(sender: AnyObject) {
         switch (self.modGame){
@@ -78,6 +100,9 @@ class ViewController: UIViewController {
             self.modGame = mod.stressing
         default:
             break;
+        }
+        if(self.started){
+            self.superReset()
         }
     }
     
@@ -94,29 +119,21 @@ class ViewController: UIViewController {
         default:
             break;
         }
+        if(self.started){
+            self.superReset()
+        }
         
     }
     
-    
     @IBAction func optionClick(sender: AnyObject) {
         if(!self.optionOpened){
-            if(self.started){
-                self.resetGame()
-                self.timer.invalidate()
-                self.timerEndGame.invalidate()
-                self.timerMod.invalidate()
-                self.fadingView.alpha = 0
-                self.fadingView.hidden = false
-                self.labelCongrats.alpha=0
-                self.labelCount.alpha=0
-                self.acceleratorView.alpha=1
-            }
             var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
             
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
+            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
                 self.slidingMenu.frame = newFrame;
                 } , completion:(nil))
             self.optionOpened=true
+            self.startButton.enabled=false
         }else{
             self.closeMenu()
         }
@@ -125,10 +142,11 @@ class ViewController: UIViewController {
     private func closeMenu(){
         var currentFrame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         
-        UIView.animateWithDuration(0.5,delay:0, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {
+        UIView.animateWithDuration(0.3,delay:0, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {
             self.slidingMenu.frame = currentFrame;
-        }, completion:(nil))
+            }, completion:(nil))
         self.optionOpened = false
+        self.startButton.enabled = true
         self.changeModView()
     }
     
@@ -166,9 +184,10 @@ class ViewController: UIViewController {
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.calcAngleOnLevel()
+        self.minDimAngle = self.acceleratorView.getTickerAngleMov()
         
         self.slidingMenu.layer.cornerRadius=30
-        	self.slidingMenu.layer.borderColor=UIColor.redColor().CGColor
+        self.slidingMenu.layer.borderColor=UIColor.redColor().CGColor
         self.slidingMenu.layer.borderWidth=1.5
         self.slidingMenu.layer.shadowColor = UIColor.blackColor().CGColor
         self.slidingMenu.layer.shadowOffset = CGSize()
@@ -187,6 +206,20 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    private func superReset(){
+        
+        self.timer.invalidate()
+        self.timerEndGame.invalidate()
+        self.timerMod.invalidate()
+        self.fadingView.alpha = 0
+        self.fadingView.hidden = false
+        self.labelCongrats.alpha=0
+        self.labelCount.alpha=0
+        self.acceleratorView.alpha=1
+        self.resetGame()
+        
+    }
+    
     private func resetGame(){
         self.started=false
         self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
@@ -197,9 +230,7 @@ class ViewController: UIViewController {
         self.startButton.enabled=true
         self.acceleratorView.resetTicker()
         self.counterTime = 60
-        if(self.modGame == mod.stressing || self.modGame == mod.astonishing){
-            self.timeLabel.text = String(self.counterTime)
-        }
+        self.changeModView()
         self.calcAngleOnLevel()
         self.counter=3
         
@@ -215,28 +246,38 @@ class ViewController: UIViewController {
     
     
     @IBAction func startGame(sender: AnyObject) {
+        var stoppedAngle = self.acceleratorView.getTickerAngle()
         switch started  {
         case false:
-            if(!self.optionOpened){
-                self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-                switch(self.modGame){
-                case mod.soft:
-                    self.counter=3
-                    self.schedulaGame(timeTicker.quite.rawValue)
-                case mod.stressing:
-                    self.schedulaContatore()
-                    self.timeLabel.text = String(counterTime)
-                    self.schedulaGame(timeTicker.quite.rawValue)
-                    
-                default:
-                    break
-                }
-                started = !started
+            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
+            switch(self.modGame){
+            case mod.soft:
+                self.counter=3
+                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.low))
+                self.schedulaGame(timeTicker.medium.rawValue)
+            case mod.stressing:
+                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
+                self.timeLabel.text = String(counterTime)
+                self.schedulaGame(timeTicker.medium.rawValue)
+                self.schedulaContatore()
+            case mod.astonishing:
+                self.schedulaContatore()
+                self.timeLabel.text = String(counterTime)
+                self.schedulaGame(timeTicker.fast.rawValue)
+                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.high))
+                
+            case mod.survival:
+                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
+                
+                self.schedulaGame(timeTicker.fast.rawValue)
+            default:
+                break
             }
+            started = !started
+            
         default:
             switch self.modGame {
             case mod.stressing:
-                var stoppedAngle = self.acceleratorView.getTickerAngle()
                 println("min \(minAngle) - max \(maxAngle) - stoppd \(stoppedAngle)")
                 if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
                     self.level++
@@ -246,12 +287,38 @@ class ViewController: UIViewController {
                     self.calcAngleOnLevel()
                     self.levelText.text = String(self.level)
                 }
+            case mod.astonishing:
+                
+                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
+                    self.level++
+                    self.currentPoint += self.modGame.rawValue
+                    self.updateRecord()
+                    self.puntiAttuali.text = String(self.currentPoint)
+                    self.calcAngleOnLevel()
+                    self.levelText.text = String(self.level)
+                }else{
+                    self.timer.invalidate()
+                    self.timerMod.invalidate()
+                    self.selectAlert()
+                }
+                
+            case mod.survival:
+                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
+                    self.level++
+                    self.currentPoint += self.modGame.rawValue
+                    self.updateRecord()
+                    self.puntiAttuali.text = String(self.currentPoint)
+                    self.calcAngleOnLevel()
+                    self.levelText.text = String(self.level)
+                }else{
+                    self.timer.invalidate()
+                    self.selectAlert()
+                }
             case mod.soft:
                 //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
                 self.startButton.enabled=false
                 self.timer.invalidate()
                 
-                var stoppedAngle = self.acceleratorView.getTickerAngle()
                 if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
                     
                     var origFrame = self.fadingView.frame
@@ -281,22 +348,36 @@ class ViewController: UIViewController {
                     )
                     
                 }else{
-                    self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness...")
+                    self.selectAlert()
                 }
             default :
                 break
+                
             }
+        }
+    }
+    
+    func selectAlert(){
+        switch(self.recordPoint, self.modGame){
+        case (self.currentPoint-1, _):
+            self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!")
+        case (_, mod.stressing):
+            self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
+        case (_, mod.soft):
+            self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness...")
+        case (_, mod.survival):
+            self.showEndAlert("Nice try", message: "You will reborn...again...", action: "Let me live")
+        case (_, mod.astonishing):
+            self.showEndAlert("Nothing to blame", message: "It still hard for you", action: "I'm not giving up")
+        default:
+            break;
         }
     }
     
     func countSec(){
         if(self.counterTime == 0){
             self.timerMod.invalidate()
-            if(self.recordPoint == self.currentPoint){
-                self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!")
-            }else{
-                self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
-            }
+            self.selectAlert()
             self.timer.invalidate()
         }else{
             self.counterTime--
@@ -339,7 +420,7 @@ class ViewController: UIViewController {
                 }
             )
             //            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-            var time  = timeTicker.quite.rawValue
+            var time  = timeTicker.medium.rawValue
             if(self.dimAngle == minAngle){
                 time -= 0.002
             }
