@@ -409,6 +409,7 @@
 				EB22B0C51A6BD2E000FED987 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB22B0C61A6BD2E000FED987 /* Build configuration list for PBXNativeTarget "CatchTheSpeedTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +418,7 @@
 				EB22B0C81A6BD2E000FED987 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

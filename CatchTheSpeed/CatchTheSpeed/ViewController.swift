@@ -21,6 +21,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var record: UILabel!
     @IBOutlet weak var nomePlayer: UILabel!
     @IBOutlet weak var levelText: UILabel!
+    @IBOutlet weak var opzioni: UIBarButtonItem!
+    @IBOutlet weak var closeSlidingMenu: UIButton!
+    @IBOutlet weak var slidingMenu: UIView!
+    @IBOutlet weak var table1: UITableViewCell!
+    @IBOutlet weak var table2: UITableViewCell!
+    @IBOutlet weak var table3: UITableViewCell!
+    @IBOutlet weak var acceleratorView: AcceleratorView!
+    @IBOutlet weak var changingSurvival: UISwitch!
     
     enum mod : Int {
         case soft = 100
@@ -42,38 +50,101 @@ class ViewController: UIViewController {
     }
     
     var started : Bool = false
-    var modGame : mod = mod.stressing
+    var modGame : mod = mod.soft
     var level : Int = 1
     var minAngle: CGFloat = 0
     var maxAngle : CGFloat = 0
     var counter = 3
     var timerEndGame = NSTimer()
     var currentPoint = 0
-    var minDimAngle : CGFloat = (1/90) * CGFloat(M_PI)
+    let minDimAngle : CGFloat = (1/90) * CGFloat(M_PI)
     var recordPoint = 0
     var dimAngle : CGFloat = 0
     var counterTime = 60
     var timerMod = NSTimer()
-    
-    @IBOutlet weak var acceleratorView: AcceleratorView!
+    var optionOpened :Bool = false
     var timer = NSTimer();
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    @IBAction func changingSurvival(sender: AnyObject) {
+        switch (self.modGame){
+        case mod.soft:
+            self.modGame=mod.survival
+        case mod.stressing:
+            self.modGame = mod.astonishing
+        case mod.survival:
+            self.modGame=mod.soft
+        case mod.astonishing:
+            self.modGame = mod.stressing
+        default:
+            break;
+        }
+    }
+    
+    @IBAction func changingTimer(sender: AnyObject) {
+        switch (self.modGame){
+        case mod.soft:
+            self.modGame=mod.stressing
+        case mod.stressing:
+            self.modGame = mod.soft
+        case mod.survival:
+            self.modGame=mod.astonishing
+        case mod.astonishing:
+            self.modGame = mod.survival
+        default:
+            break;
+        }
+
+    }
+    
+    
+    @IBAction func optionClick(sender: AnyObject) {
+        if(!self.optionOpened){
+            if(self.started){
+                self.resetGame()
+                self.timer.invalidate()
+                self.timerEndGame.invalidate()
+                self.timerMod.invalidate()
+                self.fadingView.alpha = 0
+                self.fadingView.hidden = false
+                self.labelCongrats.alpha=0
+                self.labelCount.alpha=0
+                self.acceleratorView.alpha=1
+            }
+            var newFrame =  CGRectMake(0, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
+            
+            UIView.animateWithDuration(0.5, animations: {
+                self.slidingMenu.frame = newFrame;
+            })
+            self.optionOpened=true
+        }else{
+            self.closeMenu()
+        }
+    }
+    
+    private func closeMenu(){
+        var currentFrame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         
-        self.fadingView.hidden=true
-        //        self.labelCongrats.hidden=true
-        //        self.labelCount.hidden=true
-        self.labelCongrats.alpha=0
-        self.labelCount.alpha=0
-        self.calcAngleOnLevel()
+        UIView.animateWithDuration(0.5, animations: {
+            self.slidingMenu.frame = currentFrame;
+        })
+        self.optionOpened = false
+        self.changeModView()
+        
+    }
+    
+    @IBAction func closingMenu(sender: AnyObject) {
+        self.closeMenu()
+    }
+    
+    private func changeModView(){
         switch self.modGame {
         case mod.stressing:
             self.timeLabel.text = String(self.counterTime)
             self.modalita.text = "Stressing"
         case mod.soft:
             self.modalita.text = "Soft"
-            self.timeLabel.text = "."
+            self.timeLabel.text = "-"
         case mod.survival:
             self.modalita.text = "Survival"
             self.timeLabel.text = "-"
@@ -84,12 +155,19 @@ class ViewController: UIViewController {
         default:
             break
         }
-        if(self.modGame==mod.stressing || self.modGame==mod.astonishing){
-            self.timeLabel.text = String(counterTime)
-        }else{
-            self.timeLabel.text = "-"
-        }
-        //FIXME: andranno caricati da risorsa i punti del record
+
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
+        self.fadingView.hidden=true
+        //self.labelCongrats.hidden=true
+        //self.labelCount.hidden=true
+        self.labelCongrats.alpha=0
+        self.labelCount.alpha=0
+        self.calcAngleOnLevel()
+                       //FIXME: andranno caricati da risorsa i punti del record
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -103,6 +181,7 @@ class ViewController: UIViewController {
     }
     
     private func resetGame(){
+        self.started=false
         self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
         self.level=1
         self.currentPoint=0
@@ -116,6 +195,7 @@ class ViewController: UIViewController {
         }
         self.calcAngleOnLevel()
         self.counter=3
+        
         
     }
     
@@ -156,7 +236,7 @@ class ViewController: UIViewController {
                     self.updateRecord()
                     self.puntiAttuali.text = String(self.currentPoint)
                     self.calcAngleOnLevel()
-                     self.levelText.text = String(self.level)
+                    self.levelText.text = String(self.level)
                 }
             case mod.soft:
                 //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
@@ -230,7 +310,7 @@ class ViewController: UIViewController {
         var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler: {finished in
             self.resetGame()
-            self.started = !self.started
+            //            self.started = !self.started
         }))
         self.presentViewController(alert, animated: true, completion: {})
     }
