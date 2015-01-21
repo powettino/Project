@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class AcceleratorView: UIView {
     
@@ -62,7 +63,7 @@ class AcceleratorView: UIView {
         }
     }
     
-    private let offsetCircle: CGFloat = 30
+    private let offsetCircle: CGFloat = 0
     private let precision: CGFloat = ((1/36)*CGFloat(M_PI))
     private let maxValueTick: CGFloat = ((4/3)*CGFloat(M_PI))
     private let pi : CGFloat = CGFloat(M_PI)
@@ -75,54 +76,124 @@ class AcceleratorView: UIView {
     private var tickerRadius : CGFloat = 0
     private var centerX: CGFloat = 0
     private var centerY:CGFloat = 0
-    private var tickerAngle: CGFloat = 0
-    private var tickerAnglePlus : CGFloat = (1/90) * CGFloat(M_PI)
+    private var tickerAngleMov : Double = 0
+    private var tickerAngle : Double = 0
     private var multiplier: CGFloat = 1
     private var coloredRadius :CGFloat = 0
     private var coloredStartingAngle: CGFloat = 0
     private var coloredEndingAngle : CGFloat = 0
     private var enableColored: Bool = false
-    
-    private   var puntiCerchio = puntiCirconferenza()
+    var shapeTicker : CAShapeLayer = CAShapeLayer()
+    var trans : CGAffineTransform = CGAffineTransformIdentity
+    var spin : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+    var currentTimeTicking : Double = 0
+    var stillRunning : Bool = false
+    private var puntiCerchio = puntiCirconferenza()
     
     
     override init(frame: CGRect) {
         super.init(frame:frame)
         calcolaPuntiBase(frame)
+        drawTicker()
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder )
         calcolaPuntiBase(frame)
+        drawTicker()
     }
     
-    private func drawTicker(inCanvas canvas: CGContext)
+    func animaTicker(ticking: Double){
+        self.currentTimeTicking = ticking
+        self.shapeTicker.anchorPoint = CGPoint(x: (0.5), y: (0.5))
+        
+        self.spin.removedOnCompletion = false;
+        self.spin.fillMode = kCAFillModeForwards;
+        
+        let actualTick = self.tickerAngle
+        
+        if( self.multiplier > 0){
+            if((self.tickerAngle + self.tickerAngleMov) <= Double(self.maxValueTick)){
+                self.tickerAngle += self.tickerAngleMov
+            }else{
+                self.tickerAngle = Double(self.maxValueTick)
+                self.multiplier = -1
+            }
+        }else{
+            if(self.tickerAngle - (self.tickerAngleMov) >= 0){
+                self.tickerAngle -= self.tickerAngleMov
+            }else{
+                self.tickerAngle = 0
+                self.multiplier = 1
+            }
+        }
+        
+        
+        self.spin.toValue = self.tickerAngle
+        self.spin.fromValue = actualTick
+        self.spin.repeatCount = 1
+        self.spin.autoreverses = false
+        self.spin.cumulative = false
+        self.spin.delegate = self
+        self.spin.duration = ticking
+        self.stillRunning = true
+        self.shapeTicker.addAnimation(spin, forKey: "ticking")
+        
+    }
+    
+    func bloccaTicker(){
+        self.stillRunning = false
+        self.shapeTicker.removeAnimationForKey("ticking")
+    }
+    
+    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+        if(self.stillRunning){
+            self.animaTicker(self.currentTimeTicking)
+        }
+    }
+    
+    private func drawTicker()
     {
-        CGContextSaveGState(canvas)
+        shapeTicker.frame = self.layer.bounds
         
-        CGContextSetLineWidth(canvas, 1.0)
-        CGContextSetStrokeColorWithColor(canvas, UIColor.blackColor().CGColor)
-        CGContextSetFillColorWithColor(canvas, UIColor.redColor().CGColor)
+        var path = CGPathCreateMutable()
+        var subLayer1 = CAShapeLayer()
+        subLayer1.frame = self.layer.bounds
+        subLayer1.lineWidth = 1.0
+        subLayer1.fillColor = UIColor.redColor().CGColor
+        subLayer1.strokeColor=UIColor.blackColor().CGColor
+        CGPathMoveToPoint(path, nil, centerX, centerY)
         
-        CGContextMoveToPoint(canvas, centerX, centerY)
+        var puntiExt = findXY(radius, centerX: centerX, centerY: centerY, angle: ((CGFloat(tickerAngle)*pi) / 180) + offsetAngle)
+        CGPathAddLineToPoint(path, nil, puntiExt.0, puntiExt.1)
         
-        var puntiExt = findXY(radius, centerX: centerX, centerY: centerY, angle: tickerAngle)
-        CGContextAddLineToPoint(canvas, puntiExt.0, puntiExt.1)
-        var punti = findXY(tickerRadius, centerX: centerX, centerY: centerY, angle: tickerAngle-((1/2)*pi))
-        CGContextAddLineToPoint(canvas, punti.0, punti.1)
-        CGContextAddLineToPoint(canvas, centerX, centerY)
+        var punti = findXY(tickerRadius, centerX: centerX, centerY: centerY, angle: ((CGFloat(tickerAngle)*pi) / 180) + offsetAngle - ((1/2)*pi))
+        CGPathAddLineToPoint(path, nil, punti.0, punti.1)
+        CGPathMoveToPoint(path, nil, centerX, centerY)
         
-        CGContextDrawPath(canvas, kCGPathFillStroke)
+        CGPathCloseSubpath(path)
         
-        CGContextSetFillColorWithColor(canvas, UIColor(red: CGFloat(255), green: CGFloat(127), blue: CGFloat(10), alpha: 1.0).CGColor)
-        CGContextMoveToPoint(canvas, centerX, centerY)
-        CGContextAddLineToPoint(canvas, puntiExt.0, puntiExt.1)
+        subLayer1.path = path
+        shapeTicker.insertSublayer(subLayer1, atIndex: 0)
         
-        punti = findXY(tickerRadius, centerX: centerX, centerY: centerY, angle: tickerAngle+((1/2)*pi))
-        CGContextAddLineToPoint(canvas, punti.0, punti.1)
-        CGContextAddLineToPoint(canvas, centerX, centerY)
-        CGContextDrawPath(canvas, kCGPathFillStroke)
-        CGContextRestoreGState(canvas)
+        
+        var subLayer2 = CAShapeLayer()
+        subLayer2.frame = self.layer.bounds
+        subLayer2.lineWidth = 1.0
+        subLayer2.fillColor = UIColor.whiteColor().CGColor
+        subLayer2.strokeColor=UIColor.blackColor().CGColor
+        
+        var path2 = CGPathCreateMutable()
+        CGPathMoveToPoint(path2, nil, centerX, centerY)
+        punti = findXY(tickerRadius, centerX: centerX, centerY: centerY, angle: ((CGFloat(tickerAngle)*pi) / 180) + offsetAngle + ((1/2)*pi))
+        CGPathAddLineToPoint(path2, nil, punti.0 , punti.1)
+        CGPathAddLineToPoint(path2, nil, puntiExt.0, puntiExt.1)
+        CGPathMoveToPoint(path2, nil, centerX, centerY)
+        CGPathCloseSubpath(path2)
+        subLayer2.path = path2
+        
+        shapeTicker.insertSublayer(subLayer2, atIndex: 0)
+        self.layer.insertSublayer(shapeTicker, atIndex: 1)
     }
     
     override func drawRect(rect: CGRect) {
@@ -145,18 +216,17 @@ class AcceleratorView: UIView {
         }
         drawLinee(canvas)
         drawCenterCircle(canvas)
-        drawTicker(inCanvas: canvas)
+        
         CGContextRestoreGState(canvas)
     }
     
-    func getReferenceAngleValue() -> (min: CGFloat, max: CGFloat){
-        return (self.offsetAngle ,self.maxValueTick+self.offsetAngle)
+    func getReferenceAngleValue() -> (min: Double, max: Double){
+        return (Double(self.offsetAngle * 180 ) / M_PI, Double((self.maxValueTick + self.offsetAngle)*180) / M_PI)
     }
     
-    
-    func enableYellowSection(startingAngle: CGFloat, endingAngle:CGFloat){
-        coloredStartingAngle = startingAngle
-        coloredEndingAngle = endingAngle
+    func enableYellowSection(startingAngle: Double, endingAngle:Double){
+        coloredStartingAngle = CGFloat((startingAngle / 180 ) * M_PI)
+        coloredEndingAngle = CGFloat((endingAngle / 180 ) * M_PI)
         enableColored = true
         self.setNeedsDisplay()
     }
@@ -170,7 +240,7 @@ class AcceleratorView: UIView {
     
     private func calcolaPuntiBase(frame: CGRect){
         var minDim = frame.size.width < frame.size.height ? frame.size.width : frame.size.height
-        self.radius = (minDim-offsetCircle)/2
+        self.radius = (minDim-15)/2
         self.externalRadius = radius + 1
         self.internalRadius = externalRadius-10
         self.minRadius = internalRadius * 3/25
@@ -178,7 +248,7 @@ class AcceleratorView: UIView {
         self.coloredRadius = self.radius
         centerX = frame.size.width/2
         centerY = frame.size.height/2 + offsetCircle
-        tickerAngle = offsetAngle
+        
         for index in (0...Int(maxValueTick/precision)){
             var punti = findXY(radius, centerX: centerX, centerY: centerY, angle: (CGFloat(index)*precision)+offsetAngle)
             puntiCerchio.addPointXY(x: punti.0, y: punti.1)
@@ -189,42 +259,17 @@ class AcceleratorView: UIView {
         }
     }
     
-    func addTickerAngle() -> Void{
-        if( multiplier > 0){
-            if((tickerAngle + (tickerAnglePlus * multiplier)) <= (maxValueTick + offsetAngle)){
-                tickerAngle += tickerAnglePlus * multiplier
-                self.setNeedsDisplay()
-            }else{
-                tickerAngle = maxValueTick + offsetAngle
-                multiplier = -1
-            }
-        }else{
-            if((tickerAngle + (tickerAnglePlus * multiplier)) >= offsetAngle){
-                tickerAngle += tickerAnglePlus * multiplier
-                self.setNeedsDisplay()
-            }else{
-                tickerAngle = offsetAngle
-                multiplier = 1
-            }
-        }
-     //   println("\(tickerAngle)")
-    }
-    
     func resetTicker() -> Void {
-        tickerAngle = offsetAngle;
-        self.setNeedsDisplay()
+        self.tickerAngle = 0;
     }
     
-    func getTickerAngle() -> CGFloat{
-        return tickerAngle
+    func getTickerAngle() -> Double{
+        return Double((tickerAngle + Double(offsetAngle)) * 180) / M_PI
     }
     
-    func setTickerAngleMov(angle: CGFloat){
-        self.tickerAnglePlus = angle
-    }
-    
-    func getTickerAngleMov() -> CGFloat {
-        return tickerAnglePlus
+    func setTickerAngleMov(angle: Double){
+        
+        self.tickerAngleMov = (angle * M_PI) / 180
     }
     
     private func drawColored(canvas :CGContext)
@@ -289,7 +334,4 @@ class AcceleratorView: UIView {
         let puntoY = centerY + (radius * sin(angle))
         return ( puntoX, puntoY)
     }
-    
-    
-    
 }

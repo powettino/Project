@@ -38,9 +38,12 @@ class ViewController: UIViewController {
     }
     
     enum timeTicker : NSTimeInterval{
+        case fastest = 0.0051
         case fast = 0.01
-        case medium = 0.03
-        case low = 0.05
+        case medium = 0.025
+        case low = 0.041
+        
+        
     }
     
     enum buttonLabel : String {
@@ -55,30 +58,36 @@ class ViewController: UIViewController {
     var started : Bool = false
     var modGame : mod = mod.soft
     var level : Int = 1
-    var minAngle: CGFloat = 0
-    var maxAngle : CGFloat = 0
+    var minAngle: Double = 0
+    var maxAngle : Double = 0
     var counter = 3
     var timerEndGame = NSTimer()
     var currentPoint = 0
-    var minDimAngle :CGFloat = 0
-    var recordPoint = 0
-    var dimAngle : CGFloat = 0
+    var minDimAngle : Double = (1/180) * M_PI
+    var dimAngle : Double = 0
     var counterTime = 60
     var timerMod = NSTimer()
     var optionOpened :Bool = false
-    var timer = NSTimer();
+    var recordPoint : Int {
+        get{
+            let ud = NSUserDefaults.standardUserDefaults().integerForKey("recordCatch")
+            return ud
+        }
+        set(value){
+            NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "recordCatch")
+        }
+    }
     
-    
-    private func getTickerMov(definition : tickerAngleMov) -> CGFloat{
+    private func getTickerMov(definition : tickerAngleMov) -> Double{
         switch definition {
         case tickerAngleMov.low:
-            return (1/180)*CGFloat(M_PI)
+            return 1
         case tickerAngleMov.medium:
-            return (1/90)*CGFloat(M_PI)
+            return 2
         case tickerAngleMov.high :
-            return (1/45)*CGFloat(M_PI)
+            return 3.5
         case tickerAngleMov.higher:
-            return (1/30)*CGFloat(M_PI)
+            return 5
         default:
             break;
         }
@@ -184,7 +193,7 @@ class ViewController: UIViewController {
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.calcAngleOnLevel()
-        self.minDimAngle = self.acceleratorView.getTickerAngleMov()
+        //        self.minDimAngle = self.acceleratorView.getTickerAngleMov()
         
         self.slidingMenu.layer.cornerRadius=30
         self.slidingMenu.layer.borderColor=UIColor.redColor().CGColor
@@ -193,7 +202,7 @@ class ViewController: UIViewController {
         self.slidingMenu.layer.shadowOffset = CGSize()
         self.slidingMenu.layer.shadowOpacity = 0.8
         self.slidingMenu.layer.shadowRadius=5.0
-        //FIXME: andranno caricati da risorsa i punti del record
+        self.record.text = String(self.recordPoint)
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -208,7 +217,8 @@ class ViewController: UIViewController {
     
     private func superReset(){
         
-        self.timer.invalidate()
+        //        self.timer.invalidate()
+        self.acceleratorView.bloccaTicker()
         self.timerEndGame.invalidate()
         self.timerMod.invalidate()
         self.fadingView.alpha = 0
@@ -236,10 +246,10 @@ class ViewController: UIViewController {
         
         
     }
-    
-    func schedulaGame(tick: NSTimeInterval){
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
-    }
+    //
+    //    func schedulaGame(tick: NSTimeInterval){
+    //        self.timer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
+    //    }
     func schedulaContatore(){
         self.timerMod = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countSec"), userInfo: nil, repeats: true)
     }
@@ -253,23 +263,26 @@ class ViewController: UIViewController {
             switch(self.modGame){
             case mod.soft:
                 self.counter=3
-                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.low))
-                self.schedulaGame(timeTicker.medium.rawValue)
+                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
+                self.acceleratorView.animaTicker(timeTicker.medium.rawValue)
+                //                self.schedulaGame(timeTicker.medium.rawValue)
             case mod.stressing:
                 self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
                 self.timeLabel.text = String(counterTime)
-                self.schedulaGame(timeTicker.medium.rawValue)
+                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
+                //                self.schedulaGame(timeTicker.medium.rawValue)
                 self.schedulaContatore()
             case mod.astonishing:
                 self.schedulaContatore()
                 self.timeLabel.text = String(counterTime)
-                self.schedulaGame(timeTicker.fast.rawValue)
-                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.high))
+                //                self.schedulaGame(timeTicker.fast.rawValue)
+                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.higher))
+                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
                 
             case mod.survival:
-                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
-                
-                self.schedulaGame(timeTicker.fast.rawValue)
+                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.high))
+                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
+                //                self.schedulaGame(timeTicker.fast.rawValue)
             default:
                 break
             }
@@ -297,8 +310,10 @@ class ViewController: UIViewController {
                     self.calcAngleOnLevel()
                     self.levelText.text = String(self.level)
                 }else{
-                    self.timer.invalidate()
+                    //                    self.timer.invalidate()
                     self.timerMod.invalidate()
+                    self.acceleratorView.bloccaTicker()
+                    self.acceleratorView.resetTicker()
                     self.selectAlert()
                 }
                 
@@ -311,13 +326,17 @@ class ViewController: UIViewController {
                     self.calcAngleOnLevel()
                     self.levelText.text = String(self.level)
                 }else{
-                    self.timer.invalidate()
+                    //                    self.timer.invalidate()
+                    self.acceleratorView.bloccaTicker()
+                    self.acceleratorView.resetTicker()
                     self.selectAlert()
                 }
             case mod.soft:
                 //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
                 self.startButton.enabled=false
-                self.timer.invalidate()
+                self.acceleratorView.bloccaTicker()
+                self.acceleratorView.resetTicker()
+                //                self.timer.invalidate()
                 
                 if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
                     
@@ -378,7 +397,8 @@ class ViewController: UIViewController {
         if(self.counterTime == 0){
             self.timerMod.invalidate()
             self.selectAlert()
-            self.timer.invalidate()
+            //            self.timer.invalidate()
+            self.acceleratorView.bloccaTicker()
         }else{
             self.counterTime--
             self.timeLabel.text = String(counterTime)
@@ -424,7 +444,8 @@ class ViewController: UIViewController {
             if(self.dimAngle == minAngle){
                 time -= 0.002
             }
-            self.schedulaGame(time)
+            //            self.schedulaGame(time)
+            self.acceleratorView.animaTicker(time)
             self.startButton.enabled=true
         }else{
             self.counter -= 1
@@ -432,8 +453,8 @@ class ViewController: UIViewController {
         self.labelCount.text = String(self.counter)
     }
     
-    private func randomFloat(min : CGFloat , max : CGFloat) -> CGFloat{
-        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (max-min) + min
+    private func randomDouble(min : Double , max : Double) -> Double{
+        return (Double(arc4random())) / Double(UINT32_MAX) * (max-min) + min
     }
     
     private func resetCoordinates(){
@@ -445,20 +466,20 @@ class ViewController: UIViewController {
     
     private func calcAngleOnLevel(){
         self.resetCoordinates()
-        self.dimAngle = (self.maxAngle - self.minAngle) / CGFloat((self.level + 1))
-        if( self.dimAngle < minDimAngle){
+        self.dimAngle = (self.maxAngle - self.minAngle) / Double((self.level + 1))
+        if( self.dimAngle < minDimAngle ){
             self.dimAngle = minDimAngle
         }
-        var rnd: CGFloat = self.randomFloat(self.minAngle, max: (self.maxAngle - dimAngle))
+        var rnd: Double = self.randomDouble(self.minAngle, max: (self.maxAngle - dimAngle))
         
         minAngle = rnd
         maxAngle = minAngle + dimAngle
         self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
     }
     
-    
-    func updateGame(){
-        self.acceleratorView.addTickerAngle()
-    }
+    //    
+    //    func updateGame(){
+    //        self.acceleratorView.addTickerAngle()
+    //    }
 }
 
