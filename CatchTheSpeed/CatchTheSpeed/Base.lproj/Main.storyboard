@@ -250,6 +250,7 @@ in ... </string>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.73152503188775508" green="0.54771885957369126" blue="0.11712309849149023" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5Tr-fu-U7b">

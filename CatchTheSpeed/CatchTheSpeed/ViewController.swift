@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     
-    @IBOutlet weak var timeLabel: UILabel!
+   @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var labelCount: UILabel!
     @IBOutlet weak var labelCongrats: UILabel!
     @IBOutlet weak var fadingView: UIView!
@@ -68,6 +68,7 @@ class ViewController: UIViewController {
     var counterTime = 60
     var timerMod = NSTimer()
     var optionOpened :Bool = false
+    
     var recordPoint : Int {
         get{
             let ud = NSUserDefaults.standardUserDefaults().integerForKey("recordCatch")
@@ -77,6 +78,8 @@ class ViewController: UIViewController {
             NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "recordCatch")
         }
     }
+    
+    
     
     private func getTickerMov(definition : tickerAngleMov) -> Double{
         switch definition {
@@ -134,11 +137,11 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func optionClick(sender: AnyObject) {
+    private func apriMenu() {
         if(!self.optionOpened){
             var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
             
-            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
+            UIView.animateWithDuration(0.3 , delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
                 self.slidingMenu.frame = newFrame;
                 } , completion:(nil))
             self.optionOpened=true
@@ -146,6 +149,11 @@ class ViewController: UIViewController {
         }else{
             self.closeMenu()
         }
+        
+    }
+    
+    @IBAction func optionClick(sender: AnyObject) {
+        self.apriMenu()
     }
     
     private func closeMenu(){
@@ -247,10 +255,7 @@ class ViewController: UIViewController {
         
         
     }
-    //
-    //    func schedulaGame(tick: NSTimeInterval){
-    //        self.timer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
-    //    }
+    
     func schedulaContatore(){
         self.timerMod = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countSec"), userInfo: nil, repeats: true)
     }
@@ -314,7 +319,7 @@ class ViewController: UIViewController {
                     //                    self.timer.invalidate()
                     self.timerMod.invalidate()
                     self.acceleratorView.bloccaTicker()
-//                    self.acceleratorView.resetTicker()
+                    //                    self.acceleratorView.resetTicker()
                     self.selectAlert()
                 }
                 
@@ -329,14 +334,14 @@ class ViewController: UIViewController {
                 }else{
                     //                    self.timer.invalidate()
                     self.acceleratorView.bloccaTicker()
-//                    self.acceleratorView.resetTicker()
+                    //                    self.acceleratorView.resetTicker()
                     self.selectAlert()
                 }
             case mod.soft:
                 //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
                 self.startButton.enabled=false
                 self.acceleratorView.bloccaTicker()
-//                self.acceleratorView.resetTicker()
+                //                self.acceleratorView.resetTicker()
                 //                self.timer.invalidate()
                 
                 if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
@@ -478,7 +483,7 @@ class ViewController: UIViewController {
         self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
     }
     
-    //    
+    //
     //    func updateGame(){
     //        self.acceleratorView.addTickerAngle()
     //    }
