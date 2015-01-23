@@ -193,10 +193,11 @@ class ViewController: UIViewController {
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.calcAngleOnLevel()
+        self.startButton.tintColor = UIColor.whiteColor()
         //        self.minDimAngle = self.acceleratorView.getTickerAngleMov()
         
         self.slidingMenu.layer.cornerRadius=30
-        self.slidingMenu.layer.borderColor=UIColor.redColor().CGColor
+        self.slidingMenu.layer.borderColor=UIColor.blackColor().CGColor
         self.slidingMenu.layer.borderWidth=1.5
         self.slidingMenu.layer.shadowColor = UIColor.blackColor().CGColor
         self.slidingMenu.layer.shadowOffset = CGSize()
@@ -313,7 +314,7 @@ class ViewController: UIViewController {
                     //                    self.timer.invalidate()
                     self.timerMod.invalidate()
                     self.acceleratorView.bloccaTicker()
-                    self.acceleratorView.resetTicker()
+//                    self.acceleratorView.resetTicker()
                     self.selectAlert()
                 }
                 
@@ -328,7 +329,7 @@ class ViewController: UIViewController {
                 }else{
                     //                    self.timer.invalidate()
                     self.acceleratorView.bloccaTicker()
-                    self.acceleratorView.resetTicker()
+//                    self.acceleratorView.resetTicker()
                     self.selectAlert()
                 }
             case mod.soft:
