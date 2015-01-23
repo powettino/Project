@@ -335,7 +335,7 @@ class ViewController: UIViewController {
                 //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
                 self.startButton.enabled=false
                 self.acceleratorView.bloccaTicker()
-                self.acceleratorView.resetTicker()
+//                self.acceleratorView.resetTicker()
                 //                self.timer.invalidate()
                 
                 if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){

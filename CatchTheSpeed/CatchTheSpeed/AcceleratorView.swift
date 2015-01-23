@@ -142,6 +142,7 @@ class AcceleratorView: UIView {
     }
     
     func bloccaTicker(){
+        mantainTicker();
         self.stillRunning = false
         self.shapeTicker.removeAnimationForKey("ticking")
     }
@@ -150,6 +151,12 @@ class AcceleratorView: UIView {
         if(self.stillRunning){
             self.animaTicker(self.currentTimeTicking)
         }
+    }
+    
+    private func mantainTicker()
+    {
+        shapeTicker.transform = CATransform3DMakeRotation(CGFloat(tickerAngle), 0, 0, 0.5);
+//        shapeTicker.setNeedsDisplay();
     }
     
     private func drawTicker()
@@ -192,7 +199,7 @@ class AcceleratorView: UIView {
         CGPathCloseSubpath(path2)
         subLayer2.path = path2
         
-        shapeTicker.insertSublayer(subLayer2, atIndex: 0)
+        shapeTicker.insertSublayer(subLayer2, atIndex: 1)
         self.layer.insertSublayer(shapeTicker, atIndex: 1)
     }
     
@@ -260,6 +267,8 @@ class AcceleratorView: UIView {
     }
     
     func resetTicker() -> Void {
+        shapeTicker.transform = CATransform3DMakeRotation(CGFloat(0), 0, 0, 0.5);
+        shapeTicker.setNeedsDisplay();
         self.tickerAngle = 0;
     }
     
