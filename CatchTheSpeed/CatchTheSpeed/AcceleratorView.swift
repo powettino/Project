@@ -76,20 +76,20 @@ class AcceleratorView: UIView {
     private var tickerRadius : CGFloat = 0
     private var centerX: CGFloat = 0
     private var centerY:CGFloat = 0
-    private var tickerAngleMov : Double = 0
-    private var tickerAngle : Double = 0
-    private var multiplier: CGFloat = 1
+    private var tickerAngleMov : CGFloat = 0
+    private var tickerAngle : CGFloat = 0
+    private var multiplier: Int = 1
     private var coloredRadius :CGFloat = 0
     private var coloredStartingAngle: CGFloat = 0
     private var coloredEndingAngle : CGFloat = 0
     private var enableColored: Bool = false
     var shapeTicker : CAShapeLayer = CAShapeLayer()
-    var trans : CGAffineTransform = CGAffineTransformIdentity
     var spin : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-    var currentTimeTicking : Double = 0
+    //    var currentTimeTicking : Double = 0
     var stillRunning : Bool = false
-    var startAngleMov : Double = 0
+    var startAngle : CGFloat = 0
     private var puntiCerchio = puntiCirconferenza()
+    var checkPosition : NSTimer = NSTimer()
     
     
     override init(frame: CGRect) {
@@ -106,67 +106,99 @@ class AcceleratorView: UIView {
     
     var countIteraction = 1
     
-    func animaTicker(ticking: Double){
-        println( "\(countIteraction)")
-        self.currentTimeTicking = ticking
+    func animaTicker(duration: Double){
+        //println( "\(countIteraction)")
+        //        self.currentTimeTicking = ticking
         self.shapeTicker.anchorPoint = CGPoint(x: (0.5), y: (0.5))
         
         self.spin.removedOnCompletion = false;
         self.spin.fillMode = kCAFillModeForwards;
         
-        let actualTick = self.tickerAngle
+        //        let actualTick = self.tickerAngle
+        //
+        //        if( self.multiplier > 0){
+        //            if( (countIteraction % 5) == 0){
+        //                println("entrato : \(tickerAngleMov)")
+        //                self.tickerAngleMov += ((1 / 180) * M_PI)
+        //            }
+        //            if((self.tickerAngle + self.tickerAngleMov) <= Double(self.maxValueTick)){
+        //                self.tickerAngle += self.tickerAngleMov
+        //            }else{
+        //                self.tickerAngle = Double(self.maxValueTick)
+        //                self.multiplier = -1
+        //            }
+        //        }else{
+        //            if(countIteraction % 5 == 0){
+        //                println("adada: \(tickerAngleMov)")
+        //                if( self.tickerAngleMov - ((1 / 180) * M_PI) < self.startAngleMov){
+        //                    self.tickerAngleMov = self.startAngleMov
+        //                }else{
+        //                    self.tickerAngleMov -= (1 / 180) * M_PI
+        //                }
+        //            }
+        //            if(self.tickerAngle - (self.tickerAngleMov) >= 0){
+        //                self.tickerAngle -= self.tickerAngleMov
+        //            }else{
+        //                self.tickerAngle = 0
+        //                self.multiplier = 1
+        //            }
+        //        }
+        //        countIteraction++;
         
-        if( self.multiplier > 0){
-            if( (countIteraction % 5) == 0){
-                println("entrato : \(tickerAngleMov)")
-                self.tickerAngleMov += ((1 / 180) * M_PI)
-            }
-            if((self.tickerAngle + self.tickerAngleMov) <= Double(self.maxValueTick)){
-                self.tickerAngle += self.tickerAngleMov
-            }else{
-                self.tickerAngle = Double(self.maxValueTick)
-                self.multiplier = -1
-            }
-        }else{
-            if(countIteraction % 5 == 0){
-                println("adada: \(tickerAngleMov)")
-                if( self.tickerAngleMov - ((1 / 180) * M_PI) < self.startAngleMov){
-                    self.tickerAngleMov = self.startAngleMov
-                }else{
-                    self.tickerAngleMov -= (1 / 180) * M_PI
-                }
-            }
-            if(self.tickerAngle - (self.tickerAngleMov) >= 0){
-                self.tickerAngle -= self.tickerAngleMov
-            }else{
-                self.tickerAngle = 0
-                self.multiplier = 1
-            }
-        }
-        countIteraction++;
         
-        
-        self.spin.toValue = self.tickerAngle
-        self.spin.fromValue = actualTick
-        self.spin.repeatCount = 1
-        self.spin.autoreverses = false
+        self.spin.toValue = self.maxValueTick
+        self.spin.fromValue = self.startAngle
+        self.spin.repeatCount = Float.infinity
+        self.spin.autoreverses = true
         self.spin.cumulative = false
         self.spin.delegate = self
-        self.spin.duration = ticking
+        self.spin.duration = duration
         self.stillRunning = true
+        let tickTime = duration * 0.01
+        self.tickerAngleMov  = (self.maxValueTick - self.startAngle) * CGFloat(tickTime)
+        self.checkPosition = NSTimer.scheduledTimerWithTimeInterval(tickTime, target: self, selector: Selector("schedulePosition"), userInfo: nil, repeats: true)
+        println("ticktime: \(tickTime) - move: \(self.tickerAngleMov)")
         self.shapeTicker.addAnimation(spin, forKey: "ticking")
         
     }
     
-    func bloccaTicker(){
-        self.currentTimeTicking = 0
-        self.stillRunning = false
+    var startTime = CACurrentMediaTime()
+    
+    func schedulePosition(){
+        println("realElapsed: \(CACurrentMediaTime() - startTime)")
+        startTime = CACurrentMediaTime()
+        if( multiplier > 0){
+            if ( (self.tickerAngle + self.tickerAngleMov) > self.maxValueTick ){
+                self.tickerAngle = self.maxValueTick
+                multiplier = -1
+            }else{
+                self.tickerAngle += self.tickerAngleMov
+            }
+        }else{
+            if(self.tickerAngle - self.tickerAngleMov < self.startAngle){
+                self.tickerAngle = self.startAngle
+                multiplier = 1
+                println("ORAAAAAAAAAAAAA")
+            }else{
+                self.tickerAngle -= self.tickerAngleMov
+            }
+        }
+//        println("angolo: \(self.tickerAngle)")
     }
     
+    func bloccaTicker(){
+        //        self.currentTimeTicking = 0
+//        self.stillRunning = false
+        self.checkPosition.invalidate()
+        self.shapeTicker.removeAllAnimations()
+    }
+    
+    
     override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
-        if(self.stillRunning){
-            self.animaTicker(self.currentTimeTicking)
-        }
+        //        if(self.stillRunning){
+        //            self.animaTicker(self.currentTimeTicking)
+        //        }
+        println("ANIMATOOOOOOOOOOOO")
     }
     
     
@@ -233,29 +265,23 @@ class AcceleratorView: UIView {
         let width = frame.size.width
         let height = frame.size.height
         
-//        CGContextMoveToPoint(canvas, 0, centerY)
-//        CGContextAddLineToPoint(canvas, width, height/2)
-//        CGContextStrokePath(canvas)
-//        CGContextMoveToPoint(canvas, width/2, 0)
-//        CGContextAddLineToPoint(canvas, width/2, height)
-//        CGContextStrokePath(canvas)
         drawExternalCircle(canvas)
         if (enableColored){
             drawColored(canvas)
         }
         drawLinee(canvas)
-        drawCenterCircle(canvas)
         
         CGContextRestoreGState(canvas)
     }
     
     func getReferenceAngleValue() -> (min: Double, max: Double){
-        return (Double(self.offsetAngle * 180 ) / M_PI, Double((self.maxValueTick + self.offsetAngle)*180) / M_PI)
+        return (Double(self.startAngle), Double(((self.maxValueTick) * 180) / pi) )
+        //        return (Double(self.offsetAngle * 180 ) / M_PI, Double((self.maxValueTick + self.offsetAngle)*180) / M_PI)
     }
     
     func enableYellowSection(startingAngle: Double, endingAngle:Double){
-        coloredStartingAngle = CGFloat((startingAngle / 180 ) * M_PI)
-        coloredEndingAngle = CGFloat((endingAngle / 180 ) * M_PI)
+        coloredStartingAngle = ((CGFloat(startingAngle) / 180 ) * pi) + self.offsetAngle
+        coloredEndingAngle = ((CGFloat(endingAngle)  / 180 ) * pi ) + self.offsetAngle
         enableColored = true
         self.setNeedsDisplay()
     }
@@ -290,16 +316,20 @@ class AcceleratorView: UIView {
     
     func resetTicker() -> Void {
         self.shapeTicker.removeAnimationForKey("ticking")
+        self.checkPosition.invalidate()
         self.tickerAngle = 0;
+        
     }
     
     func getTickerAngle() -> Double{
-        return Double((tickerAngle + Double(offsetAngle)) * 180) / M_PI
+        return Double(self.tickerAngle)
+        
+        //        return Double((tickerAngle + Double(offsetAngle)) * 180) / M_PI
     }
     
     func setTickerAngleMov(angle: Double){
-        self.startAngleMov = (angle * M_PI) / 180
-        self.tickerAngleMov = (angle * M_PI) / 180
+//        self.startAngleMov = (CGFloat(angle) * pi) / 180
+        self.tickerAngleMov = (CGFloat(angle) * pi) / 180
     }
     
     private func drawColored(canvas :CGContext)
@@ -351,16 +381,6 @@ class AcceleratorView: UIView {
         
     }
     
-    private func drawCenterCircle(canvas :CGContext){
-        
-        
-        //        CGContextSaveGState(canvas)
-        //        CGContextSetFillColorWithColor(canvas, UIColor.blackColor().CGColor)
-        //        CGContextAddArc(canvas, centerX, centerY, minRadius, offsetAngle, pi2 + (maxValueTick),0)
-        //        CGContextFillPath(canvas)
-        //        CGContextRestoreGState(canvas)
-        
-    }
     private func findXY(radius : CGFloat, centerX : CGFloat, centerY:CGFloat, angle:CGFloat) -> (CGFloat, CGFloat){
         let puntoX = centerX + (radius * cos(angle))
         let puntoY = centerY + (radius * sin(angle))

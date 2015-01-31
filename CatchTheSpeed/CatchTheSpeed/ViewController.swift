@@ -38,10 +38,10 @@ class ViewController: UIViewController {
     }
     
     enum timeTicker : NSTimeInterval{
-        case fastest = 0.0051
-        case fast = 0.01
-        case medium = 0.025
-        case low = 0.041
+        case fastest = 0.6
+        case fast = 0.75
+        case medium = 0.8
+        case low = 2
         
         
     }
@@ -263,6 +263,7 @@ class ViewController: UIViewController {
     
     @IBAction func startGame(sender: AnyObject) {
         var stoppedAngle = self.acceleratorView.getTickerAngle()
+        println("stopper: \(stoppedAngle)")
         switch started  {
         case false:
             self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
