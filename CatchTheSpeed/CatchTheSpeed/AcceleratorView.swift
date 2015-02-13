@@ -154,29 +154,28 @@ class AcceleratorView: UIView {
         self.spin.delegate = self
         self.spin.duration = duration
         self.stillRunning = true
-        let tickTime = duration / 0.01
+        let tickTime = duration / 0.001
         self.tickerAngleMov  = (self.maxValueTick - self.startAngle) / CGFloat(tickTime)
-        self.checkPosition = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("schedulePosition"), userInfo: nil, repeats: true)
+        // self.checkPosition = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("schedulePosition"), userInfo: nil, repeats: true)
         println("ticktime: \(tickTime) - move: \(self.tickerAngleMov)")
         self.shapeTicker.addAnimation(spin, forKey: "ticking")
         
     }
     
     var startTime = CACurrentMediaTime()
-    var i : Int = 0
+    
     func schedulePosition(){
         //println("realElapsed: \(CACurrentMediaTime() - startTime)")
-        i++
         if (CACurrentMediaTime() - startTime >= self.spin.duration*2){
-//            println("elapsed: \(CACurrentMediaTime()-startTime) angolo \(self.tickerAngle)")
-        
-        startTime = CACurrentMediaTime()
+            //            println("elapsed: \(CACurrentMediaTime()-startTime) angolo \(self.tickerAngle)")
+            
+            startTime = CACurrentMediaTime()
         }
         if( multiplier > 0){
             if ( (self.tickerAngle + self.tickerAngleMov) > self.maxValueTick ){
                 self.tickerAngle = self.maxValueTick
                 multiplier = -1
-//            println("siamo a metà \(i) : \(CACurrentMediaTime()-startTime)")
+                //            println("siamo a metà \(i) : \(CACurrentMediaTime()-startTime)")
             }else{
                 self.tickerAngle += self.tickerAngleMov
             }
@@ -184,28 +183,30 @@ class AcceleratorView: UIView {
             if(self.tickerAngle - self.tickerAngleMov < self.startAngle){
                 self.tickerAngle = self.startAngle
                 multiplier = 1
-//                println("siamo a fine \(i) : \(CACurrentMediaTime()-startTime)")
+                //                println("siamo a fine \(i) : \(CACurrentMediaTime()-startTime)")
                 println("ORAAAAAAAAAAAAA")
             }else{
                 self.tickerAngle -= self.tickerAngleMov
             }
         }
-//        println("angolo: \(self.tickerAngle)")
+        //        println("angolo: \(self.tickerAngle)")
     }
     
     func bloccaTicker(){
         //        self.currentTimeTicking = 0
-//        self.stillRunning = false
+        //        self.stillRunning = false
         self.checkPosition.invalidate()
         self.shapeTicker.removeAllAnimations()
     }
     
+    override func animationDidStart(anim: CAAnimation!) {
+        startTime = CACurrentMediaTime()
+    }
     
     override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
         //        if(self.stillRunning){
         //            self.animaTicker(self.currentTimeTicking)
         //        }
-        println("ANIMATOOOOOOOOOOOO")
     }
     
     
@@ -329,13 +330,30 @@ class AcceleratorView: UIView {
     }
     
     func getTickerAngle() -> Double{
-        return Double(self.tickerAngle)
+        var modulo = (CACurrentMediaTime() - startTime) % (self.spin.duration * 2)
+        
+        println("primo \(modulo) -- \(self.spin.duration)")
+        var angolo: CGFloat = 0.0;
+        if(modulo > self.spin.duration)
+        {
+            modulo = (modulo % self.spin.duration)
+            println("reverso \(modulo)")
+            angolo = self.maxValueTick - (self.tickerAngleMov * CGFloat(modulo / 0.001))
+        }else{
+            
+            angolo = self.startAngle + (self.tickerAngleMov * CGFloat(modulo / 0.001))
+        }
+        
+        println("ANIMATOOOOOOOOOOOO \(angolo) --- \(((angolo * 180) / pi))")
+        
+        return Double((angolo * 180) / pi)
+        //return Double(self.tickerAngle)
         
         //        return Double((tickerAngle + Double(offsetAngle)) * 180) / M_PI
     }
     
     func setTickerAngleMov(angle: Double){
-//        self.startAngleMov = (CGFloat(angle) * pi) / 180
+        //        self.startAngleMov = (CGFloat(angle) * pi) / 180
         self.tickerAngleMov = (CGFloat(angle) * pi) / 180
     }
     

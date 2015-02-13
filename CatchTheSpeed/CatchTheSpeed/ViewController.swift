@@ -39,11 +39,9 @@ class ViewController: UIViewController {
     
     enum timeTicker : NSTimeInterval{
         case fastest = 0.6
-        case fast = 0.75
+        case fast = 1
         case medium = 0.8
         case low = 2
-        
-        
     }
     
     enum buttonLabel : String {
@@ -56,7 +54,7 @@ class ViewController: UIViewController {
     }
     
     var started : Bool = false
-    var modGame : mod = mod.soft
+    var modGame : mod = mod.stressing
     var level : Int = 1
     var minAngle: Double = 0
     var maxAngle : Double = 0
@@ -78,8 +76,6 @@ class ViewController: UIViewController {
             NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "recordCatch")
         }
     }
-    
-    
     
     private func getTickerMov(definition : tickerAngleMov) -> Double{
         switch definition {
@@ -189,7 +185,6 @@ class ViewController: UIViewController {
         default:
             break
         }
-        
     }
     
     override func viewDidLoad() {
@@ -274,7 +269,7 @@ class ViewController: UIViewController {
                 self.acceleratorView.animaTicker(timeTicker.medium.rawValue)
                 //                self.schedulaGame(timeTicker.medium.rawValue)
             case mod.stressing:
-                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
+                //self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
                 self.timeLabel.text = String(counterTime)
                 self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
                 //                self.schedulaGame(timeTicker.medium.rawValue)
@@ -473,7 +468,7 @@ class ViewController: UIViewController {
     
     private func calcAngleOnLevel(){
         self.resetCoordinates()
-        self.dimAngle = (self.maxAngle - self.minAngle) / Double((self.level + 1))
+        self.dimAngle = (self.maxAngle - self.minAngle) / Double((self.level + 7))
         if( self.dimAngle < minDimAngle ){
             self.dimAngle = minDimAngle
         }
@@ -484,9 +479,5 @@ class ViewController: UIViewController {
         self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
     }
     
-    //
-    //    func updateGame(){
-    //        self.acceleratorView.addTickerAngle()
-    //    }
 }
 
