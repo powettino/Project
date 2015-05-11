@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
+		4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1E1AAE23850050B018 /* Speedo.swift */; };
 		EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */; };
 		EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0AB1A6BD2E000FED987 /* ViewController.swift */; };
 		EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB22B0AD1A6BD2E000FED987 /* Main.storyboard */; };
@@ -27,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
+		4DD1BC1E1AAE23850050B018 /* Speedo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedo.swift; sourceTree = "<group>"; };
 		EB22B0A41A6BD2E000FED987 /* CatchTheSpeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchTheSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22B0A81A6BD2E000FED987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 				EB22B0B21A6BD2E000FED987 /* LaunchScreen.xib */,
 				EB22B0A71A6BD2E000FED987 /* Supporting Files */,
 				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
+				4DD1BC1C1AAE23650050B018 /* Speedo.sks */,
+				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
 			);
 			path = CatchTheSpeed;
 			sourceTree = "<group>";
@@ -196,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */,
+				4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */,
 				EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */,
 				EB22B0B11A6BD2E000FED987 /* Images.xcassets in Resources */,
 			);
@@ -218,6 +225,7 @@
 				EB22B0CE1A6C1D5500FED987 /* AcceleratorView.swift in Sources */,
 				EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */,
 				EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */,
+				4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
