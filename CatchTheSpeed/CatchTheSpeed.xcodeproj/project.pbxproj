@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D8456031B13C49B007269B8 /* primaprova.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8456021B13C49B007269B8 /* primaprova.png */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
 		4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1E1AAE23850050B018 /* Speedo.swift */; };
 		EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D8456021B13C49B007269B8 /* primaprova.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = primaprova.png; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
 		4DD1BC1E1AAE23850050B018 /* Speedo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedo.swift; sourceTree = "<group>"; };
 		EB22B0A41A6BD2E000FED987 /* CatchTheSpeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchTheSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +64,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D8456011B13C437007269B8 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				4D8456021B13C49B007269B8 /* primaprova.png */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		4D8456041B13D109007269B8 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				4DD1BC1C1AAE23650050B018 /* Speedo.sks */,
+				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		4D8456051B13D11F007269B8 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
 		EB22B09B1A6BD2E000FED987 = {
 			isa = PBXGroup;
 			children = (
@@ -83,15 +110,15 @@
 		EB22B0A61A6BD2E000FED987 /* CatchTheSpeed */ = {
 			isa = PBXGroup;
 			children = (
+				4D8456051B13D11F007269B8 /* model */,
+				4D8456041B13D109007269B8 /* view */,
+				4D8456011B13C437007269B8 /* resources */,
 				EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */,
 				EB22B0AB1A6BD2E000FED987 /* ViewController.swift */,
 				EB22B0AD1A6BD2E000FED987 /* Main.storyboard */,
 				EB22B0B01A6BD2E000FED987 /* Images.xcassets */,
 				EB22B0B21A6BD2E000FED987 /* LaunchScreen.xib */,
 				EB22B0A71A6BD2E000FED987 /* Supporting Files */,
-				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
-				4DD1BC1C1AAE23650050B018 /* Speedo.sks */,
-				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
 			);
 			path = CatchTheSpeed;
 			sourceTree = "<group>";
@@ -202,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */,
+				4D8456031B13C49B007269B8 /* primaprova.png in Resources */,
 				4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */,
 				EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */,
 				EB22B0B11A6BD2E000FED987 /* Images.xcassets in Resources */,

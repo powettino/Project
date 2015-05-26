@@ -11,12 +11,12 @@ import SpriteKit
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
+        if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as Speedo
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! Speedo
             archiver.finishDecoding()
             return scene
         } else {
@@ -24,6 +24,7 @@ extension SKNode {
         }
     }
 }
+
 
 class ViewController: UIViewController {
     
@@ -44,8 +45,58 @@ class ViewController: UIViewController {
     @IBOutlet weak var table1: UITableViewCell!
     @IBOutlet weak var table2: UITableViewCell!
     @IBOutlet weak var table3: UITableViewCell!
-    @IBOutlet weak var acceleratorView: AcceleratorView!
+//    @IBOutlet weak var acceleratorView: AcceleratorView!
     @IBOutlet weak var changingSurvival: UISwitch!
+    
+    
+    @IBAction func resetClick(sender: AnyObject) {
+        self.superReset()
+    }
+    
+    @IBAction func changingSurvival(sender: AnyObject) {
+        switch (self.modGame){
+        case mod.soft:
+            self.modGame=mod.survival
+        case mod.stressing:
+            self.modGame = mod.astonishing
+        case mod.survival:
+            self.modGame=mod.soft
+        case mod.astonishing:
+            self.modGame = mod.stressing
+        default:
+            break;
+        }
+        if(self.started){
+            self.superReset()
+        }
+    }
+    
+    @IBAction func changingTimer(sender: AnyObject) {
+        switch (self.modGame){
+        case mod.soft:
+            self.modGame=mod.stressing
+        case mod.stressing:
+            self.modGame = mod.soft
+        case mod.survival:
+            self.modGame=mod.astonishing
+        case mod.astonishing:
+            self.modGame = mod.survival
+        default:
+            break;
+        }
+        if(self.started){
+            self.superReset()
+        }
+    }
+    
+    
+    @IBAction func optionClick(sender: AnyObject) {
+        self.apriMenu()
+    }
+
+    @IBAction func closingMenu(sender: AnyObject) {
+        self.closeMenu()
+    }
     
     enum mod : Int {
         case soft = 100
@@ -109,46 +160,6 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func resetClick(sender: AnyObject) {
-        self.superReset()
-    }
-    
-    @IBAction func changingSurvival(sender: AnyObject) {
-        switch (self.modGame){
-        case mod.soft:
-            self.modGame=mod.survival
-        case mod.stressing:
-            self.modGame = mod.astonishing
-        case mod.survival:
-            self.modGame=mod.soft
-        case mod.astonishing:
-            self.modGame = mod.stressing
-        default:
-            break;
-        }
-        if(self.started){
-            self.superReset()
-        }
-    }
-    
-    @IBAction func changingTimer(sender: AnyObject) {
-        switch (self.modGame){
-        case mod.soft:
-            self.modGame=mod.stressing
-        case mod.stressing:
-            self.modGame = mod.soft
-        case mod.survival:
-            self.modGame=mod.astonishing
-        case mod.astonishing:
-            self.modGame = mod.survival
-        default:
-            break;
-        }
-        if(self.started){
-            self.superReset()
-        }
-        
-    }
     
     private func apriMenu() {
         if(!self.optionOpened){
@@ -165,9 +176,6 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func optionClick(sender: AnyObject) {
-        self.apriMenu()
-    }
     
     private func closeMenu(){
         var currentFrame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
@@ -178,10 +186,6 @@ class ViewController: UIViewController {
         self.optionOpened = false
         self.startButton.enabled = true
         self.changeModView()
-    }
-    
-    @IBAction func closingMenu(sender: AnyObject) {
-        self.closeMenu()
     }
     
     private func changeModView(){
@@ -204,6 +208,8 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var acceleratorView: SKView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
@@ -224,7 +230,26 @@ class ViewController: UIViewController {
         self.slidingMenu.layer.shadowOpacity = 0.8
         self.slidingMenu.layer.shadowRadius=5.0
         self.record.text = String(self.recordPoint)
+        
+        let scene = Speedo.unarchiveFromFile("Speedo") as? Speedo
+//        var scene = Speedo(size: acceleratorView.bounds.size)
+
+        acceleratorView.showsFPS = true
+        acceleratorView.showsNodeCount = true
+        acceleratorView.frame.size.width = self.view.bounds.size.width;
+        scene?.size = acceleratorView.bounds.size
+        scene?.scaleMode = SKSceneScaleMode.ResizeFill
+        acceleratorView.presentScene(scene)
+    
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
+    
+    override func viewWillLayoutSubviews() {
+       
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -233,13 +258,10 @@ class ViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     private func superReset(){
-        
-        //        self.timer.invalidate()
-        self.acceleratorView.bloccaTicker()
+//        self.acceleratorView.bloccaTicker()
         self.timerEndGame.invalidate()
         self.timerMod.invalidate()
         self.fadingView.alpha = 0
@@ -259,7 +281,7 @@ class ViewController: UIViewController {
         self.puntiAttuali.text = String(self.currentPoint)
         self.levelText.text = String(self.level)
         self.startButton.enabled=true
-        self.acceleratorView.resetTicker()
+//        self.acceleratorView.resetTicker()
         self.counterTime = 60
         self.changeModView()
         self.calcAngleOnLevel()
@@ -270,129 +292,6 @@ class ViewController: UIViewController {
     
     func schedulaContatore(){
         self.timerMod = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countSec"), userInfo: nil, repeats: true)
-    }
-    
-    
-    @IBAction func startGame(sender: AnyObject) {
-        var stoppedAngle = self.acceleratorView.getTickerAngle()
-        println("stopper: \(stoppedAngle)")
-        switch started  {
-        case false:
-            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-            switch(self.modGame){
-            case mod.soft:
-                self.counter=3
-                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
-                self.acceleratorView.animaTicker(timeTicker.medium.rawValue)
-                //                self.schedulaGame(timeTicker.medium.rawValue)
-            case mod.stressing:
-                //self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
-                self.timeLabel.text = String(counterTime)
-                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
-                //                self.schedulaGame(timeTicker.medium.rawValue)
-                self.schedulaContatore()
-            case mod.astonishing:
-                self.schedulaContatore()
-                self.timeLabel.text = String(counterTime)
-                //                self.schedulaGame(timeTicker.fast.rawValue)
-                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.higher))
-                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
-                
-            case mod.survival:
-                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.high))
-                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
-                //                self.schedulaGame(timeTicker.fast.rawValue)
-            default:
-                break
-            }
-            started = !started
-            
-        default:
-            switch self.modGame {
-            case mod.stressing:
-                println("min \(minAngle) - max \(maxAngle) - stoppd \(stoppedAngle)")
-                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-                    self.level++
-                    self.currentPoint += self.modGame.rawValue
-                    self.updateRecord()
-                    self.puntiAttuali.text = String(self.currentPoint)
-                    self.calcAngleOnLevel()
-                    self.levelText.text = String(self.level)
-                }
-            case mod.astonishing:
-                
-                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-                    self.level++
-                    self.currentPoint += self.modGame.rawValue
-                    self.updateRecord()
-                    self.puntiAttuali.text = String(self.currentPoint)
-                    self.calcAngleOnLevel()
-                    self.levelText.text = String(self.level)
-                }else{
-                    //                    self.timer.invalidate()
-                    self.timerMod.invalidate()
-                    self.acceleratorView.bloccaTicker()
-                    //                    self.acceleratorView.resetTicker()
-                    self.selectAlert()
-                }
-                
-            case mod.survival:
-                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-                    self.level++
-                    self.currentPoint += self.modGame.rawValue
-                    self.updateRecord()
-                    self.puntiAttuali.text = String(self.currentPoint)
-                    self.calcAngleOnLevel()
-                    self.levelText.text = String(self.level)
-                }else{
-                    //                    self.timer.invalidate()
-                    self.acceleratorView.bloccaTicker()
-                    //                    self.acceleratorView.resetTicker()
-                    self.selectAlert()
-                }
-            case mod.soft:
-                //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
-                self.startButton.enabled=false
-                self.acceleratorView.bloccaTicker()
-                //                self.acceleratorView.resetTicker()
-                //                self.timer.invalidate()
-                
-                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-                    
-                    var origFrame = self.fadingView.frame
-                    self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
-                    self.level++
-                    self.currentPoint += self.modGame.rawValue
-                    
-                    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.fadingView.frame = origFrame
-                        self.fadingView.alpha = 1
-                        self.fadingView.hidden = false
-                        self.acceleratorView.alpha = 0.4
-                        self.labelCount.alpha=1
-                        self.labelCongrats.alpha=1
-                        }, completion: { finished in
-                            UIView.animateWithDuration(1, animations: {
-                                self.levelText.text = String(self.level)
-                                self.puntiAttuali.text = String(self.currentPoint)
-                                self.updateRecord()
-                                
-                                }, completion: {
-                                    finished in
-                                    self.timerEndGame = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("messageGame"), userInfo: nil, repeats: true)
-                                }
-                            )
-                        }
-                    )
-                    
-                }else{
-                    self.selectAlert()
-                }
-            default :
-                break
-                
-            }
-        }
     }
     
     func selectAlert(){
@@ -416,8 +315,7 @@ class ViewController: UIViewController {
         if(self.counterTime == 0){
             self.timerMod.invalidate()
             self.selectAlert()
-            //            self.timer.invalidate()
-            self.acceleratorView.bloccaTicker()
+//            self.acceleratorView.bloccaTicker()
         }else{
             self.counterTime--
             self.timeLabel.text = String(counterTime)
@@ -458,13 +356,12 @@ class ViewController: UIViewController {
                     self.labelCount.text = String(self.counter)
                 }
             )
-            //            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
             var time  = timeTicker.medium.rawValue
             if(self.dimAngle == minAngle){
                 time -= 0.002
             }
             //            self.schedulaGame(time)
-            self.acceleratorView.animaTicker(time)
+//            self.acceleratorView.animaTicker(time)
             self.startButton.enabled=true
         }else{
             self.counter -= 1
@@ -477,9 +374,9 @@ class ViewController: UIViewController {
     }
     
     private func resetCoordinates(){
-        let angles = self.acceleratorView.getReferenceAngleValue()
-        self.minAngle = angles.min
-        self.maxAngle = angles.max
+//        let angles = self.acceleratorView.getReferenceAngleValue()
+//        self.minAngle = angles.min
+//        self.maxAngle = angles.max
         
     }
     
@@ -493,7 +390,7 @@ class ViewController: UIViewController {
         
         minAngle = rnd
         maxAngle = minAngle + dimAngle
-        self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
+//        self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
     }
     
 }

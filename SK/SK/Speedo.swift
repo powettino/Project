@@ -55,7 +55,7 @@ class Speedo : SKScene {
         empty.runAction(action);
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         for touch: AnyObject in touches{
             let location = touch.locationInNode(self)
             moveToTappo(location)
