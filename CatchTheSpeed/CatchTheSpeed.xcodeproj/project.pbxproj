@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D04820D1B18852800289B41 /* ago3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D04820C1B18852800289B41 /* ago3.png */; };
 		4D8456031B13C49B007269B8 /* primaprova.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8456021B13C49B007269B8 /* primaprova.png */; };
+		4DD120451B18C35200D4B299 /* ago5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DD120441B18C35200D4B299 /* ago5.png */; };
+		4DD120471B26279200D4B299 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD120461B26279200D4B299 /* constants.swift */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
 		4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1E1AAE23850050B018 /* Speedo.swift */; };
+		4DE7D57E1B18945A00A13773 /* ago4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE7D57D1B18945A00A13773 /* ago4.png */; };
 		EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */; };
 		EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0AB1A6BD2E000FED987 /* ViewController.swift */; };
 		EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB22B0AD1A6BD2E000FED987 /* Main.storyboard */; };
@@ -30,9 +34,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D04820C1B18852800289B41 /* ago3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ago3.png; sourceTree = "<group>"; };
 		4D8456021B13C49B007269B8 /* primaprova.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = primaprova.png; sourceTree = "<group>"; };
+		4DD120441B18C35200D4B299 /* ago5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ago5.png; sourceTree = "<group>"; };
+		4DD120461B26279200D4B299 /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
 		4DD1BC1E1AAE23850050B018 /* Speedo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedo.swift; sourceTree = "<group>"; };
+		4DE7D57D1B18945A00A13773 /* ago4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ago4.png; sourceTree = "<group>"; };
 		EB22B0A41A6BD2E000FED987 /* CatchTheSpeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchTheSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22B0A81A6BD2E000FED987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,26 +75,40 @@
 		4D8456011B13C437007269B8 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				4DD120441B18C35200D4B299 /* ago5.png */,
+				4DE7D57D1B18945A00A13773 /* ago4.png */,
+				4D04820C1B18852800289B41 /* ago3.png */,
 				4D8456021B13C49B007269B8 /* primaprova.png */,
 			);
 			name = resources;
 			sourceTree = "<group>";
 		};
-		4D8456041B13D109007269B8 /* view */ = {
+		4D8456041B13D109007269B8 /* classes */ = {
+			isa = PBXGroup;
+			children = (
+				4DD120481B2627A100D4B299 /* structure */,
+				4D8456061B166296007269B8 /* spritekit */,
+				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
+				EB22B0AB1A6BD2E000FED987 /* ViewController.swift */,
+				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
+			);
+			name = classes;
+			sourceTree = "<group>";
+		};
+		4D8456061B166296007269B8 /* spritekit */ = {
 			isa = PBXGroup;
 			children = (
 				4DD1BC1C1AAE23650050B018 /* Speedo.sks */,
-				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
 			);
-			name = view;
+			name = spritekit;
 			sourceTree = "<group>";
 		};
-		4D8456051B13D11F007269B8 /* model */ = {
+		4DD120481B2627A100D4B299 /* structure */ = {
 			isa = PBXGroup;
 			children = (
-				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
+				4DD120461B26279200D4B299 /* constants.swift */,
 			);
-			name = model;
+			name = structure;
 			sourceTree = "<group>";
 		};
 		EB22B09B1A6BD2E000FED987 = {
@@ -110,11 +132,9 @@
 		EB22B0A61A6BD2E000FED987 /* CatchTheSpeed */ = {
 			isa = PBXGroup;
 			children = (
-				4D8456051B13D11F007269B8 /* model */,
-				4D8456041B13D109007269B8 /* view */,
+				4D8456041B13D109007269B8 /* classes */,
 				4D8456011B13C437007269B8 /* resources */,
 				EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */,
-				EB22B0AB1A6BD2E000FED987 /* ViewController.swift */,
 				EB22B0AD1A6BD2E000FED987 /* Main.storyboard */,
 				EB22B0B01A6BD2E000FED987 /* Images.xcassets */,
 				EB22B0B21A6BD2E000FED987 /* LaunchScreen.xib */,
@@ -233,6 +253,9 @@
 				4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */,
 				EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */,
 				EB22B0B11A6BD2E000FED987 /* Images.xcassets in Resources */,
+				4DE7D57E1B18945A00A13773 /* ago4.png in Resources */,
+				4D04820D1B18852800289B41 /* ago3.png in Resources */,
+				4DD120451B18C35200D4B299 /* ago5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +276,7 @@
 				EB22B0CE1A6C1D5500FED987 /* AcceleratorView.swift in Sources */,
 				EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */,
 				EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */,
+				4DD120471B26279200D4B299 /* constants.swift in Sources */,
 				4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

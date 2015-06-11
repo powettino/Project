@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6UQ-7P-TyN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6UQ-7P-TyN">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -136,7 +136,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" id="6SP-Wf-V6S" customClass="SKView">
-                                <rect key="frame" x="0.0" y="240" width="320" height="300"/>
+                                <rect key="frame" x="10" y="203" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.98800751460921776" blue="0.021670761362232782" alpha="0.0" colorSpace="calibratedRGB"/>
                             </view>
@@ -169,7 +169,7 @@ in ... </string>
                                         <rect key="frame" x="0.0" y="214" width="220" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5ei-42-ANn" id="pk9-Mr-rK4">
-                                            <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="220" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hbP-kH-VNF">
@@ -190,7 +190,7 @@ in ... </string>
                                         <rect key="frame" x="0.0" y="149" width="220" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sFU-xw-8aA" id="tMO-ZA-efI">
-                                            <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="220" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Survival" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OZX-OP-SPH">
@@ -216,7 +216,7 @@ in ... </string>
                                         <rect key="frame" x="0.0" y="85" width="220" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NZ1-FW-t4p" id="JoH-2c-LHf">
-                                            <rect key="frame" x="0.0" y="0.0" width="220" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="220" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zbp-pG-bYk">
@@ -303,7 +303,7 @@ in ... </string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-901.33333333333337" y="-86.146666666666661"/>
+            <point key="canvasLocation" x="-902" y="-87"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ad9-Yb-Whw">

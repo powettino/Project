@@ -28,8 +28,7 @@ extension SKNode {
 
 class ViewController: UIViewController {
     
-    
-   @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var labelCount: UILabel!
     @IBOutlet weak var labelCongrats: UILabel!
     @IBOutlet weak var fadingView: UIView!
@@ -45,7 +44,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var table1: UITableViewCell!
     @IBOutlet weak var table2: UITableViewCell!
     @IBOutlet weak var table3: UITableViewCell!
-//    @IBOutlet weak var acceleratorView: AcceleratorView!
+    //    @IBOutlet weak var acceleratorView: AcceleratorView!
+    @IBOutlet weak var acceleratorView: SKView!
     @IBOutlet weak var changingSurvival: UISwitch!
     
     
@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     @IBAction func optionClick(sender: AnyObject) {
         self.apriMenu()
     }
-
+    
     @IBAction func closingMenu(sender: AnyObject) {
         self.closeMenu()
     }
@@ -105,12 +105,6 @@ class ViewController: UIViewController {
         case astonishing = 500
     }
     
-    enum timeTicker : NSTimeInterval{
-        case fastest = 0.6
-        case fast = 1
-        case medium = 0.8
-        case low = 2
-    }
     
     enum buttonLabel : String {
         case start = "Start"
@@ -129,11 +123,13 @@ class ViewController: UIViewController {
     var counter = 3
     var timerEndGame = NSTimer()
     var currentPoint = 0
-    var minDimAngle : Double = (1/180) * M_PI
+    //    var minDimAngle : Double = (1/180) * M_PI
+    
     var dimAngle : Double = 0
     var counterTime = 60
     var timerMod = NSTimer()
     var optionOpened :Bool = false
+    var scene : Speedo?;
     
     var recordPoint : Int {
         get{
@@ -160,7 +156,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     private func apriMenu() {
         if(!self.optionOpened){
             var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
@@ -175,7 +170,6 @@ class ViewController: UIViewController {
         }
         
     }
-    
     
     private func closeMenu(){
         var currentFrame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
@@ -208,17 +202,27 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var acceleratorView: SKView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //        self.scene = Speedo.unarchiveFromFile("Speedo") as? Speedo
+        self.scene = Speedo(size: acceleratorView.bounds.size)
+        acceleratorView.showsFPS = true
+        acceleratorView.showsNodeCount = true
+        //        acceleratorView.frame.size.width = self.view.bounds.size.width;
+        self.scene?.size = acceleratorView.bounds.size
+        self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
+//        var o = self.scene?.childNodeWithName("grid");
+        //        o?.position.x = acceleratorView.bounds.size.width/2;
+        acceleratorView.presentScene(self.scene!)
+        self.scene?.enableYellowSection(level);
+        
         self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.fadingView.hidden=true
         //self.labelCongrats.hidden=true
         //self.labelCount.hidden=true
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
-        self.calcAngleOnLevel()
         self.startButton.tintColor = UIColor.whiteColor()
         //        self.minDimAngle = self.acceleratorView.getTickerAngleMov()
         
@@ -230,18 +234,6 @@ class ViewController: UIViewController {
         self.slidingMenu.layer.shadowOpacity = 0.8
         self.slidingMenu.layer.shadowRadius=5.0
         self.record.text = String(self.recordPoint)
-        
-        let scene = Speedo.unarchiveFromFile("Speedo") as? Speedo
-//        var scene = Speedo(size: acceleratorView.bounds.size)
-
-        acceleratorView.showsFPS = true
-        acceleratorView.showsNodeCount = true
-        acceleratorView.frame.size.width = self.view.bounds.size.width;
-        scene?.size = acceleratorView.bounds.size
-        scene?.scaleMode = SKSceneScaleMode.ResizeFill
-        acceleratorView.presentScene(scene)
-    
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -249,7 +241,7 @@ class ViewController: UIViewController {
     }
     
     override func viewWillLayoutSubviews() {
-       
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -261,7 +253,7 @@ class ViewController: UIViewController {
     }
     
     private func superReset(){
-//        self.acceleratorView.bloccaTicker()
+        //        self.acceleratorView.bloccaTicker()
         self.timerEndGame.invalidate()
         self.timerMod.invalidate()
         self.fadingView.alpha = 0
@@ -281,13 +273,11 @@ class ViewController: UIViewController {
         self.puntiAttuali.text = String(self.currentPoint)
         self.levelText.text = String(self.level)
         self.startButton.enabled=true
-//        self.acceleratorView.resetTicker()
+        //        self.acceleratorView.resetTicker()
         self.counterTime = 60
         self.changeModView()
-        self.calcAngleOnLevel()
+        self.scene?.enableYellowSection(level);
         self.counter=3
-        
-        
     }
     
     func schedulaContatore(){
@@ -315,7 +305,7 @@ class ViewController: UIViewController {
         if(self.counterTime == 0){
             self.timerMod.invalidate()
             self.selectAlert()
-//            self.acceleratorView.bloccaTicker()
+            //            self.acceleratorView.bloccaTicker()
         }else{
             self.counterTime--
             self.timeLabel.text = String(counterTime)
@@ -327,7 +317,6 @@ class ViewController: UIViewController {
             self.recordPoint = self.currentPoint
             self.record.text = String(self.recordPoint)
         }
-        
     }
     
     func showEndAlert(title : String, message : String, action: String){
@@ -350,18 +339,18 @@ class ViewController: UIViewController {
                 self.labelCongrats.alpha=0
                 self.labelCount.alpha=0
                 self.acceleratorView.alpha=1
-                self.calcAngleOnLevel()
+                self.scene?.enableYellowSection(self.level)
                 }, completion: {finished in
                     self.counter=3
                     self.labelCount.text = String(self.counter)
                 }
             )
-            var time  = timeTicker.medium.rawValue
+            var time  = Speedo.NeedleSpeed.medium.rawValue
             if(self.dimAngle == minAngle){
                 time -= 0.002
             }
             //            self.schedulaGame(time)
-//            self.acceleratorView.animaTicker(time)
+            //            self.acceleratorView.animaTicker(time)
             self.startButton.enabled=true
         }else{
             self.counter -= 1
@@ -369,29 +358,13 @@ class ViewController: UIViewController {
         self.labelCount.text = String(self.counter)
     }
     
-    private func randomDouble(min : Double , max : Double) -> Double{
-        return (Double(arc4random())) / Double(UINT32_MAX) * (max-min) + min
-    }
-    
     private func resetCoordinates(){
-//        let angles = self.acceleratorView.getReferenceAngleValue()
-//        self.minAngle = angles.min
-//        self.maxAngle = angles.max
-        
+        //        let angles = self.scene!.getReferenceAngleValue()
+        //        self.minAngle = angles.min
+        self.minAngle = self.scene!.minDegreeNeedleAngle
+        //        self.maxAngle = angles.max
+        self.maxAngle = self.scene!.maxDegreeNeedleAngle
+        NSLog("min \(minAngle) - max \(maxAngle)");
     }
-    
-    private func calcAngleOnLevel(){
-        self.resetCoordinates()
-        self.dimAngle = (self.maxAngle - self.minAngle) / Double((self.level + 7))
-        if( self.dimAngle < minDimAngle ){
-            self.dimAngle = minDimAngle
-        }
-        var rnd: Double = self.randomDouble(self.minAngle, max: (self.maxAngle - dimAngle))
-        
-        minAngle = rnd
-        maxAngle = minAngle + dimAngle
-//        self.acceleratorView.enableYellowSection( minAngle, endingAngle: maxAngle)
-    }
-    
 }
 
