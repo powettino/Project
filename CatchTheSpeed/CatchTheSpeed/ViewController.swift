@@ -25,7 +25,6 @@ extension SKNode {
     }
 }
 
-
 class ViewController: UIViewController {
     
     @IBOutlet weak var timeLabel: UILabel!
@@ -44,7 +43,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var table1: UITableViewCell!
     @IBOutlet weak var table2: UITableViewCell!
     @IBOutlet weak var table3: UITableViewCell!
-    //    @IBOutlet weak var acceleratorView: AcceleratorView!
     @IBOutlet weak var acceleratorView: SKView!
     @IBOutlet weak var changingSurvival: UISwitch!
     
@@ -89,7 +87,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     @IBAction func optionClick(sender: AnyObject) {
         self.apriMenu()
     }
@@ -105,27 +102,24 @@ class ViewController: UIViewController {
         case astonishing = 500
     }
     
-    
     enum buttonLabel : String {
         case start = "Start"
         case stop = "Stop"
     }
     
-    enum tickerAngleMov {
-        case low, medium, high, higher
-    }
+    //    enum tickerAngleMov {
+    //        case low, medium, high, higher
+    //    }
     
     var started : Bool = false
     var modGame : mod = mod.stressing
     var level : Int = 1
-    var minAngle: Double = 0
-    var maxAngle : Double = 0
+    //    var minAngle: Double = 0
+    //    var maxAngle : Double = 0
     var counter = 3
     var timerEndGame = NSTimer()
     var currentPoint = 0
-    //    var minDimAngle : Double = (1/180) * M_PI
-    
-    var dimAngle : Double = 0
+    //    var dimAngle : Double = 0
     var counterTime = 60
     var timerMod = NSTimer()
     var optionOpened :Bool = false
@@ -141,20 +135,20 @@ class ViewController: UIViewController {
         }
     }
     
-    private func getTickerMov(definition : tickerAngleMov) -> Double{
-        switch definition {
-        case tickerAngleMov.low:
-            return 1
-        case tickerAngleMov.medium:
-            return 2
-        case tickerAngleMov.high :
-            return 3.5
-        case tickerAngleMov.higher:
-            return 5
-        default:
-            break;
-        }
-    }
+    //    private func getTickerMov(definition : tickerAngleMov) -> Double{
+    //        switch definition {
+    //        case tickerAngleMov.low:
+    //            return 1
+    //        case tickerAngleMov.medium:
+    //            return 2
+    //        case tickerAngleMov.high :
+    //            return 3.5
+    //        case tickerAngleMov.higher:
+    //            return 5
+    //        default:
+    //            break;
+    //        }
+    //    }
     
     private func apriMenu() {
         if(!self.optionOpened){
@@ -212,10 +206,11 @@ class ViewController: UIViewController {
         //        acceleratorView.frame.size.width = self.view.bounds.size.width;
         self.scene?.size = acceleratorView.bounds.size
         self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
-//        var o = self.scene?.childNodeWithName("grid");
+        //        var o = self.scene?.childNodeWithName("grid");
         //        o?.position.x = acceleratorView.bounds.size.width/2;
         acceleratorView.presentScene(self.scene!)
-        self.scene?.enableYellowSection(level);
+        self.scene?.startGame()
+        //        self.scene?.enableYellowSection(level);
         
         self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.fadingView.hidden=true
@@ -276,7 +271,8 @@ class ViewController: UIViewController {
         //        self.acceleratorView.resetTicker()
         self.counterTime = 60
         self.changeModView()
-        self.scene?.enableYellowSection(level);
+        self.scene?.resetSpeedo();
+        //        self.scene?.enableYellowSection(level);
         self.counter=3
     }
     
@@ -339,16 +335,17 @@ class ViewController: UIViewController {
                 self.labelCongrats.alpha=0
                 self.labelCount.alpha=0
                 self.acceleratorView.alpha=1
-                self.scene?.enableYellowSection(self.level)
+                self.scene?.changeLevel(self.level);
+                //                self.scene?.enableYellowSection(self.level)
                 }, completion: {finished in
                     self.counter=3
                     self.labelCount.text = String(self.counter)
                 }
             )
-            var time  = Speedo.NeedleSpeed.medium.rawValue
-            if(self.dimAngle == minAngle){
-                time -= 0.002
-            }
+            //            var time  = Speedo.NeedleSpeed.medium.rawValue
+            //            if(scene?.getDimAnglePointSection() == minAngle){
+            //                time -= 0.002
+            //        }
             //            self.schedulaGame(time)
             //            self.acceleratorView.animaTicker(time)
             self.startButton.enabled=true
@@ -358,13 +355,13 @@ class ViewController: UIViewController {
         self.labelCount.text = String(self.counter)
     }
     
-    private func resetCoordinates(){
-        //        let angles = self.scene!.getReferenceAngleValue()
-        //        self.minAngle = angles.min
-        self.minAngle = self.scene!.minDegreeNeedleAngle
-        //        self.maxAngle = angles.max
-        self.maxAngle = self.scene!.maxDegreeNeedleAngle
-        NSLog("min \(minAngle) - max \(maxAngle)");
-    }
+    //private func resetCoordinates(){
+    //    //        let angles = self.scene!.getReferenceAngleValue()
+    //    //        self.minAngle = angles.min
+    //    self.minAngle = self.scene!.minDegreeNeedleAngle
+    //    //        self.maxAngle = angles.max
+    //    self.maxAngle = self.scene!.maxDegreeNeedleAngle
+    //    NSLog("min \(minAngle) - max \(maxAngle)");
+    //}
 }
 
