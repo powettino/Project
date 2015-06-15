@@ -10,6 +10,11 @@ import Foundation
 import SpriteKit
 import QuartzCore
 
+protocol ScoreDelegate{
+    func setPoint();
+}
+
+
 class Speedo : SKScene, SKPhysicsContactDelegate{
     
     struct PhysicsCategory {
@@ -187,6 +192,8 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private var centerX : CGFloat!;
     private var centerY : CGFloat!;
     
+    var scoreDelegate : ScoreDelegate?
+    
     func setNeedleSpeed(speed : Needle.NeedleSpeed){
         self.needle.setSpeed(speed);
     }
@@ -247,6 +254,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         
         self.physicsWorld.gravity = CGVectorMake(0, 0);
         self.physicsWorld.contactDelegate = self;
+        
     }
     
     func resetSpeedo(){
@@ -266,6 +274,8 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
                     obj.removeFromParent();
                 }
             }
+            
+            self.scoreDelegate?.setPoint();
             
             self.yellowSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : self.radius);
             self.addChild(self.yellowSection.yellowShape!);
