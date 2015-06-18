@@ -12,6 +12,7 @@ import QuartzCore
 
 protocol ScoreDelegate{
     func setPoint();
+    func setFail();
 }
 
 
@@ -26,11 +27,10 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     struct Needle{
         
         internal enum NeedleSpeed : NSTimeInterval{
-            case fastest = 1
-            case fast = 1.5
-            case medium = 2
-            case low = 2.5
-            case stopped = 10000000000;
+            case fastest = 0.5
+            case fast = 0.8
+            case medium = 1
+            case low = 1.5
         }
         
         var speed : NeedleSpeed!
@@ -40,9 +40,10 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         var collisionBitMask : UInt32 = PhysicsCategory.Empty
         var spriteNode : SKSpriteNode?
         var colliderNode : SKSpriteNode?
+        var rotationLabel : String = "rotationAction"
         
         init(spriteName : String, posX : CGFloat, posY : CGFloat, posZ : CGFloat, name: String, startingAngle : Double, minAngle : Double, maxAngle : Double){
-            speed = NeedleSpeed.stopped
+            speed = NeedleSpeed.low
             spriteNode = SKSpriteNode(imageNamed: spriteName);
             spriteNode!.name = name
             spriteNode!.position = CGPoint(x: posX, y: posY)
@@ -75,13 +76,26 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             speed = newSpeed;
         }
         
+        mutating func setStartPosition(startingAngle : Double){
+            spriteNode!.zRotation = Speedo.degreesToRadiant(startingAngle)
+        }
+        
         mutating func startRotation(){
             let forwardRotation = SKAction.rotateToAngle(movementAngles.min, duration: speed.rawValue, shortestUnitArc: false);
             let backwardRotation = SKAction.rotateToAngle(movementAngles.max, duration: speed.rawValue, shortestUnitArc: false);
             var seq = SKAction.sequence([forwardRotation, backwardRotation]);
             spriteNode?.runAction(
                 SKAction.repeatActionForever(seq)
+                , withKey: rotationLabel
             );
+        }
+        
+        mutating func pauseRotation(paused: Bool){
+            spriteNode?.paused = paused;
+        }
+        
+        mutating func stopRotation(){
+            spriteNode?.removeActionForKey(rotationLabel)
         }
     }
     
@@ -140,15 +154,15 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         private static func calcAngleOnLevel(level : Int, minDegreeAngle : Double, maxDegreeAngle: Double) -> (max : CGFloat, min : CGFloat, dim : CGFloat){
             
             // si applica una correzione di 90 gradi dovuta agli assi del piano di presentazione
-//            NSLog("Calcolo dai punti di riferimento: \(minDegreeAngle+90) - \(maxDegreeAngle+90)");
+            // NSLog("Calcolo dai punti di riferimento: \(minDegreeAngle+90) - \(maxDegreeAngle+90)");
             var fixedAngles : (min: Double, max: Double) = (minDegreeAngle + 90, maxDegreeAngle + 90)
             var dimensionAngle = (fixedAngles.max - fixedAngles.min) / Double((level + 7))
             
-//            NSLog("Dimensione angolo: \(dimensionAngle) - minimo: \( fixedAngles.min )");
+            //NSLog("Dimensione angolo: \(dimensionAngle) - minimo: \( fixedAngles.min )");
             dimensionAngle = dimensionAngle < fixedAngles.min ? fixedAngles.min :dimensionAngle;
             
             var rnd: Double = Speedo.randomDouble( (fixedAngles.min + dimensionAngle),  max: (fixedAngles.max))
-//            NSLog("Punto random: \(rnd)");
+            //NSLog("Punto random: \(rnd)");
             
             return ( Speedo.degreesToRadiant(rnd), Speedo.degreesToRadiant(rnd-dimensionAngle), Speedo.degreesToRadiant(dimensionAngle));
         }
@@ -176,11 +190,14 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private final let gridNodeName :String = "gridNode"
     private final let needleNodeName : String = "needleNode"
     
-    internal let minDegreeNeedleAngle : Double = -136   //-46
-    internal let maxDegreeNeedleAngle : Double = 136   //226
+    private var enableFail = false;
+    
+    private let minDegreeNeedleAngle : Double = -136   //-46
+    private let maxDegreeNeedleAngle : Double = 136   //226
     private let radius : CGFloat = 132;
     private var currentLevel : Int = 1
     private var colliso : Bool = false;
+    private var running : Bool = false
     
     private var grid : SKSpriteNode!
     private var needle : Needle!
@@ -198,9 +215,14 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.needle.setSpeed(speed);
     }
     
+    func enableFailDelegate(enable : Bool){
+        self.enableFail = enable;
+    }
+    
     func startGame(){
-        self.needle.setSpeed(Needle.NeedleSpeed.fast)
+//        self.needle.setSpeed(Needle.NeedleSpeed.fast)
         self.needle.startRotation();
+        self.running=true;
         NSLog("velocita: \(self.needle.speed.rawValue)");
     }
     
@@ -257,28 +279,46 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         
     }
     
-    func resetSpeedo(){
-        self.currentLevel = 1;
+    func stopNeedle(){
+        self.running=false;
+        self.needle.stopRotation();
     }
     
-    func changeLevel(level: Int){
+    func resetSpeedo(){
+        self.stopNeedle();
+        self.needle.setStartPosition(maxDegreeNeedleAngle)
+        self.currentLevel = 1;
+        self.updateCollisionSection()
+    }
+    
+    func pauseNeedle(paused: Bool){
+        self.needle.pauseRotation(paused)
+    }
+    
+    func setLevel(level: Int){
         self.currentLevel = level;
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if(self.colliso){
-            self.colliso = false;
-            self.currentLevel++;
-            for (obj) in self.children{
-                if(self.yellowSectionShapeName == obj.name){
-                    obj.removeFromParent();
-                }
+    func updateCollisionSection(){
+        for (obj) in self.children{
+            if(self.yellowSectionShapeName == obj.name){
+                obj.removeFromParent();
             }
-            
-            self.scoreDelegate?.setPoint();
-            
-            self.yellowSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : self.radius);
-            self.addChild(self.yellowSection.yellowShape!);
+        }
+        
+        self.yellowSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : self.radius);
+        self.addChild(self.yellowSection.yellowShape!);
+    }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if(self.running){
+            if(self.colliso){
+                self.colliso = false;
+                self.currentLevel++;
+                self.scoreDelegate?.setPoint();
+            }else if(self.enableFail){
+                self.scoreDelegate?.setFail();
+            }
         }
     }
     

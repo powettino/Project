@@ -107,19 +107,12 @@ class ViewController: UIViewController, ScoreDelegate{
         case stop = "Stop"
     }
     
-    //    enum tickerAngleMov {
-    //        case low, medium, high, higher
-    //    }
-    
     var started : Bool = false
     var modGame : mod = mod.stressing
     var level : Int = 1
-    //    var minAngle: Double = 0
-    //    var maxAngle : Double = 0
     var counter = 3
     var timerEndGame = NSTimer()
     var currentPoint = 0
-    //    var dimAngle : Double = 0
     var counterTime = 60
     var timerMod = NSTimer()
     var optionOpened :Bool = false
@@ -135,92 +128,28 @@ class ViewController: UIViewController, ScoreDelegate{
         }
     }
     
-    func setPoint(){
-        //            switch self.modGame {
-        //            case mod.stressing:
-        //                println("min \(minAngle) - max \(maxAngle) - stoppd \(stoppedAngle)")
-        //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-        //                    self.level++
-        //                    self.currentPoint += self.modGame.rawValue
-        //                    self.updateRecord()
-        //                    self.puntiAttuali.text = String(self.currentPoint)
-        //                    self.calcAngleOnLevel()
-        //                    self.levelText.text = String(self.level)
-        //                }
-        //            case mod.astonishing:
-        //
-        //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-        //                    self.level++
-        //                    self.currentPoint += self.modGame.rawValue
-        //                    self.updateRecord()
-        //                    self.puntiAttuali.text = String(self.currentPoint)
-        //                    self.calcAngleOnLevel()
-        //                    self.levelText.text = String(self.level)
-        //                }else{
-        //                    //                    self.timer.invalidate()
-        //                    self.timerMod.invalidate()
-        //                    self.acceleratorView.bloccaTicker()
-        //                    //                    self.acceleratorView.resetTicker()
-        //                    self.selectAlert()
-        //                }
-        //
-        //            case mod.survival:
-        //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-        //                    self.level++
-        //                    self.currentPoint += self.modGame.rawValue
-        //                    self.updateRecord()
-        //                    self.puntiAttuali.text = String(self.currentPoint)
-        //                    self.calcAngleOnLevel()
-        //                    self.levelText.text = String(self.level)
-        //                }else{
-        //                    //                    self.timer.invalidate()
-        //                    self.acceleratorView.bloccaTicker()
-        //                    //                    self.acceleratorView.resetTicker()
-        //                    self.selectAlert()
-        //                }
-        //            case mod.soft:
-        //                //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
-        //                self.startButton.enabled=false
-        //                self.acceleratorView.bloccaTicker()
-        //                //                self.acceleratorView.resetTicker()
-        //                //                self.timer.invalidate()
-        //
-        //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-        //
-        //                    var origFrame = self.fadingView.frame
-        //                    self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
-        //                    self.level++
-        //                    self.currentPoint += self.modGame.rawValue
-        //
-        //                    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-        //                        self.fadingView.frame = origFrame
-        //                        self.fadingView.alpha = 1
-        //                        self.fadingView.hidden = false
-        //                        self.acceleratorView.alpha = 0.4
-        //                        self.labelCount.alpha=1
-        //                        self.labelCongrats.alpha=1
-        //                        }, completion: { finished in
-        //                            UIView.animateWithDuration(1, animations: {
-        //                                self.levelText.text = String(self.level)
-        //                                self.puntiAttuali.text = String(self.currentPoint)
-        //                                self.updateRecord()
-        //
-        //                                }, completion: {
-        //                                    finished in
-        //                                    self.timerEndGame = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("messageGame"), userInfo: nil, repeats: true)
-        //                                }
-        //                            )
-        //                        }
-        //                    )
-        //
-        //                }else{
-        //                    self.selectAlert()
-        //                }
-        //            default :
-        //                break
-        //
-        //            }
-
+    func updateRecord(){
+        if(self.currentPoint > self.recordPoint){
+            self.recordPoint = self.currentPoint
+            self.record.text = String(self.recordPoint)
+        }
+    }
+    
+    func selectAlert(){
+        switch(self.recordPoint, self.modGame){
+        case (self.currentPoint-1, _):
+            self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!")
+        case (_, mod.stressing):
+            self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
+        case (_, mod.soft):
+            self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness...")
+        case (_, mod.survival):
+            self.showEndAlert("Nice try", message: "You will reborn...again...", action: "Let me live")
+        case (_, mod.astonishing):
+            self.showEndAlert("Nothing to blame", message: "It still hard for you", action: "I'm not giving up")
+        default:
+            break;
+        }
     }
     
     private func apriMenu() {
@@ -279,8 +208,6 @@ class ViewController: UIViewController, ScoreDelegate{
         //        acceleratorView.frame.size.width = self.view.bounds.size.width;
         self.scene?.size = acceleratorView.bounds.size
         self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
-        //        var o = self.scene?.childNodeWithName("grid");
-        //        o?.position.x = acceleratorView.bounds.size.width/2;
         acceleratorView.presentScene(self.scene!)
         scene?.scoreDelegate = self;
         //        self.scene?.startGame()
@@ -292,7 +219,6 @@ class ViewController: UIViewController, ScoreDelegate{
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.startButton.tintColor = UIColor.whiteColor()
-        //        self.minDimAngle = self.acceleratorView.getTickerAngleMov()
         
         self.slidingMenu.layer.cornerRadius=30
         self.slidingMenu.layer.borderColor=UIColor.blackColor().CGColor
@@ -329,7 +255,7 @@ class ViewController: UIViewController, ScoreDelegate{
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.acceleratorView.alpha=1
-        self.resetGame()
+        //        self.resetGame()
         
     }
     
@@ -341,33 +267,14 @@ class ViewController: UIViewController, ScoreDelegate{
         self.puntiAttuali.text = String(self.currentPoint)
         self.levelText.text = String(self.level)
         self.startButton.enabled=true
-        //        self.acceleratorView.resetTicker()
         self.counterTime = 60
         self.changeModView()
         self.scene?.resetSpeedo();
-        //        self.scene?.enableYellowSection(level);
         self.counter=3
     }
     
     func schedulaContatore(){
         self.timerMod = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countSec"), userInfo: nil, repeats: true)
-    }
-    
-    func selectAlert(){
-        switch(self.recordPoint, self.modGame){
-        case (self.currentPoint-1, _):
-            self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!")
-        case (_, mod.stressing):
-            self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
-        case (_, mod.soft):
-            self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness...")
-        case (_, mod.survival):
-            self.showEndAlert("Nice try", message: "You will reborn...again...", action: "Let me live")
-        case (_, mod.astonishing):
-            self.showEndAlert("Nothing to blame", message: "It still hard for you", action: "I'm not giving up")
-        default:
-            break;
-        }
     }
     
     func countSec(){
@@ -381,16 +288,10 @@ class ViewController: UIViewController, ScoreDelegate{
         }
     }
     
-    func updateRecord(){
-        if(self.currentPoint > self.recordPoint){
-            self.recordPoint = self.currentPoint
-            self.record.text = String(self.recordPoint)
-        }
-    }
-    
     func showEndAlert(title : String, message : String, action: String){
         var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler: {finished in
+        alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler:{
+            finished in
             self.resetGame()
             //            self.started = !self.started
         }))
@@ -408,11 +309,12 @@ class ViewController: UIViewController, ScoreDelegate{
                 self.labelCongrats.alpha=0
                 self.labelCount.alpha=0
                 self.acceleratorView.alpha=1
-                self.scene?.changeLevel(self.level);
-                //                self.scene?.enableYellowSection(self.level)
                 }, completion: {finished in
                     self.counter=3
                     self.labelCount.text = String(self.counter)
+                    self.scene?.setLevel(self.level);
+                    self.scene?.pauseNeedle(false);
+                    self.scene?.updateCollisionSection();
                 }
             )
             //            var time  = Speedo.NeedleSpeed.medium.rawValue
@@ -437,8 +339,7 @@ class ViewController: UIViewController, ScoreDelegate{
     //    NSLog("min \(minAngle) - max \(maxAngle)");
     //}
     
-    @IBAction func startGame(sender: AnyObject) {
-        //        var stoppedAngle = self.acceleratorView.getTickerAngle()
+    @IBAction func startGame(sender: AnyObject) {        
         switch started  {
         case false:
             self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
@@ -447,17 +348,13 @@ class ViewController: UIViewController, ScoreDelegate{
                 self.counter=3
                 self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.low)
                 self.scene?.startGame();
-                //                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
-                //                self.acceleratorView.animaTicker(timeTicker.medium.rawValue)
-                //                self.schedulaGame(timeTicker.medium.rawValue)
+                self.scene?.enableFailDelegate(true);
             case mod.stressing:
                 self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.medium)
-                //                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.medium))
                 self.timeLabel.text = String(counterTime)
-                //                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
-                //                self.schedulaGame(timeTicker.medium.rawValue)
                 self.schedulaContatore()
                 self.scene?.startGame();
+                self.scene?.enableFailDelegate(false);
             case mod.astonishing:
                 self.schedulaContatore()
                 self.timeLabel.text = String(counterTime)
@@ -466,12 +363,13 @@ class ViewController: UIViewController, ScoreDelegate{
                 //                self.schedulaGame(timeTicker.fast.rawValue)
                 //                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.higher))
                 //                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
-                
+                self.scene?.enableFailDelegate(false);
             case mod.survival:
                 //                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.high))
                 //                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
                 self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
                 self.scene?.startGame();
+                self.scene?.enableFailDelegate(true);
                 //                self.schedulaGame(timeTicker.fast.rawValue)
             default:
                 break
@@ -480,19 +378,31 @@ class ViewController: UIViewController, ScoreDelegate{
             
         default:
             break
-            //bisogna gestire lo stop del gioco
-            
-            //            switch self.modGame {
-            //            case mod.stressing:
-            //                println("min \(minAngle) - max \(maxAngle) - stoppd \(stoppedAngle)")
-            //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-            //                    self.level++
-            //                    self.currentPoint += self.modGame.rawValue
-            //                    self.updateRecord()
-            //                    self.puntiAttuali.text = String(self.currentPoint)
-            //                    self.calcAngleOnLevel()
-            //                    self.levelText.text = String(self.level)
-            //                }
+        }
+    }
+    
+    func setFail(){
+        switch self.modGame{
+        case mod.soft:
+            self.scene?.stopNeedle();
+            self.selectAlert();
+        default:
+            break;
+        }
+    }
+    
+    func setPoint(){
+        switch self.modGame {
+        case mod.stressing:
+            //            if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
+            self.level++
+            self.currentPoint += self.modGame.rawValue
+            self.updateRecord()
+            self.puntiAttuali.text = String(self.currentPoint)
+            //                self.calcAngleOnLevel()
+            self.levelText.text = String(self.level)
+            self.scene?.setLevel(self.level);
+            self.scene?.updateCollisionSection();
             //            case mod.astonishing:
             //
             //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
@@ -524,52 +434,32 @@ class ViewController: UIViewController, ScoreDelegate{
             //                    //                    self.acceleratorView.resetTicker()
             //                    self.selectAlert()
             //                }
-            //            case mod.soft:
-            //                //                self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
-            //                self.startButton.enabled=false
-            //                self.acceleratorView.bloccaTicker()
-            //                //                self.acceleratorView.resetTicker()
-            //                //                self.timer.invalidate()
-            //
-            //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-            //
-            //                    var origFrame = self.fadingView.frame
-            //                    self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
-            //                    self.level++
-            //                    self.currentPoint += self.modGame.rawValue
-            //
-            //                    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            //                        self.fadingView.frame = origFrame
-            //                        self.fadingView.alpha = 1
-            //                        self.fadingView.hidden = false
-            //                        self.acceleratorView.alpha = 0.4
-            //                        self.labelCount.alpha=1
-            //                        self.labelCongrats.alpha=1
-            //                        }, completion: { finished in
-            //                            UIView.animateWithDuration(1, animations: {
-            //                                self.levelText.text = String(self.level)
-            //                                self.puntiAttuali.text = String(self.currentPoint)
-            //                                self.updateRecord()
-            //                                
-            //                                }, completion: {
-            //                                    finished in
-            //                                    self.timerEndGame = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("messageGame"), userInfo: nil, repeats: true)
-            //                                }
-            //                            )
-            //                        }
-            //                    )
-            //                    
-            //                }else{
-            //                    self.selectAlert()
-            //                }
-            //            default :
-            //                break
-            //                
-            //            }
+        case mod.soft:
+            self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
+            self.startButton.enabled=false
+            self.scene?.pauseNeedle(true);
+            var origFrame = self.fadingView.frame
+            self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
+            self.level++
+            self.currentPoint += self.modGame.rawValue
+            self.puntiAttuali.text = String(self.currentPoint)
+            self.updateRecord()
+            self.levelText.text = String(self.level)
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.fadingView.frame = origFrame
+                self.fadingView.alpha = 1
+                self.fadingView.hidden = false
+                self.acceleratorView.alpha = 0.4
+                self.labelCount.alpha=1
+                self.labelCongrats.alpha=1
+                }, completion: { finished in
+                    self.timerEndGame = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("messageGame"), userInfo: nil, repeats: true)
+                }
+            )
+        default :
+            break;
         }
     }
-    
-    
     
 }
 
