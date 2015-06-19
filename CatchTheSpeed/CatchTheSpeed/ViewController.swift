@@ -64,9 +64,7 @@ class ViewController: UIViewController, ScoreDelegate{
         default:
             break;
         }
-        if(self.started){
-            self.resetSession()
-        }
+        NSLog("ora sonoSur \(self.modGame.rawValue)");
     }
     
     @IBAction func changingTimer(sender: AnyObject) {
@@ -82,13 +80,21 @@ class ViewController: UIViewController, ScoreDelegate{
         default:
             break;
         }
-        if(self.started){
-            self.resetSession()
-        }
     }
     
     @IBAction func optionClick(sender: AnyObject) {
-        self.apriMenu()
+        self.scene?.pauseNeedle(true);
+        if(!self.optionOpened){
+            var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
+            UIView.animateWithDuration(0.3 , delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
+                self.slidingMenu.frame = newFrame;
+                } , completion:(nil))
+            self.optionOpened=true
+            self.startButton.enabled=false
+        }else{
+            self.closeMenu()
+        }
+
     }
     
     @IBAction func closingMenu(sender: AnyObject) {
@@ -98,8 +104,8 @@ class ViewController: UIViewController, ScoreDelegate{
     enum mod : Int {
         case soft = 100
         case stressing = 50
-        case astonishing = 200
-        case survival = 500
+        case survival = 200
+        case astonishing = 500
     }
     
     enum buttonLabel : String {
@@ -108,7 +114,7 @@ class ViewController: UIViewController, ScoreDelegate{
     }
     
     var started : Bool = false
-    var modGame : mod = mod.stressing
+    var modGame : mod = mod.soft
     var level : Int = 1
     var counter = 3
     var timerEndGame = NSTimer()
@@ -152,20 +158,19 @@ class ViewController: UIViewController, ScoreDelegate{
         }
     }
     
-    private func apriMenu() {
-        if(!self.optionOpened){
-            var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
-            
-            UIView.animateWithDuration(0.3 , delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
-                self.slidingMenu.frame = newFrame;
-                } , completion:(nil))
-            self.optionOpened=true
-            self.startButton.enabled=false
-        }else{
-            self.closeMenu()
-        }
-        
-    }
+//    private func apriMenu() {
+//        self.scene?.pauseNeedle(true);
+//        if(!self.optionOpened){
+//            var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
+//            UIView.animateWithDuration(0.3 , delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
+//                self.slidingMenu.frame = newFrame;
+//                } , completion:(nil))
+//            self.optionOpened=true
+//            self.startButton.enabled=false
+//        }else{
+//            self.closeMenu()
+//        }
+//    }
     
     private func closeMenu(){
         var currentFrame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
@@ -175,27 +180,48 @@ class ViewController: UIViewController, ScoreDelegate{
             }, completion:(nil))
         self.optionOpened = false
         self.startButton.enabled = true
-        self.changeModView()
+        if(self.changeModView()){
+            self.scene?.resetSpeedo()
+            self.started = false;
+        }
+        self.scene?.pauseNeedle(false);
     }
     
-    private func changeModView(){
-        switch self.modGame {
-        case mod.stressing:
-            self.timeLabel.text = String(self.counterTime)
-            self.modalita.text = "Stressing"
-        case mod.soft:
+    private func changeModView() -> Bool{
+        var changed : Bool! = false;
+        switch (self.modGame, self.modalita.text!) {
+        case (mod.stressing, "Stressing"):
+            break;
+        case (mod.soft, "Soft"):
+            break;
+        case (mod.survival, "Survival"):
+            break;
+        case (mod.astonishing, "Astonishing!!") :
+            break;
+        case (mod.soft, _):
+            NSLog("Cambio modalita");
             self.modalita.text = "Soft"
             self.timeLabel.text = "-"
-        case mod.survival:
+            changed=true;
+        case (mod.stressing, _):
+            NSLog("Cambio modalita");
+            self.timeLabel.text = String(self.counterTime)
+            self.modalita.text = "Stressing"
+            changed=true;
+        case (mod.survival, _):
+            NSLog("Cambio modalita");
             self.modalita.text = "Survival"
             self.timeLabel.text = "-"
-        case mod.astonishing :
+            changed=true;
+        case (mod.astonishing, _) :
+            NSLog("Cambio modalita");
             self.modalita.text = "Astonishing!!"
             self.timeLabel.text = String(self.counterTime)
-            
+            changed=true;
         default:
             break
         }
+        return changed;
     }
     
     override func viewDidLoad() {
@@ -245,7 +271,6 @@ class ViewController: UIViewController, ScoreDelegate{
     }
     
     private func resetSession(){
-        //        self.acceleratorView.bloccaTicker()
         self.timerEndGame.invalidate()
         self.timerMod.invalidate()
         self.fadingView.alpha = 0
@@ -253,8 +278,7 @@ class ViewController: UIViewController, ScoreDelegate{
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.acceleratorView.alpha=1
-        //        self.resetGame()
-        
+        self.resetGame()
     }
     
     private func resetGame(){
@@ -291,7 +315,7 @@ class ViewController: UIViewController, ScoreDelegate{
         alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler:{
             finished in
             self.resetGame()
-            //            self.started = !self.started
+            self.started = false
         }))
         self.presentViewController(alert, animated: true, completion: {})
     }
@@ -300,7 +324,6 @@ class ViewController: UIViewController, ScoreDelegate{
         if(self.counter == 1){
             self.timerEndGame.invalidate()
             UIView.animateWithDuration(0.2, animations: {
-                
                 self.fadingView.alpha = 0
                 self.fadingView.hidden = false
                 self.labelCongrats.alpha=0
@@ -310,7 +333,9 @@ class ViewController: UIViewController, ScoreDelegate{
                     self.counter=3
                     self.labelCount.text = String(self.counter)
                     self.scene?.setLevel(self.level);
-                    self.scene?.pauseNeedle(false);
+                    if(!self.optionOpened){
+                        self.scene?.pauseNeedle(false);
+                    }
                     self.scene?.updateCollisionSection(nil);
                 }
             )
@@ -337,21 +362,21 @@ class ViewController: UIViewController, ScoreDelegate{
                 self.schedulaContatore()
                 self.scene?.startGame();
                 self.scene?.enableFailDelegate(false);
+            case mod.survival:
+                self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
+                self.scene?.startGame();
+                self.scene?.enableFailDelegate(true);
             case mod.astonishing:
                 self.schedulaContatore()
                 self.timeLabel.text = String(counterTime)
-                self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
-                self.scene?.startGame();
-                self.scene?.enableFailDelegate(false);
-            case mod.survival:
                 self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
                 self.scene?.startGame();
-                self.scene?.enableFailDelegate(true);
+                self.scene?.enableFailDelegate(false);
+                
             default:
                 break
             }
-            started = !started
-            
+            started = true;
         default:
             break
         }
@@ -372,9 +397,9 @@ class ViewController: UIViewController, ScoreDelegate{
         case mod.soft:
             self.scene?.stopNeedle();
             self.selectAlert();
-        case mod.astonishing:
-            self.scene?.stopNeedle();
-            self.selectAlert();
+            //        case mod.astonishing:
+            //            self.scene?.stopNeedle();
+            //            self.selectAlert();
         case mod.survival:
             self.scene?.stopNeedle();
             self.selectAlert()

@@ -59,7 +59,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             colliderNode = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
             colliderNode!.name = name+"Collider";
             var punto = Speedo.findXY(spriteNode!.size.height + 30 , centerX: posX, centerY: posY, angle: Speedo.degreesToRadiant(90));
-            //                Speedo.degreesToRadiant(self.minDegreeNeedleAngle));
             colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y-spriteNode!.position.y)
             colliderNode!.zPosition = posZ;
             colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2-7)
@@ -208,7 +207,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private var yellowSection : YellowSection!
     private var maxAngle : CGFloat!
     private var minAngle : CGFloat!
-    private static var minSectionDimension : Double = 10;//    internal var dimAngleYellowSection : Double!
+    private static var minSectionDimension : Double = 10;
     private var centerX : CGFloat!;
     private var centerY : CGFloat!;
     
@@ -227,7 +226,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     }
     
     func startGame(){
-        //        self.needle.setSpeed(Needle.NeedleSpeed.fast)
         self.needle.startRotation();
         self.running=true;
         NSLog("velocita: \(self.needle.speed.rawValue)");
@@ -292,11 +290,14 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     }
     
     func resetSpeedo(){
+        NSLog("needle : \(self.running)")
+        //        if(self.running){
         self.stopNeedle();
         self.needle.increaseSpeedTo(1.0);
         self.needle.setStartPosition(maxDegreeNeedleAngle)
         self.currentLevel = 1;
         self.updateCollisionSection(self.currentLevel);
+        //        }
     }
     
     func pauseNeedle(paused: Bool){
@@ -335,7 +336,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     
     override func update(currentTime: NSTimeInterval) {
         var intersecato = self.needle.colliderNode!.intersectsNode(self.yellowSection.colliderNode!);
-        //        NSLog("intersecato \(intersecato)");
         if(intersecato && !self.colliso){
             self.colliso = true;
         }
