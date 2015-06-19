@@ -98,8 +98,8 @@ class ViewController: UIViewController, ScoreDelegate{
     enum mod : Int {
         case soft = 100
         case stressing = 50
-        case survival = 300
-        case astonishing = 500
+        case astonishing = 200
+        case survival = 500
     }
     
     enum buttonLabel : String {
@@ -214,8 +214,6 @@ class ViewController: UIViewController, ScoreDelegate{
         
         self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.fadingView.hidden=true
-        //self.labelCongrats.hidden=true
-        //self.labelCount.hidden=true
         self.labelCongrats.alpha=0
         self.labelCount.alpha=0
         self.startButton.tintColor = UIColor.whiteColor()
@@ -281,7 +279,7 @@ class ViewController: UIViewController, ScoreDelegate{
         if(self.counterTime == 0){
             self.timerMod.invalidate()
             self.selectAlert()
-            //            self.acceleratorView.bloccaTicker()
+            self.scene?.stopNeedle();
         }else{
             self.counterTime--
             self.timeLabel.text = String(counterTime)
@@ -299,7 +297,6 @@ class ViewController: UIViewController, ScoreDelegate{
     }
     
     func messageGame(){
-        //        println("uff \(self.counter)")
         if(self.counter == 1){
             self.timerEndGame.invalidate()
             UIView.animateWithDuration(0.2, animations: {
@@ -314,15 +311,9 @@ class ViewController: UIViewController, ScoreDelegate{
                     self.labelCount.text = String(self.counter)
                     self.scene?.setLevel(self.level);
                     self.scene?.pauseNeedle(false);
-                    self.scene?.updateCollisionSection();
+                    self.scene?.updateCollisionSection(nil);
                 }
             )
-            //            var time  = Speedo.NeedleSpeed.medium.rawValue
-            //            if(scene?.getDimAnglePointSection() == minAngle){
-            //                time -= 0.002
-            //        }
-            //            self.schedulaGame(time)
-            //            self.acceleratorView.animaTicker(time)
             self.startButton.enabled=true
         }else{
             self.counter -= 1
@@ -330,16 +321,7 @@ class ViewController: UIViewController, ScoreDelegate{
         self.labelCount.text = String(self.counter)
     }
     
-    //private func resetCoordinates(){
-    //    //        let angles = self.scene!.getReferenceAngleValue()
-    //    //        self.minAngle = angles.min
-    //    self.minAngle = self.scene!.minDegreeNeedleAngle
-    //    //        self.maxAngle = angles.max
-    //    self.maxAngle = self.scene!.maxDegreeNeedleAngle
-    //    NSLog("min \(minAngle) - max \(maxAngle)");
-    //}
-    
-    @IBAction func startGame(sender: AnyObject) {        
+    @IBAction func startGame(sender: AnyObject) {
         switch started  {
         case false:
             self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
@@ -360,17 +342,11 @@ class ViewController: UIViewController, ScoreDelegate{
                 self.timeLabel.text = String(counterTime)
                 self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
                 self.scene?.startGame();
-                //                self.schedulaGame(timeTicker.fast.rawValue)
-                //                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.higher))
-                //                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
                 self.scene?.enableFailDelegate(false);
             case mod.survival:
-                //                self.acceleratorView.setTickerAngleMov(self.getTickerMov(tickerAngleMov.high))
-                //                self.acceleratorView.animaTicker(timeTicker.fast.rawValue)
                 self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
                 self.scene?.startGame();
                 self.scene?.enableFailDelegate(true);
-                //                self.schedulaGame(timeTicker.fast.rawValue)
             default:
                 break
             }
@@ -381,70 +357,48 @@ class ViewController: UIViewController, ScoreDelegate{
         }
     }
     
+    func checkTimeToSpeedUp(){
+        if(self.scene?.isMinimunSectionDimension() == true){
+            if(self.level > 10){
+                var increasing : CGFloat = CGFloat(self.level) / 25.0
+                self.scene?.increaseSpeedTo(increasing);
+                NSLog("incremento di \(increasing)");
+            }
+        }
+    }
+    
     func setFail(){
         switch self.modGame{
         case mod.soft:
             self.scene?.stopNeedle();
             self.selectAlert();
+        case mod.astonishing:
+            self.scene?.stopNeedle();
+            self.selectAlert();
+        case mod.survival:
+            self.scene?.stopNeedle();
+            self.selectAlert()
         default:
             break;
         }
     }
     
     func setPoint(){
+        self.currentPoint += self.modGame.rawValue
+        self.level++
+        self.updateRecord()
+        self.puntiAttuali.text = String(self.currentPoint)
+        self.levelText.text = String(self.level)
         switch self.modGame {
-        case mod.stressing:
-            //            if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-            self.level++
-            self.currentPoint += self.modGame.rawValue
-            self.updateRecord()
-            self.puntiAttuali.text = String(self.currentPoint)
-            //                self.calcAngleOnLevel()
-            self.levelText.text = String(self.level)
-            self.scene?.setLevel(self.level);
-            self.scene?.updateCollisionSection();
-            //            case mod.astonishing:
-            //
-            //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-            //                    self.level++
-            //                    self.currentPoint += self.modGame.rawValue
-            //                    self.updateRecord()
-            //                    self.puntiAttuali.text = String(self.currentPoint)
-            //                    self.calcAngleOnLevel()
-            //                    self.levelText.text = String(self.level)
-            //                }else{
-            //                    //                    self.timer.invalidate()
-            //                    self.timerMod.invalidate()
-            //                    self.acceleratorView.bloccaTicker()
-            //                    //                    self.acceleratorView.resetTicker()
-            //                    self.selectAlert()
-            //                }
-            //
-            //            case mod.survival:
-            //                if (stoppedAngle >= self.minAngle && stoppedAngle <= self.maxAngle ){
-            //                    self.level++
-            //                    self.currentPoint += self.modGame.rawValue
-            //                    self.updateRecord()
-            //                    self.puntiAttuali.text = String(self.currentPoint)
-            //                    self.calcAngleOnLevel()
-            //                    self.levelText.text = String(self.level)
-            //                }else{
-            //                    //                    self.timer.invalidate()
-            //                    self.acceleratorView.bloccaTicker()
-            //                    //                    self.acceleratorView.resetTicker()
-            //                    self.selectAlert()
-            //                }
+        case mod.stressing, mod.astonishing, mod.survival:
+            self.scene?.updateCollisionSection(self.level);
+            checkTimeToSpeedUp()
         case mod.soft:
             self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
             self.startButton.enabled=false
             self.scene?.pauseNeedle(true);
             var origFrame = self.fadingView.frame
             self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
-            self.level++
-            self.currentPoint += self.modGame.rawValue
-            self.puntiAttuali.text = String(self.currentPoint)
-            self.updateRecord()
-            self.levelText.text = String(self.level)
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                 self.fadingView.frame = origFrame
                 self.fadingView.alpha = 1
@@ -460,6 +414,5 @@ class ViewController: UIViewController, ScoreDelegate{
             break;
         }
     }
-    
 }
 

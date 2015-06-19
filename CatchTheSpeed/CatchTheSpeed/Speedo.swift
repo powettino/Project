@@ -76,6 +76,10 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             speed = newSpeed;
         }
         
+        mutating func increaseSpeedTo(value: CGFloat){
+            spriteNode!.runAction(SKAction.speedTo(value, duration: 0.5));
+        }
+        
         mutating func setStartPosition(startingAngle : Double){
             spriteNode!.zRotation = Speedo.degreesToRadiant(startingAngle)
         }
@@ -159,7 +163,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             var dimensionAngle = (fixedAngles.max - fixedAngles.min) / Double((level + 7))
             
             //NSLog("Dimensione angolo: \(dimensionAngle) - minimo: \( fixedAngles.min )");
-            dimensionAngle = dimensionAngle < fixedAngles.min ? fixedAngles.min :dimensionAngle;
+            dimensionAngle = dimensionAngle < Speedo.minSectionDimension ? Speedo.minSectionDimension : dimensionAngle;
             
             var rnd: Double = Speedo.randomDouble( (fixedAngles.min + dimensionAngle),  max: (fixedAngles.max))
             //NSLog("Punto random: \(rnd)");
@@ -204,8 +208,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private var yellowSection : YellowSection!
     private var maxAngle : CGFloat!
     private var minAngle : CGFloat!
-    private var minAngleYellowSection : Double = 10
-    private var dimAngleYellowSection : Double!
+    private static var minSectionDimension : Double = 10;//    internal var dimAngleYellowSection : Double!
     private var centerX : CGFloat!;
     private var centerY : CGFloat!;
     
@@ -215,12 +218,16 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.needle.setSpeed(speed);
     }
     
+    func increaseSpeedTo(value : CGFloat){
+        self.needle.increaseSpeedTo(value);
+    }
+    
     func enableFailDelegate(enable : Bool){
         self.enableFail = enable;
     }
     
     func startGame(){
-//        self.needle.setSpeed(Needle.NeedleSpeed.fast)
+        //        self.needle.setSpeed(Needle.NeedleSpeed.fast)
         self.needle.startRotation();
         self.running=true;
         NSLog("velocita: \(self.needle.speed.rawValue)");
@@ -286,9 +293,10 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     
     func resetSpeedo(){
         self.stopNeedle();
+        self.needle.increaseSpeedTo(1.0);
         self.needle.setStartPosition(maxDegreeNeedleAngle)
         self.currentLevel = 1;
-        self.updateCollisionSection()
+        self.updateCollisionSection(self.currentLevel);
     }
     
     func pauseNeedle(paused: Bool){
@@ -299,7 +307,10 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.currentLevel = level;
     }
     
-    func updateCollisionSection(){
+    func updateCollisionSection(level : Int?){
+        if let tempLevel = level{
+            self.setLevel(tempLevel);
+        }
         for (obj) in self.children{
             if(self.yellowSectionShapeName == obj.name){
                 obj.removeFromParent();
@@ -333,7 +344,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         }
     }
     
-    func getDimAnglePointSection() -> Double{
-        return self.dimAngleYellowSection;
+    func isMinimunSectionDimension() -> Bool{
+        return (self.yellowSection.referenceAngles.angles.dim == Speedo.degreesToRadiant(Speedo.minSectionDimension));
     }
 }
