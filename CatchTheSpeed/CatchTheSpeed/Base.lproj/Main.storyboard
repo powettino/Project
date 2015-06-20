@@ -3,6 +3,11 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Blazed.ttf">
+            <string>Blazed</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="IGw-BA-Dom">
@@ -141,23 +146,35 @@
                                 <color key="backgroundColor" red="1" green="0.98800751460921776" blue="0.021670761362232782" alpha="0.0" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="scR-hz-rh7">
-                                <rect key="frame" x="13" y="271" width="294" height="214"/>
+                                <rect key="frame" x="0.0" y="271" width="320" height="214"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wGK-1e-Ytx">
-                                        <rect key="frame" x="33" y="0.0" width="228" height="139"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congrats!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="3wr-1o-lGY">
+                                        <rect key="frame" x="42" y="0.0" width="232" height="139"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">Congrats!
-Next level
-in ... </string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="37"/>
-                                        <nil key="highlightedColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="highlightedColor" red="0.99462966153464538" green="1" blue="0.99674339526510702" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="shadowColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="3" height="2"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mpY-At-1eQ">
-                                        <rect key="frame" x="129" y="147" width="37" height="51"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congrats!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="wGK-1e-Ytx">
+                                        <rect key="frame" x="42" y="0.0" width="232" height="139"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="37"/>
-                                        <nil key="highlightedColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                        <color key="textColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="highlightedColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="3" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="mpY-At-1eQ">
+                                        <rect key="frame" x="127" y="107" width="62" height="76"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="65"/>
+                                        <color key="textColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="highlightedColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="6" height="2"/>
                                     </label>
                                 </subviews>
                             </view>
@@ -284,9 +301,10 @@ in ... </string>
                     <connections>
                         <outlet property="acceleratorView" destination="6SP-Wf-V6S" id="HPK-pd-dDU"/>
                         <outlet property="closeSlidingMenu" destination="AmG-UY-e4j" id="D3X-RD-Lvm"/>
+                        <outlet property="copyLabelText" destination="3wr-1o-lGY" id="zg8-eq-kW7"/>
                         <outlet property="fadingView" destination="scR-hz-rh7" id="2Ef-M6-Hqy"/>
-                        <outlet property="labelCongrats" destination="wGK-1e-Ytx" id="112-4k-flZ"/>
                         <outlet property="labelCount" destination="mpY-At-1eQ" id="KEb-Nw-bEl"/>
+                        <outlet property="labelText" destination="wGK-1e-Ytx" id="EWS-ac-bgv"/>
                         <outlet property="levelText" destination="FB4-0f-hOQ" id="MER-my-A0U"/>
                         <outlet property="modalita" destination="Yxu-iV-6QS" id="XZa-3Y-JUd"/>
                         <outlet property="nomePlayer" destination="gNh-CS-7wn" id="f0Y-Ia-9ua"/>

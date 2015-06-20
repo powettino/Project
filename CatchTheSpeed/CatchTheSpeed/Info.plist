@@ -30,6 +30,13 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Blazed.ttf</string>
+		<string>Flame.ttf</string>
+		<string>budmo-jigglish.ttf</string>
+		<string>budmo-jiggler.ttf</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
