@@ -177,7 +177,8 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private final let gridNodeName :String = "gridNode"
     private final let needleNodeName : String = "needleNode"
     private final let labelNodeName : String = "labelNode"
-    private final let labelStandardText : String = "SPEED UP !!"
+    private final let smokeNodeName : String = "smokeNode"
+    private final let labelStandardText : String = "SPEED UP"
     
     private var enableFail = false;
     private let minDegreeNeedleAngle : Double = -136   //-46
@@ -187,7 +188,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private var colliso : Bool = false;
     private var running : Bool = false
     
-    private var smokeEmitter : SKEmitterNode!
     private var label: SKLabelNode!
     private var grid : SKSpriteNode!
     private var needle : Needle!
@@ -200,6 +200,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     
     var scoreDelegate : ScoreDelegate?
     
+    
     override func didMoveToView(view: SKView) {
         
         self.centerX = self.size.width/2;
@@ -208,7 +209,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.grid = SKSpriteNode(imageNamed: "primaprova.png");
         self.grid.name = self.gridNodeName;
         self.grid.position = CGPoint(x: self.centerX, y: self.centerY)
-        self.grid.size = CGSize(width: 300, height: 300);
+        self.grid.size = CGSize(width: self.size.width-50, height: self.size.width-50);
         
         self.grid.physicsBody = nil;
         self.addChild(self.grid)
@@ -241,8 +242,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         //        self.label.alpha=1
         self.addChild(self.label);
         
-        self.smokeEmitter = SKEmitterNode(fileNamed: "SmokeBrake");
-        self.smokeEmitter.position = CGPointMake(self.label.frame.width/2, 0)
         
         self.physicsWorld.gravity = CGVectorMake(0, 0);
         self.physicsWorld.contactDelegate = self;
@@ -250,7 +249,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        animateText(nil)
+//        animateText(nil)
         if(self.running){
             if(self.colliso){
                 self.colliso = false;
@@ -272,7 +271,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         }
     }
     
-    
     func setNeedleSpeed(speed : Needle.NeedleSpeed){
         self.needle.setSpeed(speed);
     }
@@ -286,40 +284,47 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     }
     
     func animateText(text : String?){
-        if let tempText = text {
-            self.label.text = tempText
-        }
-        self.label.alpha=1
-        
-        var midPoint = CGPointMake(self.centerX, self.centerY+50)
-        var startingPoint = CGPointMake(-self.label.frame.width-10, self.centerY+50)
-        var endingPoint = CGPointMake(self.size.width+self.label.frame.width+10, self.label.position.y)
-        
-        var inc = SKTMoveEffect(node: self.label, duration: 2, startPosition: startingPoint, endPosition:midPoint)
-        inc.timingFunction = SKTTimingFunctionBackEaseOut
-        
-        var block = SKAction.runBlock({
-            self.label.runAction( SKAction.actionWithEffect(inc));
-            self.runAction(SKAction.waitForDuration(0.3), completion: {self.label.addChild(self.smokeEmitter)});
-            self.runAction(SKAction.waitForDuration(0.3), completion:
-                {self.smokeEmitter.removeFromParent()})
+        if let emitter = self.childNodeWithName(self.smokeNodeName) {
+            NSLog("Esiste");
+        }else{
+            
+            if let tempText = text {
+                self.label.text = tempText
+                NSLog("ok");
             }
-        );
-        
-        var out = SKTMoveEffect(node: self.label, duration: 0.6, startPosition: self.label.position, endPosition: endingPoint)
-        out.timingFunction = SKTTimingFunctionBackEaseIn
-        
-        self.label.runAction(SKAction.sequence([
-            SKAction.runBlock({
-                self.label.runAction( SKAction.actionWithEffect(inc));
-                self.runAction(SKAction.waitForDuration(0.3), completion: {self.label.addChild(self.smokeEmitter)});
-                self.runAction(SKAction.waitForDuration(0.3), completion:
-                    {self.smokeEmitter.removeFromParent()})
-                }
-            ),
-            SKAction.waitForDuration(4),
-            SKAction.actionWithEffect(out)]),
-            withKey: "textAnimation");
+            
+            var originalPosition = self.label.position
+            
+            var midPoint = CGPointMake(self.centerX, self.centerY+50)
+            var startingPoint = CGPointMake(-self.label.frame.width-10, self.centerY+50)
+            var endingPoint = CGPointMake(self.size.width+self.label.frame.width+10, self.label.position.y)
+            
+            //NSLog("starting: \(startingPoint) - midpoint \(midPoint) - endpoint \(endingPoint)")
+            
+            var inc = SKTMoveEffect(node: self.label, duration: 0.8, startPosition: startingPoint, endPosition:midPoint)
+            inc.timingFunction = SKTTimingFunctionBackEaseOut
+            
+            var out = SKTMoveEffect(node: self.label, duration: 0.8, startPosition: self.label.position, endPosition: endingPoint)
+            out.timingFunction = SKTTimingFunctionBackEaseIn
+            
+            self.label.runAction(SKAction.sequence([
+                SKAction.actionWithEffect(inc),
+                SKAction.waitForDuration(0.5),
+                SKAction.actionWithEffect(out)]), completion:{
+                    self.label.position = originalPosition
+                    self.label.text = self.labelStandardText
+            });
+            
+            var smokeEmitter = SKEmitterNode(fileNamed: "SmokeBrake");
+            smokeEmitter.name = self.smokeNodeName
+            //        self.smokeEmitter.position = CGPointMake(self.label.frame.width/2, 0)
+            smokeEmitter.position = CGPointMake(self.centerX+(self.label.frame.width/2), self.centerY+50)
+            
+            self.runAction(SKAction.waitForDuration(0.3), completion: {self.addChild(smokeEmitter)});
+            self.runAction(SKAction.waitForDuration(2), completion:{
+                smokeEmitter.removeFromParent();
+            });
+        }
     }
     
     func startGame(){
@@ -353,10 +358,14 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         if let tempLevel = level{
             self.setLevel(tempLevel);
         }
-        for (obj) in self.children{
-            if(self.yellowSectionShapeName == obj.name){
-                obj.removeFromParent();
-            }
+        //        for (obj) in self.children{
+        //            if(self.yellowSectionShapeName == obj.name){
+        //                obj.removeFromParent();
+        //            }
+        //        }
+        self.enumerateChildNodesWithName(self.yellowSectionShapeName) {
+            node, stop in
+            node.removeFromParent();
         }
         
         self.yellowSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : self.radius);

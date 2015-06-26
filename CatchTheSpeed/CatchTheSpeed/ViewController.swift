@@ -27,7 +27,7 @@ extension SKNode {
 
 class ViewController: UIViewController, ScoreDelegate{
     
-    @IBOutlet weak var copyLabelText: UILabel!
+    @IBOutlet weak var copyLabelCount: UILabel!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var labelCount: UILabel!
@@ -65,7 +65,6 @@ class ViewController: UIViewController, ScoreDelegate{
         default:
             break;
         }
-        NSLog("ora sonoSur \(self.modGame.rawValue)");
     }
     
     @IBAction func changingTimer(sender: AnyObject) {
@@ -169,6 +168,7 @@ class ViewController: UIViewController, ScoreDelegate{
         if(self.changeModView()){
             self.scene?.resetSpeedo()
             self.started = false;
+            self.resetGame()
         }
         self.scene?.pauseNeedle(false);
     }
@@ -214,29 +214,32 @@ class ViewController: UIViewController, ScoreDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        for family in UIFont.familyNames(){
-//            for fontname in UIFont.fontNamesForFamilyName(family as! String){
-//                NSLog("\(fontname)")
-//            }
-//        }
+        //        for family in UIFont.familyNames(){
+        //            for fontname in UIFont.fontNamesForFamilyName(family as! String){
+        //                NSLog("\(fontname)")
+        //            }
+        //        }
+        var res =  UtilityFunction.IOSDeviceUtility.checkDevice((self.view.bounds.width, self.view.bounds.height));
+        NSLog("res: \(res)")
+        acceleratorView.frame.size.width = self.view.frame.width
+        acceleratorView.frame.size.height = self.view.frame.width
+        acceleratorView.frame.origin.x = 0
+        acceleratorView.frame.origin.y = self.view.frame.height - self.view.frame.width-150
         
         
-        //        self.scene = Speedo.unarchiveFromFile("Speedo") as? Speedo
         self.scene = Speedo(size: acceleratorView.bounds.size)
         acceleratorView.showsFPS = true
         acceleratorView.showsNodeCount = true
-        //        acceleratorView.frame.size.width = self.view.bounds.size.width;
         self.scene?.size = acceleratorView.bounds.size
         self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
         acceleratorView.presentScene(self.scene!)
         scene?.scoreDelegate = self;
-        //        self.scene?.startGame()
         
         self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.fadingView.hidden=true
         self.labelText.alpha=0
-        self.copyLabelText.alpha=0
         self.labelCount.alpha=0
+        self.copyLabelCount.alpha=0
         self.startButton.tintColor = UIColor.whiteColor()
         
         self.slidingMenu.layer.cornerRadius=30
@@ -272,11 +275,13 @@ class ViewController: UIViewController, ScoreDelegate{
         self.fadingView.hidden = false
         self.labelText.alpha=0
         self.labelCount.alpha=0
+        self.copyLabelCount.alpha=0
         self.acceleratorView.alpha=1
-        self.resetGame()
+        //        self.resetGame()
     }
     
     private func resetGame(){
+        self.resetSession();
         self.started=false
         self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
         self.level=1
@@ -323,11 +328,15 @@ class ViewController: UIViewController, ScoreDelegate{
                 self.fadingView.hidden = false
                 self.labelText.alpha=0
                 self.labelCount.alpha=0
+                self.copyLabelCount.alpha=0
                 self.acceleratorView.alpha=1
                 }, completion: {finished in
                     self.labelCount.frame = CGRectMake(self.view.frame.width/2 - self.labelCount.frame.width/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
+                    self.copyLabelCount.frame = CGRectMake(self.view.frame.width/2 - self.labelCount.frame.width/2, self.copyLabelCount.frame.origin.y, self.copyLabelCount.frame.width, self.copyLabelCount.frame.height);
+                    
                     self.counter=3
                     self.labelCount.text = String(self.counter)
+                    self.copyLabelCount.text = String(self.counter)
                     self.scene?.setLevel(self.level);
                     if(!self.optionOpened){
                         self.scene?.pauseNeedle(false);
@@ -339,8 +348,11 @@ class ViewController: UIViewController, ScoreDelegate{
         }else{
             self.counter -= 1
             var middleFrame = CGRectMake(self.view.frame.width/2 - self.labelCount.frame.width/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
-            self.animateHorizontalElement(self.labelCount, originalFrame: middleFrame, completeDuration: self.timerEndGame.timeInterval, complex: false, finalComplention: nil);
+            var middleFrameCopy = CGRectMake(self.view.frame.width/2 - self.copyLabelCount.frame.width/2, self.copyLabelCount.frame.origin.y, self.copyLabelCount.frame.width, self.copyLabelCount.frame.height);
+            self.animateHorizontalElement(self.labelCount, middlePosition: middleFrame, completeDuration: self.timerEndGame.timeInterval, complex: ((self.counter==2) ? "left" : "right"), finalComplention: nil);
+            self.animateHorizontalElement(self.copyLabelCount, middlePosition: middleFrame, completeDuration: self.timerEndGame.timeInterval,complex: ((self.counter==1) ? "left" : "right"), finalComplention: nil);
             self.labelCount.text = String(self.counter)
+            self.copyLabelCount.text = String(self.counter)
         }
     }
     
@@ -385,56 +397,36 @@ class ViewController: UIViewController, ScoreDelegate{
             var increasing : CGFloat = CGFloat(self.level) / 25.0
             self.scene?.increaseSpeedTo(increasing);
             if((self.level % 5) == 0){
-                self.copyLabelText.text = "!! Speed up !!";
-                self.labelText.text = "!! Speed up !!";
-                self.labelText.alpha=1
-                self.copyLabelText.alpha=1
-                self.fadingView.alpha = 1
-                self.fadingView.hidden=false
-                var original = self.labelText.frame
-                self.animateHorizontalElement(self.labelText, originalFrame: original, completeDuration: 1.5, complex: true, finalComplention: {(result: Bool) in
-                    self.labelText.alpha=0
-                    self.labelText.text = "Congrats!";
-                    self.labelText.frame = original
-                });
-                original = self.copyLabelText.frame
-                self.animateHorizontalElement(self.copyLabelText, originalFrame: original, completeDuration: 1.6, complex: true, finalComplention: {(result: Bool) in
-                    self.fadingView.alpha = 0
-                    self.fadingView.hidden=true
-                    self.copyLabelText.alpha=0
-                    self.copyLabelText.frame = original
-                });
+                self.scene?.animateText(nil)
             }
         }
+        //        }
     }
     
-    
-    func animateHorizontalElement(toAnimate : UIView, originalFrame : CGRect, completeDuration: NSTimeInterval, complex : Bool, finalComplention: ((result: Bool) -> Void)?){
-        toAnimate.frame = CGRectMake(-originalFrame.width, originalFrame.origin.y, originalFrame.width, originalFrame.height)
-        if(complex){
+    func animateHorizontalElement(toAnimate : UIView, middlePosition : CGRect, completeDuration: NSTimeInterval, complex : String?, finalComplention: ((result: Bool) -> Void)?){
+        if(complex != nil){
+            var starting: CGRect!
+            if(complex == "left"){
+                starting = CGRectMake(self.view.frame.width+middlePosition.width+10, middlePosition.origin.y, middlePosition.width, middlePosition.height)
+            }else{
+                starting = CGRectMake(-middlePosition.width, middlePosition.origin.y, middlePosition.width, middlePosition.height)
+            }
+            toAnimate.frame = starting;
             UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                toAnimate.frame = originalFrame;
-                }, completion: nil )
-            UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { toAnimate.transform = CGAffineTransformMakeRotation(UtilityFunction.degreesToRadiant(-15))},  completion: {finished in
-                UIView.animateWithDuration(completeDuration/10, delay: completeDuration/10, options: UIViewAnimationOptions.CurveEaseInOut, animations: { toAnimate.transform = CGAffineTransformMakeRotation(UtilityFunction.degreesToRadiant(0))},  completion: {finished in
-                    UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { toAnimate.transform = CGAffineTransformMakeRotation(UtilityFunction.degreesToRadiant(15))},  completion: {finished in
-                        UIView.animateWithDuration(completeDuration/5, delay: completeDuration*(3/5), options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                            toAnimate.frame = CGRectMake(0-toAnimate.bounds.width-100, originalFrame.origin.y, originalFrame.width , originalFrame.height)
-                            }, completion : {finished in
-                                UIView.animateWithDuration(completeDuration/10, delay: completeDuration/10, options: UIViewAnimationOptions.CurveEaseInOut, animations: { toAnimate.transform = CGAffineTransformMakeRotation(UtilityFunction.degreesToRadiant(0))},  completion: {finished in
-                                    finalComplention
-                                    }
-                                )}
-                        )}
-                    )}
-                )}
-            )
-        }else{
-            UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                toAnimate.frame = originalFrame;
+                toAnimate.frame = middlePosition;
                 }, completion: {finished in
                     UIView.animateWithDuration(completeDuration/5, delay: completeDuration*(3/5), options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        toAnimate.frame = CGRectMake(self.view.frame.width+50, originalFrame.origin.y, originalFrame.width , originalFrame.height)
+                        toAnimate.frame = starting
+                        }, completion :
+                        finalComplention)
+            })
+        }else{
+            toAnimate.frame = CGRectMake(-middlePosition.width, middlePosition.origin.y, middlePosition.width, middlePosition.height)
+            UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                toAnimate.frame = middlePosition;
+                }, completion: {finished in
+                    UIView.animateWithDuration(completeDuration/5, delay: completeDuration*(3/5), options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        toAnimate.frame = CGRectMake(self.view.frame.width+50, middlePosition.origin.y, middlePosition.width , middlePosition.height)
                         }, completion :
                         finalComplention
                     )}
@@ -479,8 +471,12 @@ class ViewController: UIViewController, ScoreDelegate{
                 self.labelText.alpha=1
                 }, completion: { finished in
                     self.labelCount.alpha=1;
+                    self.copyLabelCount.alpha=1;
                     var duration : NSTimeInterval = 0.8;
-                    self.animateHorizontalElement(self.labelCount, originalFrame: self.labelCount.frame,  completeDuration: duration,complex: false, finalComplention: nil);
+                    self.animateHorizontalElement(self.labelCount, middlePosition: self.labelCount.frame, completeDuration: duration,complex: "right", finalComplention: nil);
+                    
+                    self.animateHorizontalElement(self.copyLabelCount, middlePosition: self.copyLabelCount.frame, completeDuration: duration, complex: "left", finalComplention: nil);
+                    
                     self.timerEndGame = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("messageGame"), userInfo: nil, repeats: true)
                     
                 }

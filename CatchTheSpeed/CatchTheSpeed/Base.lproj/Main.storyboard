@@ -6,6 +6,8 @@
     <customFonts key="customFonts">
         <mutableArray key="Blazed.ttf">
             <string>Blazed</string>
+            <string>Blazed</string>
+            <string>Blazed</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -149,23 +151,23 @@
                                 <rect key="frame" x="0.0" y="271" width="320" height="214"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congrats!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="3wr-1o-lGY">
-                                        <rect key="frame" x="42" y="0.0" width="232" height="139"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congrats!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="wGK-1e-Ytx">
+                                        <rect key="frame" x="8" y="15" width="304" height="74"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="highlightedColor" red="0.99462966153464538" green="1" blue="0.99674339526510702" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="shadowColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="3" height="2"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congrats!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="wGK-1e-Ytx">
-                                        <rect key="frame" x="42" y="0.0" width="232" height="139"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                        <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="40"/>
                                         <color key="textColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="3" height="2"/>
+                                        <size key="shadowOffset" width="6" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="wlb-GD-Q6S">
+                                        <rect key="frame" x="127" y="107" width="62" height="76"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="65"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="shadowColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="6" height="2"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="mpY-At-1eQ">
                                         <rect key="frame" x="127" y="107" width="62" height="76"/>
@@ -301,7 +303,7 @@
                     <connections>
                         <outlet property="acceleratorView" destination="6SP-Wf-V6S" id="HPK-pd-dDU"/>
                         <outlet property="closeSlidingMenu" destination="AmG-UY-e4j" id="D3X-RD-Lvm"/>
-                        <outlet property="copyLabelText" destination="3wr-1o-lGY" id="zg8-eq-kW7"/>
+                        <outlet property="copyLabelCount" destination="wlb-GD-Q6S" id="bOi-Ix-4Wy"/>
                         <outlet property="fadingView" destination="scR-hz-rh7" id="2Ef-M6-Hqy"/>
                         <outlet property="labelCount" destination="mpY-At-1eQ" id="KEb-Nw-bEl"/>
                         <outlet property="labelText" destination="wGK-1e-Ytx" id="EWS-ac-bgv"/>

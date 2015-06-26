@@ -11,6 +11,63 @@ import UIKit
 
 class UtilityFunction{
     
+    internal class IOSDeviceUtility {
+        
+        private final let iPhone5Bound : (CGFloat, CGFloat) = (320.0, 568.0)
+        private final let iPhone5SBound : (CGFloat, CGFloat) = (320.0, 568.0)
+        private final let iPhone6Bound : (CGFloat, CGFloat)  = (375.0, 667.0)
+        private final let iPhone6PlusBound : (CGFloat, CGFloat)  = (414.0, 736.0)
+        
+        internal enum IOSDeviceType : String {
+            case unknown = "unknown"
+            case iPhone5 = "5"
+            case iPhone5S = "5s"
+            case iPhone6 = "6"
+            case iPhone6Plus = "6+"
+            
+            static let allValues = [unknown, iPhone5, iPhone5S, iPhone6, iPhone6Plus]
+        }
+        
+        internal func IOSDeviceDimension(device: IOSDeviceType) -> (w:CGFloat, h:CGFloat)?{
+            switch device{
+            case .iPhone5:
+                return iPhone5Bound
+            case .iPhone5S:
+                return iPhone5SBound
+            case .iPhone6:
+                return iPhone6Bound
+            case .iPhone6Plus:
+                return iPhone6PlusBound
+            default:
+                return nil;
+            }
+        }
+        
+        internal func checkDevice(bounds:(CGFloat, CGFloat)) -> IOSDeviceUtility.IOSDeviceType{
+
+            for device in IOSDeviceUtility.IOSDeviceType.allValues{
+                if(UtilityFunction.compare(bounds, tuple2: IOSDeviceDimension(UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5S)!)){
+                    return device
+                }
+            }
+            return IOSDeviceType.unknown
+        }
+    }
+    
+    func iterateTupleWithResultBlock<C,R>(t:C, block:(String,Any)->R) {
+        let mirror = reflect(t)
+        for i in 0..<mirror.count {
+            block(mirror[i].0, mirror[i].1.value)
+        }
+    }
+    
+    
+    internal static func compare <T:Equatable> (tuple1:(T,T),tuple2:(T,T)) -> Bool
+    {
+        return (tuple1.0 == tuple2.0) && (tuple1.1 == tuple2.1)
+    }
+    
+    
     internal static func degreesToRadiant(angle : Double) -> CGFloat{
         return CGFloat(angle * (M_PI / 180));
     }
@@ -28,6 +85,6 @@ class UtilityFunction{
     internal static func randomDouble(min : Double , max : Double) -> Double{
         return (Double(arc4random())) / Double(UINT32_MAX) * (max-min) + min
     }
-
+    
     
 }
