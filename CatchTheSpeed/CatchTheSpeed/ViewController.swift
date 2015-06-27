@@ -219,7 +219,7 @@ class ViewController: UIViewController, ScoreDelegate{
         //                NSLog("\(fontname)")
         //            }
         //        }
-        var res =  UtilityFunction.IOSDeviceUtility.checkDevice((self.view.bounds.width, self.view.bounds.height));
+        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(UtilityFunction.IOSDeviceUtility) .IOSDeviceUtility.checkDevice((self.view.bounds.width, self.view.bounds.height));
         NSLog("res: \(res)")
         acceleratorView.frame.size.width = self.view.frame.width
         acceleratorView.frame.size.height = self.view.frame.width
