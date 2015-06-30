@@ -11,29 +11,29 @@ import UIKit
 
 class UtilityFunction{
     
-    internal class IOSDeviceUtility {
+    class IOSDeviceUtility {
         
-        private final let iPhone5Bound : (CGFloat, CGFloat) = (320.0, 568.0)
-        private final let iPhone5SBound : (CGFloat, CGFloat) = (320.0, 568.0)
-        private final let iPhone6Bound : (CGFloat, CGFloat)  = (375.0, 667.0)
-        private final let iPhone6PlusBound : (CGFloat, CGFloat)  = (414.0, 736.0)
+        private static let iPhone5Bound : (CGFloat, CGFloat) = (320.0, 568.0)
+        //        private static let iPhone5SBound : (CGFloat, CGFloat) = (320.0, 568.0)
+        private static let iPhone6Bound : (CGFloat, CGFloat)  = (375.0, 667.0)
+        private static let iPhone6PlusBound : (CGFloat, CGFloat)  = (414.0, 736.0)
         
-        internal enum IOSDeviceType : String {
+        enum IOSDeviceType : String {
             case unknown = "unknown"
             case iPhone5 = "5"
-            case iPhone5S = "5s"
+            //            case iPhone5S = "5s"
             case iPhone6 = "6"
             case iPhone6Plus = "6+"
             
-            static let allValues = [unknown, iPhone5, iPhone5S, iPhone6, iPhone6Plus]
+            static let allValues = [unknown, iPhone5, iPhone6, iPhone6Plus]
         }
         
-        internal func IOSDeviceDimension(device: IOSDeviceType) -> (w:CGFloat, h:CGFloat)?{
+        static func IOSDeviceDimension(device: IOSDeviceType) -> (w:CGFloat, h:CGFloat)?{
             switch device{
             case .iPhone5:
                 return iPhone5Bound
-            case .iPhone5S:
-                return iPhone5SBound
+                //            case .iPhone5S:
+                //                return iPhone5SBound
             case .iPhone6:
                 return iPhone6Bound
             case .iPhone6Plus:
@@ -43,11 +43,12 @@ class UtilityFunction{
             }
         }
         
-        internal func checkDevice(bounds:(CGFloat, CGFloat)) -> IOSDeviceUtility.IOSDeviceType{
-
+        static func checkDevice(bounds:(CGFloat, CGFloat)) -> IOSDeviceUtility.IOSDeviceType{
             for device in IOSDeviceUtility.IOSDeviceType.allValues{
-                if(UtilityFunction.compare(bounds, tuple2: IOSDeviceDimension(UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5S)!)){
-                    return device
+                if let dev = IOSDeviceDimension(device){
+                    if(UtilityFunction.compare(bounds, tuple2: dev)){
+                        return device
+                    }
                 }
             }
             return IOSDeviceType.unknown

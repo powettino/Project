@@ -43,11 +43,12 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         var colliderNode : SKSpriteNode?
         var rotationLabel : String = "rotationAction"
         
-        init(spriteName : String, posX : CGFloat, posY : CGFloat, posZ : CGFloat, name: String, startingAngle : Double, minAngle : Double, maxAngle : Double){
+        init(spriteName : String, w: CGFloat, maxH:CGFloat, posX : CGFloat, posY : CGFloat, posZ : CGFloat, name: String, startingAngle : Double, minAngle : Double, maxAngle : Double){
             speed = NeedleSpeed.low
             spriteNode = SKSpriteNode(imageNamed: spriteName);
             spriteNode!.name = name
             spriteNode!.position = CGPoint(x: posX, y: posY)
+            spriteNode!.size = CGSize(width: w, height: maxH-30)
             spriteNode!.anchorPoint = CGPoint(x: 0.5, y: 0.1)
             spriteNode!.zRotation = UtilityFunction.degreesToRadiant(startingAngle)
             spriteNode!.zPosition = posZ;
@@ -59,10 +60,10 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             
             colliderNode = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
             colliderNode!.name = name+"Collider";
-            var punto = UtilityFunction.findXY(spriteNode!.size.height + 30 , centerX: posX, centerY: posY, angle: UtilityFunction.degreesToRadiant(90));
-            colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y-spriteNode!.position.y)
+            var punto = UtilityFunction.findXY(maxH-10 , centerX: posX, centerY: posY, angle: UtilityFunction.degreesToRadiant(90));
+            colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y - spriteNode!.position.y)
             colliderNode!.zPosition = posZ;
-            colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2-7)
+            colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2 - 7)
             colliderNode!.physicsBody?.categoryBitMask = collisionCategory;
             colliderNode!.physicsBody?.contactTestBitMask = contactCollisionCategory;
             colliderNode!.physicsBody?.collisionBitMask = collisionBitMask
@@ -172,7 +173,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         }
     }
     
-    
     private final let yellowSectionShapeName : String = "yellowNode"
     private final let gridNodeName :String = "gridNode"
     private final let needleNodeName : String = "needleNode"
@@ -181,12 +181,13 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private final let labelStandardText : String = "SPEED UP"
     
     private var enableFail = false;
-    private let minDegreeNeedleAngle : Double = -136   //-46
-    private let maxDegreeNeedleAngle : Double = 136   //226
-    private let radius : CGFloat = 132;
+    private final let minDegreeNeedleAngle : Double = -136   //-46
+    private final let maxDegreeNeedleAngle : Double = 136   //226
+//    private final let radius : CGFloat = 132;
     private var currentLevel : Int = 1
     private var colliso : Bool = false;
     private var running : Bool = false
+    private final let offset : (w: CGFloat, h: CGFloat) = (15,15)
     
     private var label: SKLabelNode!
     private var grid : SKSpriteNode!
@@ -209,14 +210,14 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.grid = SKSpriteNode(imageNamed: "primaprova.png");
         self.grid.name = self.gridNodeName;
         self.grid.position = CGPoint(x: self.centerX, y: self.centerY)
-        self.grid.size = CGSize(width: self.size.width-50, height: self.size.width-50);
+        self.grid.size = CGSize(width: self.size.width - offset.w, height: self.size.width - offset.h);
         
         self.grid.physicsBody = nil;
         self.addChild(self.grid)
         
-        self.needle = Needle(spriteName: "ago4", posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle);
+        self.needle = Needle(spriteName: "ago4", w: 30, maxH: (self.grid.size.height/2)-18, posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle);
         
-        self.yellowSection = YellowSection(startingLevel: 1, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: self.radius, yellowSectionName: self.yellowSectionShapeName);
+        self.yellowSection = YellowSection(startingLevel: 1, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: (self.grid.size.height/2)-18, yellowSectionName: self.yellowSectionShapeName);
         
         if let needleNode = self.needle.spriteNode {
             self.addChild(needleNode);
@@ -249,7 +250,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-//        animateText(nil)
+        //        animateText(nil)
         if(self.running){
             if(self.colliso){
                 self.colliso = false;
@@ -368,7 +369,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             node.removeFromParent();
         }
         
-        self.yellowSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : self.radius);
+        self.yellowSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : (self.grid.size.height/2)-18);
         self.addChild(self.yellowSection.yellowShape!);
     }
     

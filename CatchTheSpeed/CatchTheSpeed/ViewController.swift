@@ -211,6 +211,22 @@ class ViewController: UIViewController, ScoreDelegate{
         return changed;
     }
     
+    private func getAccelleratorViewOffset(width:CGFloat, height:CGFloat) -> (w: CGFloat, h: CGFloat)
+    {
+        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(width, height)
+        NSLog("res: \(res.rawValue)")
+        switch (res){
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
+            return (0,40)
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
+            return (0,70)
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
+            return (0,90)
+        default:
+            return (0,0);
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -219,20 +235,19 @@ class ViewController: UIViewController, ScoreDelegate{
         //                NSLog("\(fontname)")
         //            }
         //        }
-        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(UtilityFunction.IOSDeviceUtility) .IOSDeviceUtility.checkDevice((self.view.bounds.width, self.view.bounds.height));
-        NSLog("res: \(res)")
-        acceleratorView.frame.size.width = self.view.frame.width
-        acceleratorView.frame.size.height = self.view.frame.width
-        acceleratorView.frame.origin.x = 0
-        acceleratorView.frame.origin.y = self.view.frame.height - self.view.frame.width-150
+        var offset = getAccelleratorViewOffset(self.view.bounds.width, height: self.view.bounds.height)
         
+        self.acceleratorView.frame.size.width = self.view.frame.width
+        self.acceleratorView.frame.size.height = self.view.frame.width
+        self.acceleratorView.frame.origin.x = 0
+        self.acceleratorView.frame.origin.y = self.view.frame.height - self.acceleratorView.frame.size.height - offset.1
         
-        self.scene = Speedo(size: acceleratorView.bounds.size)
-        acceleratorView.showsFPS = true
-        acceleratorView.showsNodeCount = true
-        self.scene?.size = acceleratorView.bounds.size
+        self.scene = Speedo(size: self.acceleratorView.bounds.size)
+        self.acceleratorView.showsFPS = true
+        self.acceleratorView.showsNodeCount = true
+        self.scene?.size = self.acceleratorView.bounds.size
         self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
-        acceleratorView.presentScene(self.scene!)
+        self.acceleratorView.presentScene(self.scene!)
         scene?.scoreDelegate = self;
         
         self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
