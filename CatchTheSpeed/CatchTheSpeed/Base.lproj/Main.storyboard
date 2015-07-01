@@ -96,16 +96,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hSK-qd-sMM">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hSK-qd-sMM">
                                 <rect key="frame" x="70" y="508" width="181" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Start">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="startGame:" destination="vXZ-lx-hvc" eventType="touchDown" id="FxC-Im-txo"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U7c-Wc-4Dp">
                                 <rect key="frame" x="212" y="149" width="92" height="21"/>
@@ -181,8 +178,8 @@
                                 </subviews>
                             </view>
                             <view contentMode="scaleToFill" id="3t0-IR-rbN">
-                                <rect key="frame" x="50" y="0.0" width="220" height="364"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="26" y="0.0" width="268" height="364"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5ei-42-ANn">
                                         <rect key="frame" x="0.0" y="214" width="220" height="44"/>
@@ -314,7 +311,6 @@
                         <outlet property="puntiAttuali" destination="KKV-eO-xB1" id="cjy-Ba-3nQ"/>
                         <outlet property="record" destination="938-wC-2eI" id="jhF-c9-fJs"/>
                         <outlet property="slidingMenu" destination="3t0-IR-rbN" id="nGW-Wr-ABP"/>
-                        <outlet property="startButton" destination="hSK-qd-sMM" id="L0i-Ah-SMk"/>
                         <outlet property="table1" destination="5ei-42-ANn" id="Txb-8B-YWX"/>
                         <outlet property="table2" destination="sFU-xw-8aA" id="Tug-cD-HP4"/>
                         <outlet property="table3" destination="NZ1-FW-t4p" id="kZ8-TI-xy0"/>

@@ -25,14 +25,14 @@ extension SKNode {
     }
 }
 
-class ViewController: UIViewController, ScoreDelegate{
+class ViewController: UIViewController, ScoreDelegate, StartingAction{
     
     @IBOutlet weak var copyLabelCount: UILabel!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var labelCount: UILabel!
     @IBOutlet weak var fadingView: UIView!
-    @IBOutlet weak var startButton: UIButton!
+    //    @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var modalita: UILabel!
     @IBOutlet weak var puntiAttuali: UILabel!
     @IBOutlet weak var record: UILabel!
@@ -90,7 +90,7 @@ class ViewController: UIViewController, ScoreDelegate{
                 self.slidingMenu.frame = newFrame;
                 } , completion:(nil))
             self.optionOpened=true
-            self.startButton.enabled=false
+            //            self.startButton.enabled=false
         }else{
             self.closeMenu()
         }
@@ -107,12 +107,12 @@ class ViewController: UIViewController, ScoreDelegate{
         case astonishing = 500
     }
     
-    enum buttonLabel : String {
-        case start = "Start"
-        case stop = "Stop"
-    }
+    //    enum buttonLabel : String {
+    //        case start = "Start"
+    //        case stop = "Stop"
+    //    }
     
-    var started : Bool = false
+    //    var started : Bool = false
     var modGame : mod = mod.soft
     var level : Int = 1
     var counter = 3
@@ -164,10 +164,10 @@ class ViewController: UIViewController, ScoreDelegate{
             self.slidingMenu.frame = currentFrame;
             }, completion:(nil))
         self.optionOpened = false
-        self.startButton.enabled = true
+        //        self.startButton.enabled = true
         if(self.changeModView()){
             self.scene?.resetSpeedo()
-            self.started = false;
+            //            self.started = false;
             self.resetGame()
         }
         self.scene?.pauseNeedle(false);
@@ -217,11 +217,11 @@ class ViewController: UIViewController, ScoreDelegate{
         NSLog("res: \(res.rawValue)")
         switch (res){
         case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
-            return (0,40)
+            return (0,25)
         case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
-            return (0,70)
+            return (0,55)
         case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
-            return (0,90)
+            return (0,75)
         default:
             return (0,0);
         }
@@ -235,12 +235,13 @@ class ViewController: UIViewController, ScoreDelegate{
         //                NSLog("\(fontname)")
         //            }
         //        }
+
         var offset = getAccelleratorViewOffset(self.view.bounds.width, height: self.view.bounds.height)
         
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
         self.acceleratorView.frame.origin.x = 0
-        self.acceleratorView.frame.origin.y = self.view.frame.height - self.acceleratorView.frame.size.height - offset.1
+        self.acceleratorView.frame.origin.y = self.view.frame.height - self.acceleratorView.frame.size.height - offset.h
         
         self.scene = Speedo(size: self.acceleratorView.bounds.size)
         self.acceleratorView.showsFPS = true
@@ -249,13 +250,15 @@ class ViewController: UIViewController, ScoreDelegate{
         self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
         self.acceleratorView.presentScene(self.scene!)
         scene?.scoreDelegate = self;
+        scene?.startingAction = self;
+        scene?.enableTouchStartGame(true);
         
         self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.fadingView.hidden=true
         self.labelText.alpha=0
         self.labelCount.alpha=0
         self.copyLabelCount.alpha=0
-        self.startButton.tintColor = UIColor.whiteColor()
+        //        self.startButton.tintColor = UIColor.whiteColor()
         
         self.slidingMenu.layer.cornerRadius=30
         self.slidingMenu.layer.borderColor=UIColor.blackColor().CGColor
@@ -297,13 +300,13 @@ class ViewController: UIViewController, ScoreDelegate{
     
     private func resetGame(){
         self.resetSession();
-        self.started=false
-        self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
+        //        self.started=false
+        //        self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
         self.level=1
         self.currentPoint=0
         self.puntiAttuali.text = String(self.currentPoint)
         self.levelText.text = String(self.level)
-        self.startButton.enabled=true
+        //        self.startButton.enabled=true
         self.counterTime = 60
         self.changeModView()
         self.scene?.resetSpeedo();
@@ -330,7 +333,7 @@ class ViewController: UIViewController, ScoreDelegate{
         alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler:{
             finished in
             self.resetGame()
-            self.started = false
+            //            self.started = false
         }))
         self.presentViewController(alert, animated: true, completion: {})
     }
@@ -359,7 +362,7 @@ class ViewController: UIViewController, ScoreDelegate{
                     self.scene?.updateCollisionSection(nil);
                 }
             )
-            self.startButton.enabled=true
+            //            self.startButton.enabled=true
         }else{
             self.counter -= 1
             var middleFrame = CGRectMake(self.view.frame.width/2 - self.labelCount.frame.width/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
@@ -371,40 +374,8 @@ class ViewController: UIViewController, ScoreDelegate{
         }
     }
     
-    @IBAction func startGame(sender: AnyObject) {
-        switch started  {
-        case false:
-            self.startButton.setTitle(buttonLabel.stop.rawValue, forState: UIControlState.Normal)
-            switch(self.modGame){
-            case mod.soft:
-                self.counter=3
-                self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.low)
-                self.scene?.startGame();
-                self.scene?.enableFailDelegate(true);
-            case mod.stressing:
-                self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.medium)
-                self.timeLabel.text = String(counterTime)
-                self.schedulaContatore()
-                self.scene?.startGame();
-                self.scene?.enableFailDelegate(false);
-            case mod.survival:
-                self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
-                self.scene?.startGame();
-                self.scene?.enableFailDelegate(true);
-            case mod.astonishing:
-                self.schedulaContatore()
-                self.timeLabel.text = String(counterTime)
-                self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
-                self.scene?.startGame();
-                self.scene?.enableFailDelegate(false);
-            default:
-                break
-            }
-            started = true;
-        default:
-            break
-        }
-    }
+    //    @IBAction func startGame(sender: AnyObject) {
+    //    }
     
     func checkTimeToSpeedUp(){
         //        if(self.scene?.isMinimunSectionDimension() == true){
@@ -449,6 +420,31 @@ class ViewController: UIViewController, ScoreDelegate{
         }
     }
     
+    func startedGame() {
+        switch(self.modGame){
+        case mod.soft:
+            self.counter=3
+            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.low)
+            self.scene?.enableFailDelegate(true);
+        case mod.stressing:
+            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.medium)
+            self.timeLabel.text = String(counterTime)
+            self.schedulaContatore()
+            self.scene?.enableFailDelegate(false);
+        case mod.survival:
+            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
+            self.scene?.enableFailDelegate(true);
+        case mod.astonishing:
+            self.schedulaContatore()
+            self.timeLabel.text = String(counterTime)
+            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
+            self.scene?.enableFailDelegate(false);
+        default:
+            break
+        }
+        self.scene?.startGame();
+    }
+    
     func setFail(){
         switch self.modGame{
         case mod.soft:
@@ -473,8 +469,8 @@ class ViewController: UIViewController, ScoreDelegate{
             self.scene?.updateCollisionSection(self.level);
             self.checkTimeToSpeedUp()
         case mod.soft:
-            self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
-            self.startButton.enabled=false
+            //            self.startButton.setTitle(buttonLabel.start.rawValue, forState: UIControlState.Normal)
+            //            self.startButton.enabled=false
             self.scene?.pauseNeedle(true);
             var origFrame = self.fadingView.frame
             self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
@@ -500,6 +496,15 @@ class ViewController: UIViewController, ScoreDelegate{
             break;
         }
     }
+    
+    override func shouldAutorotate() -> Bool {
+        return false;
+    }
+    
+    override func supportedInterfaceOrientations() -> Int {
+        return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+    }
+
 }
 
 

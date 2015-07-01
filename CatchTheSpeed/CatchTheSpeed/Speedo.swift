@@ -16,6 +16,9 @@ protocol ScoreDelegate{
     func setFail();
 }
 
+protocol StartingAction{
+    func startedGame();
+}
 
 class Speedo : SKScene, SKPhysicsContactDelegate{
     
@@ -48,7 +51,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             spriteNode = SKSpriteNode(imageNamed: spriteName);
             spriteNode!.name = name
             spriteNode!.position = CGPoint(x: posX, y: posY)
-            spriteNode!.size = CGSize(width: w, height: maxH-30)
+            spriteNode!.size = CGSize(width: w, height: maxH-15)
             spriteNode!.anchorPoint = CGPoint(x: 0.5, y: 0.1)
             spriteNode!.zRotation = UtilityFunction.degreesToRadiant(startingAngle)
             spriteNode!.zPosition = posZ;
@@ -181,9 +184,10 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private final let labelStandardText : String = "SPEED UP"
     
     private var enableFail = false;
+    private var enableTouchStartGame = false;
     private final let minDegreeNeedleAngle : Double = -136   //-46
     private final let maxDegreeNeedleAngle : Double = 136   //226
-//    private final let radius : CGFloat = 132;
+    //    private final let radius : CGFloat = 132;
     private var currentLevel : Int = 1
     private var colliso : Bool = false;
     private var running : Bool = false
@@ -200,7 +204,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private var centerY : CGFloat!;
     
     var scoreDelegate : ScoreDelegate?
-    
+    var startingAction : StartingAction?
     
     override func didMoveToView(view: SKView) {
         
@@ -240,9 +244,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.label.fontSize = 20;
         
         self.label.physicsBody = nil;
-        //        self.label.alpha=1
         self.addChild(self.label);
-        
         
         self.physicsWorld.gravity = CGVectorMake(0, 0);
         self.physicsWorld.contactDelegate = self;
@@ -250,7 +252,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        //        animateText(nil)
         if(self.running){
             if(self.colliso){
                 self.colliso = false;
@@ -258,6 +259,11 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
                 self.scoreDelegate?.setPoint();
             }else if(self.enableFail){
                 self.scoreDelegate?.setFail();
+            }
+        }else{
+            if(self.enableTouchStartGame){
+                self.running = true;
+                self.startingAction?.startedGame();
             }
         }
     }
@@ -280,18 +286,21 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.needle.increaseSpeedTo(value);
     }
     
+    func enableTouchStartGame(enable: Bool){
+        self.enableTouchStartGame = enable;
+    }
+    
     func enableFailDelegate(enable : Bool){
         self.enableFail = enable;
     }
     
     func animateText(text : String?){
         if let emitter = self.childNodeWithName(self.smokeNodeName) {
-            NSLog("Esiste");
+            NSLog("Skip emitter")
         }else{
             
             if let tempText = text {
                 self.label.text = tempText
-                NSLog("ok");
             }
             
             var originalPosition = self.label.position
@@ -299,8 +308,6 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
             var midPoint = CGPointMake(self.centerX, self.centerY+50)
             var startingPoint = CGPointMake(-self.label.frame.width-10, self.centerY+50)
             var endingPoint = CGPointMake(self.size.width+self.label.frame.width+10, self.label.position.y)
-            
-            //NSLog("starting: \(startingPoint) - midpoint \(midPoint) - endpoint \(endingPoint)")
             
             var inc = SKTMoveEffect(node: self.label, duration: 0.8, startPosition: startingPoint, endPosition:midPoint)
             inc.timingFunction = SKTTimingFunctionBackEaseOut
@@ -377,7 +384,4 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         return (self.yellowSection.referenceAngles.angles.dim == UtilityFunction.degreesToRadiant(Speedo.minSectionDimension));
     }
 }
-
-
-
 
