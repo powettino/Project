@@ -55,7 +55,7 @@ class UtilityFunction{
         }
     }
     
-    func iterateTupleWithResultBlock<C,R>(t:C, block:(String,Any)->R) {
+    internal static func iterateTupleWithResultBlock<C,R>(t:C, block:(String,Any)->R) {
         let mirror = reflect(t)
         for i in 0..<mirror.count {
             block(mirror[i].0, mirror[i].1.value)
@@ -86,6 +86,38 @@ class UtilityFunction{
     internal static func randomDouble(min : Double , max : Double) -> Double{
         return (Double(arc4random())) / Double(UINT32_MAX) * (max-min) + min
     }
+    
+    internal static func animateHorizontalElementOnMiddleBreak(containerView: UIView, toAnimate : UIView, middlePosition : CGRect, completeDuration: NSTimeInterval, complex : String?, finalComplention: ((result: Bool) -> Void)?){
+        if(complex != nil){
+            var starting: CGRect!
+            if(complex == "left"){
+                starting = CGRectMake(containerView.frame.width+middlePosition.width+10, middlePosition.origin.y, middlePosition.width, middlePosition.height)
+            }else{
+                starting = CGRectMake(-middlePosition.width, middlePosition.origin.y, middlePosition.width, middlePosition.height)
+            }
+            toAnimate.frame = starting;
+            UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                toAnimate.frame = middlePosition;
+                }, completion: {finished in
+                    UIView.animateWithDuration(completeDuration/5, delay: completeDuration*(3/5), options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        toAnimate.frame = starting
+                        }, completion :
+                        finalComplention)
+            })
+        }else{
+            toAnimate.frame = CGRectMake(-middlePosition.width, middlePosition.origin.y, middlePosition.width, middlePosition.height)
+            UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                toAnimate.frame = middlePosition;
+                }, completion: {finished in
+                    UIView.animateWithDuration(completeDuration/5, delay: completeDuration*(3/5), options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        toAnimate.frame = CGRectMake(containerView.frame.width+50, middlePosition.origin.y, middlePosition.width , middlePosition.height)
+                        }, completion :
+                        finalComplention
+                    )}
+            )
+        }
+    }
+
     
     
 }

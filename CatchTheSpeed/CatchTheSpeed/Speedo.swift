@@ -16,11 +16,11 @@ protocol ScoreDelegate{
     func setFail();
 }
 
-protocol StartingAction{
+protocol StartingActionDelegate{
     func startedGame();
 }
 
-class Speedo : SKScene, SKPhysicsContactDelegate{
+class Speedo : SKScene{
     
     struct PhysicsCategory {
         static let NeedleP : UInt32 = 0b1
@@ -204,7 +204,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
     private var centerY : CGFloat!;
     
     var scoreDelegate : ScoreDelegate?
-    var startingAction : StartingAction?
+    var startingActionDelegate : StartingActionDelegate?
     
     override func didMoveToView(view: SKView) {
         
@@ -247,7 +247,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         self.addChild(self.label);
         
         self.physicsWorld.gravity = CGVectorMake(0, 0);
-        self.physicsWorld.contactDelegate = self;
+//        self.physicsWorld.contactDelegate = self;
         
     }
     
@@ -263,7 +263,7 @@ class Speedo : SKScene, SKPhysicsContactDelegate{
         }else{
             if(self.enableTouchStartGame){
                 self.running = true;
-                self.startingAction?.startedGame();
+                self.startingActionDelegate?.startedGame();
             }
         }
     }

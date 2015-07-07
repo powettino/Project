@@ -28,6 +28,7 @@
 		4D30E8221B355D7B00C0EE33 /* SmokeBrake.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D30E8201B355D7B00C0EE33 /* SmokeBrake.sks */; };
 		4D30E8231B355D7B00C0EE33 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D30E8211B355D7B00C0EE33 /* spark.png */; };
 		4D8456031B13C49B007269B8 /* primaprova.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D8456021B13C49B007269B8 /* primaprova.png */; };
+		4DA9C5B61B445E6C001BDD9D /* MenuTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */; };
 		4DD120451B18C35200D4B299 /* ago5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DD120441B18C35200D4B299 /* ago5.png */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
 		4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1E1AAE23850050B018 /* Speedo.swift */; };
@@ -73,6 +74,7 @@
 		4D30E8201B355D7B00C0EE33 /* SmokeBrake.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SmokeBrake.sks; sourceTree = "<group>"; };
 		4D30E8211B355D7B00C0EE33 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		4D8456021B13C49B007269B8 /* primaprova.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = primaprova.png; sourceTree = "<group>"; };
+		4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTable.swift; sourceTree = "<group>"; };
 		4DD120441B18C35200D4B299 /* ago5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ago5.png; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
 		4DD1BC1E1AAE23850050B018 /* Speedo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedo.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
 				EB22B0AB1A6BD2E000FED987 /* ViewController.swift */,
 				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
+				4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */,
 				4D30E81B1B34F5CD00C0EE33 /* SKNode+Extensions.swift in Sources */,
 				4D30E8181B34F5CD00C0EE33 /* SKAction+Extensions.swift in Sources */,
+				4DA9C5B61B445E6C001BDD9D /* MenuTable.swift in Sources */,
 				4D30E8191B34F5CD00C0EE33 /* SKAction+SpecialEffects.swift in Sources */,
 				4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */,
 				4D30E81D1B34F5CD00C0EE33 /* SKTEffects.swift in Sources */,
