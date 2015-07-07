@@ -32,6 +32,9 @@
 		4DD120451B18C35200D4B299 /* ago5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DD120441B18C35200D4B299 /* ago5.png */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
 		4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1E1AAE23850050B018 /* Speedo.swift */; };
+		4DE00F121B4C85E0005EDFDC /* sfondo5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F0F1B4C85E0005EDFDC /* sfondo5.png */; };
+		4DE00F131B4C85E0005EDFDC /* sfondo6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F101B4C85E0005EDFDC /* sfondo6.png */; };
+		4DE00F141B4C85E0005EDFDC /* sfondo6+.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F111B4C85E0005EDFDC /* sfondo6+.png */; };
 		4DE7D57E1B18945A00A13773 /* ago4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE7D57D1B18945A00A13773 /* ago4.png */; };
 		EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */; };
 		EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0AB1A6BD2E000FED987 /* ViewController.swift */; };
@@ -78,6 +81,9 @@
 		4DD120441B18C35200D4B299 /* ago5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ago5.png; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
 		4DD1BC1E1AAE23850050B018 /* Speedo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedo.swift; sourceTree = "<group>"; };
+		4DE00F0F1B4C85E0005EDFDC /* sfondo5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sfondo5.png; sourceTree = "<group>"; };
+		4DE00F101B4C85E0005EDFDC /* sfondo6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sfondo6.png; sourceTree = "<group>"; };
+		4DE00F111B4C85E0005EDFDC /* sfondo6+.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sfondo6+.png"; sourceTree = "<group>"; };
 		4DE7D57D1B18945A00A13773 /* ago4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ago4.png; sourceTree = "<group>"; };
 		EB22B0A41A6BD2E000FED987 /* CatchTheSpeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchTheSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22B0A81A6BD2E000FED987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,6 +162,9 @@
 				4DE7D57D1B18945A00A13773 /* ago4.png */,
 				4D04820C1B18852800289B41 /* ago3.png */,
 				4D8456021B13C49B007269B8 /* primaprova.png */,
+				4DE00F0F1B4C85E0005EDFDC /* sfondo5.png */,
+				4DE00F101B4C85E0005EDFDC /* sfondo6.png */,
+				4DE00F111B4C85E0005EDFDC /* sfondo6+.png */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -323,9 +332,11 @@
 			files = (
 				4D30E7EA1B34AAA500C0EE33 /* Blazed.ttf in Resources */,
 				4D30E7E41B34A4E800C0EE33 /* budmo-jiggler.ttf in Resources */,
+				4DE00F141B4C85E0005EDFDC /* sfondo6+.png in Resources */,
 				EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */,
 				4D30E8231B355D7B00C0EE33 /* spark.png in Resources */,
 				4D30E7E81B34A91C00C0EE33 /* Flame.ttf in Resources */,
+				4DE00F121B4C85E0005EDFDC /* sfondo5.png in Resources */,
 				4D8456031B13C49B007269B8 /* primaprova.png in Resources */,
 				4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */,
 				EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */,
@@ -333,6 +344,7 @@
 				4DE7D57E1B18945A00A13773 /* ago4.png in Resources */,
 				4D04820D1B18852800289B41 /* ago3.png in Resources */,
 				4D30E8221B355D7B00C0EE33 /* SmokeBrake.sks in Resources */,
+				4DE00F131B4C85E0005EDFDC /* sfondo6.png in Resources */,
 				4D30E7E51B34A4E800C0EE33 /* budmo-jigglish.ttf in Resources */,
 				4DD120451B18C35200D4B299 /* ago5.png in Resources */,
 			);

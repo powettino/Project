@@ -44,9 +44,20 @@ class UtilityFunction{
         }
         
         static func checkDevice(bounds:(CGFloat, CGFloat)) -> IOSDeviceUtility.IOSDeviceType{
-            for device in IOSDeviceUtility.IOSDeviceType.allValues{
+            for device in IOSDeviceType.allValues{
                 if let dev = IOSDeviceDimension(device){
                     if(UtilityFunction.compare(bounds, tuple2: dev)){
+                        return device
+                    }
+                }
+            }
+            return IOSDeviceType.unknown
+        }
+        
+        static func checkDevice(view: UIView) -> IOSDeviceUtility.IOSDeviceType{
+            for device in IOSDeviceType.allValues{
+                if let dev = IOSDeviceDimension(device){
+                    if(UtilityFunction.compare((view.frame.width, view.frame.height), tuple2: dev)){
                         return device
                     }
                 }
@@ -117,7 +128,7 @@ class UtilityFunction{
             )
         }
     }
-
+    
     
     
 }

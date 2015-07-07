@@ -182,7 +182,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.counterMessageGame=3
     }
     
-    
     func updateRecord(){
         if(self.currentPoint > self.recordPoint){
             self.recordPoint = self.currentPoint
@@ -247,9 +246,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         return changed;
     }
     
-    private func getAccelleratorViewOffset(width:CGFloat, height:CGFloat) -> (w: CGFloat, h: CGFloat)
+    private func getAccelleratorViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
     {
-        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(width, height)
+        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(view)
         NSLog("res: \(res.rawValue)")
         switch (res){
         case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
@@ -272,7 +271,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         //            }
         //        }
         
-        var offset = getAccelleratorViewOffset(self.view.bounds.width, height: self.view.bounds.height)
+        var offset = getAccelleratorViewOffset(self.view)
         
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
@@ -284,6 +283,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.acceleratorView.showsNodeCount = true
         self.scene?.size = self.acceleratorView.bounds.size
         self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
+//        self.scene?.backgroundColor = UIColor.whiteColor()
         self.acceleratorView.presentScene(self.scene!)
         scene?.scoreDelegate = self;
         scene?.startingActionDelegate = self;
@@ -294,7 +294,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.labelText.alpha=0
         self.labelCount.alpha=0
         self.copyLabelCount.alpha=0
-        //        self.startButton.tintColor = UIColor.whiteColor()
         self.slidingMenu.layer.cornerRadius=30
         self.slidingMenu.layer.borderColor=UIColor.blackColor().CGColor
         self.slidingMenu.layer.borderWidth=1.5
@@ -305,6 +304,8 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.record.text = String(self.recordPoint)
         
         (self.container.subviews[0] as! MenuTable).menuDelegate = self
+        let deviceNumberType = UtilityFunction.IOSDeviceUtility.checkDevice(view)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "sfondo\(deviceNumberType.rawValue).png")!)
     }
     
     func counterDescreaseFunction(){

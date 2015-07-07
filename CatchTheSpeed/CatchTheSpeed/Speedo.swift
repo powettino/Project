@@ -207,6 +207,8 @@ class Speedo : SKScene{
     var startingActionDelegate : StartingActionDelegate?
     
     override func didMoveToView(view: SKView) {
+        self.view?.allowsTransparency = true
+        self.backgroundColor = UIColor.clearColor()
         
         self.centerX = self.size.width/2;
         self.centerY = self.size.height/2;
