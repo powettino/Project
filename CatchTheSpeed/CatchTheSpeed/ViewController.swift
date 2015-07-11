@@ -71,6 +71,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
     var timerStressingMode = NSTimer()
     var optionOpened :Bool = false
     var scene : Speedo?;
+    var menu : MenuTable!
     
     var recordPoint : Int {
         get{
@@ -283,7 +284,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.acceleratorView.showsNodeCount = true
         self.scene?.size = self.acceleratorView.bounds.size
         self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
-//        self.scene?.backgroundColor = UIColor.whiteColor()
         self.acceleratorView.presentScene(self.scene!)
         scene?.scoreDelegate = self;
         scene?.startingActionDelegate = self;
@@ -294,16 +294,24 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.labelText.alpha=0
         self.labelCount.alpha=0
         self.copyLabelCount.alpha=0
+        
         self.slidingMenu.layer.cornerRadius=30
-        self.slidingMenu.layer.borderColor=UIColor.blackColor().CGColor
-        self.slidingMenu.layer.borderWidth=1.5
-        self.slidingMenu.layer.shadowColor = UIColor.blackColor().CGColor
+        self.slidingMenu.layer.borderColor=UIColor.orangeColor().CGColor
+        self.slidingMenu.layer.borderWidth=1
+        self.slidingMenu.layer.shadowColor = UIColor.redColor().CGColor
         self.slidingMenu.layer.shadowOffset = CGSize()
         self.slidingMenu.layer.shadowOpacity = 0.8
         self.slidingMenu.layer.shadowRadius=5.0
+        
+        self.container.layer.cornerRadius=30
+        
         self.record.text = String(self.recordPoint)
         
-        (self.container.subviews[0] as! MenuTable).menuDelegate = self
+        menu = self.container.subviews[0] as! MenuTable
+        menu.layer.cornerRadius=30
+        menu.menuDelegate = self
+        menu.backgroundColor = UIColor(patternImage: UIImage(named: "sfondo.png")!)
+        
         let deviceNumberType = UtilityFunction.IOSDeviceUtility.checkDevice(view)
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "sfondo\(deviceNumberType.rawValue).png")!)
     }

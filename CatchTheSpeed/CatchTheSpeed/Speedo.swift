@@ -66,12 +66,12 @@ class Speedo : SKScene{
             var punto = UtilityFunction.findXY(maxH-10 , centerX: posX, centerY: posY, angle: UtilityFunction.degreesToRadiant(90));
             colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y - spriteNode!.position.y)
             colliderNode!.zPosition = posZ;
-            colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2 - 7)
-            colliderNode!.physicsBody?.categoryBitMask = collisionCategory;
-            colliderNode!.physicsBody?.contactTestBitMask = contactCollisionCategory;
-            colliderNode!.physicsBody?.collisionBitMask = collisionBitMask
-            colliderNode!.physicsBody?.dynamic = true;
-            colliderNode!.physicsBody?.usesPreciseCollisionDetection = true;
+//            colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2 - 7)
+//            colliderNode!.physicsBody?.categoryBitMask = collisionCategory;
+//            colliderNode!.physicsBody?.contactTestBitMask = contactCollisionCategory;
+//            colliderNode!.physicsBody?.collisionBitMask = collisionBitMask
+//            colliderNode!.physicsBody?.dynamic = true;
+//            colliderNode!.physicsBody?.usesPreciseCollisionDetection = true;
             
             spriteNode?.addChild(colliderNode!);
         }
@@ -150,12 +150,12 @@ class Speedo : SKScene{
             colliderNode!.position = CGPoint(x: punto.x, y: punto.y);
             colliderNode!.anchorPoint = CGPoint(x: 0, y: 1);
             colliderNode!.zRotation = (referenceAngles.angles.max - (referenceAngles.angles.dim/2)) - UtilityFunction.degreesToRadiant(90)
-            colliderNode!.physicsBody = SKPhysicsBody(rectangleOfSize: colliderNode!.frame.size)
-            colliderNode!.physicsBody?.categoryBitMask = PhysicsCategory.CollisionBlockP
-            colliderNode!.physicsBody?.contactTestBitMask = PhysicsCategory.NeedleP
-            colliderNode!.physicsBody?.collisionBitMask = PhysicsCategory.Empty;
-            colliderNode!.physicsBody?.dynamic=false;
-            colliderNode!.physicsBody?.usesPreciseCollisionDetection=true;
+//            colliderNode!.physicsBody = SKPhysicsBody(rectangleOfSize: colliderNode!.frame.size)
+//            colliderNode!.physicsBody?.categoryBitMask = PhysicsCategory.CollisionBlockP
+//            colliderNode!.physicsBody?.contactTestBitMask = PhysicsCategory.NeedleP
+//            colliderNode!.physicsBody?.collisionBitMask = PhysicsCategory.Empty;
+//            colliderNode!.physicsBody?.dynamic=false;
+//            colliderNode!.physicsBody?.usesPreciseCollisionDetection=true;
             yellowShape?.addChild(colliderNode!)
         }
         
@@ -176,8 +176,10 @@ class Speedo : SKScene{
         }
     }
     
+    private final let lightNodeName : String = "lightNode"
     private final let yellowSectionShapeName : String = "yellowNode"
     private final let gridNodeName :String = "gridNode"
+    private final let vetroNodeName :String = "vetroNode"
     private final let needleNodeName : String = "needleNode"
     private final let labelNodeName : String = "labelNode"
     private final let smokeNodeName : String = "smokeNode"
@@ -195,6 +197,8 @@ class Speedo : SKScene{
     
     private var label: SKLabelNode!
     private var grid : SKSpriteNode!
+    private var ambientLight : SKLightNode!
+    private var vetro : SKSpriteNode!
     private var needle : Needle!
     private var yellowSection : YellowSection!
     private var maxAngle : CGFloat!
@@ -219,11 +223,14 @@ class Speedo : SKScene{
         self.grid.size = CGSize(width: self.size.width - offset.w, height: self.size.width - offset.h);
         
         self.grid.physicsBody = nil;
+        self.grid.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
+//                self.grid.lightingBitMask = 1;
+        
         self.addChild(self.grid)
         
         self.needle = Needle(spriteName: "ago4", w: 30, maxH: (self.grid.size.height/2)-18, posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle);
         
-        self.yellowSection = YellowSection(startingLevel: 1, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: (self.grid.size.height/2)-18, yellowSectionName: self.yellowSectionShapeName);
+        self.yellowSection = YellowSection(startingLevel: self.currentLevel, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: (self.grid.size.height/2)-18, yellowSectionName: self.yellowSectionShapeName);
         
         if let needleNode = self.needle.spriteNode {
             self.addChild(needleNode);
@@ -232,6 +239,19 @@ class Speedo : SKScene{
         if let  yellowNode = self.yellowSection.yellowShape {
             self.addChild(yellowNode);
         }
+        
+        self.vetro = SKSpriteNode(imageNamed: "tondo.png");
+        self.vetro.name = self.vetroNodeName;
+        self.vetro.position = CGPoint(x: self.centerX, y: self.centerY)
+        self.vetro.size = CGSize(width: self.size.width - offset.w, height: self.size.width - offset.h);
+        self.vetro.alpha = 0.3
+        
+        self.vetro.physicsBody = nil;
+        self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
+        self.vetro.lightingBitMask = 1;
+        self.vetro.zPosition = 2
+        
+        self.addChild(self.vetro)
         
         //        self.label = SKLabelNode(fontNamed: "BradleyHandITCTT-Bold")
         //        self.label = SKLabelNode(fontNamed: "BudmoJiggler-Regular")
@@ -249,7 +269,13 @@ class Speedo : SKScene{
         self.addChild(self.label);
         
         self.physicsWorld.gravity = CGVectorMake(0, 0);
-//        self.physicsWorld.contactDelegate = self;
+        
+        self.ambientLight = SKLightNode()
+        self.ambientLight.name = self.lightNodeName
+        self.ambientLight.falloff = 0;
+        self.ambientLight.position = CGPoint(x: 250, y: 60)
+        self.ambientLight.categoryBitMask = 1
+        self.addChild(self.ambientLight)
         
     }
     
@@ -278,6 +304,14 @@ class Speedo : SKScene{
         if(!intersecato && self.colliso){
             self.colliso=false;
         }
+    }
+    
+    func brakeGlass(){
+        self.vetro.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
+    }
+    
+    func restoreGlass(){
+        self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
     }
     
     func setNeedleSpeed(speed : Needle.NeedleSpeed){

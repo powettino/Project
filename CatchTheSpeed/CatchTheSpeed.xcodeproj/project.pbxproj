@@ -35,6 +35,9 @@
 		4DE00F121B4C85E0005EDFDC /* sfondo5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F0F1B4C85E0005EDFDC /* sfondo5.png */; };
 		4DE00F131B4C85E0005EDFDC /* sfondo6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F101B4C85E0005EDFDC /* sfondo6.png */; };
 		4DE00F141B4C85E0005EDFDC /* sfondo6+.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F111B4C85E0005EDFDC /* sfondo6+.png */; };
+		4DE00F161B4D8841005EDFDC /* brokenGlass.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F151B4D8841005EDFDC /* brokenGlass.jpg */; };
+		4DE00F1A1B4D89B8005EDFDC /* lightNormalGlass.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F191B4D89B8005EDFDC /* lightNormalGlass.jpg */; };
+		4DE00F1C1B4D98CC005EDFDC /* tondo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE00F1B1B4D98CC005EDFDC /* tondo.png */; };
 		4DE7D57E1B18945A00A13773 /* ago4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DE7D57D1B18945A00A13773 /* ago4.png */; };
 		EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */; };
 		EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0AB1A6BD2E000FED987 /* ViewController.swift */; };
@@ -84,6 +87,9 @@
 		4DE00F0F1B4C85E0005EDFDC /* sfondo5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sfondo5.png; sourceTree = "<group>"; };
 		4DE00F101B4C85E0005EDFDC /* sfondo6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sfondo6.png; sourceTree = "<group>"; };
 		4DE00F111B4C85E0005EDFDC /* sfondo6+.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sfondo6+.png"; sourceTree = "<group>"; };
+		4DE00F151B4D8841005EDFDC /* brokenGlass.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = brokenGlass.jpg; sourceTree = "<group>"; };
+		4DE00F191B4D89B8005EDFDC /* lightNormalGlass.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lightNormalGlass.jpg; sourceTree = "<group>"; };
+		4DE00F1B1B4D98CC005EDFDC /* tondo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tondo.png; sourceTree = "<group>"; };
 		4DE7D57D1B18945A00A13773 /* ago4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ago4.png; sourceTree = "<group>"; };
 		EB22B0A41A6BD2E000FED987 /* CatchTheSpeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchTheSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22B0A81A6BD2E000FED987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -154,17 +160,36 @@
 			name = SKTUtils;
 			sourceTree = "<group>";
 		};
-		4D8456011B13C437007269B8 /* resources */ = {
+		4D3B3E671B5123DC008647D4 /* image */ = {
 			isa = PBXGroup;
 			children = (
-				4D30E7E61B34A56B00C0EE33 /* fonts */,
 				4DD120441B18C35200D4B299 /* ago5.png */,
 				4DE7D57D1B18945A00A13773 /* ago4.png */,
 				4D04820C1B18852800289B41 /* ago3.png */,
 				4D8456021B13C49B007269B8 /* primaprova.png */,
 				4DE00F0F1B4C85E0005EDFDC /* sfondo5.png */,
+				4DE00F1B1B4D98CC005EDFDC /* tondo.png */,
 				4DE00F101B4C85E0005EDFDC /* sfondo6.png */,
 				4DE00F111B4C85E0005EDFDC /* sfondo6+.png */,
+			);
+			name = image;
+			sourceTree = "<group>";
+		};
+		4D3B3E681B5123EF008647D4 /* normalMap */ = {
+			isa = PBXGroup;
+			children = (
+				4DE00F151B4D8841005EDFDC /* brokenGlass.jpg */,
+				4DE00F191B4D89B8005EDFDC /* lightNormalGlass.jpg */,
+			);
+			name = normalMap;
+			sourceTree = "<group>";
+		};
+		4D8456011B13C437007269B8 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				4D3B3E681B5123EF008647D4 /* normalMap */,
+				4D3B3E671B5123DC008647D4 /* image */,
+				4D30E7E61B34A56B00C0EE33 /* fonts */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -330,9 +355,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DE00F161B4D8841005EDFDC /* brokenGlass.jpg in Resources */,
 				4D30E7EA1B34AAA500C0EE33 /* Blazed.ttf in Resources */,
 				4D30E7E41B34A4E800C0EE33 /* budmo-jiggler.ttf in Resources */,
 				4DE00F141B4C85E0005EDFDC /* sfondo6+.png in Resources */,
+				4DE00F1C1B4D98CC005EDFDC /* tondo.png in Resources */,
 				EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */,
 				4D30E8231B355D7B00C0EE33 /* spark.png in Resources */,
 				4D30E7E81B34A91C00C0EE33 /* Flame.ttf in Resources */,
@@ -344,6 +371,7 @@
 				4DE7D57E1B18945A00A13773 /* ago4.png in Resources */,
 				4D04820D1B18852800289B41 /* ago3.png in Resources */,
 				4D30E8221B355D7B00C0EE33 /* SmokeBrake.sks in Resources */,
+				4DE00F1A1B4D89B8005EDFDC /* lightNormalGlass.jpg in Resources */,
 				4DE00F131B4C85E0005EDFDC /* sfondo6.png in Resources */,
 				4D30E7E51B34A4E800C0EE33 /* budmo-jigglish.ttf in Resources */,
 				4DD120451B18C35200D4B299 /* ago5.png in Resources */,
