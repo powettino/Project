@@ -307,10 +307,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         
         self.record.text = String(self.recordPoint)
         
-        menu = self.container.subviews[0] as! MenuTable
-        menu.layer.cornerRadius=30
-        menu.menuDelegate = self
-        menu.backgroundColor = UIColor(patternImage: UIImage(named: "sfondo.png")!)
+        self.menu = self.container.subviews[0] as! MenuTable
+        self.menu.layer.cornerRadius=30
+        self.menu.menuDelegate = self
+        self.menu.backgroundColor = UIColor.redColor()
+                self.menu.backgroundColor = UIColor(patternImage: UIImage(named: "sfondoMenu.jpg")!)
         
         let deviceNumberType = UtilityFunction.IOSDeviceUtility.checkDevice(view)
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "sfondo\(deviceNumberType.rawValue).png")!)
