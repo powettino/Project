@@ -46,13 +46,13 @@ class Speedo : SKScene{
         var colliderNode : SKSpriteNode?
         var rotationLabel : String = "rotationAction"
         
-        init(spriteName : String, w: CGFloat, maxH:CGFloat, posX : CGFloat, posY : CGFloat, posZ : CGFloat, name: String, startingAngle : Double, minAngle : Double, maxAngle : Double){
+        init(spriteName : String, w: CGFloat, maxH:CGFloat, posX : CGFloat, posY : CGFloat, posZ : CGFloat, name: String, startingAngle : Double, minAngle : Double, maxAngle : Double, anchorPoint: CGPoint){
             speed = NeedleSpeed.low
             spriteNode = SKSpriteNode(imageNamed: spriteName);
             spriteNode!.name = name
             spriteNode!.position = CGPoint(x: posX, y: posY)
-            spriteNode!.size = CGSize(width: w, height: maxH-15)
-            spriteNode!.anchorPoint = CGPoint(x: 0.5, y: 0.1)
+            spriteNode!.size = CGSize(width: w, height: maxH)
+            spriteNode!.anchorPoint = anchorPoint
             spriteNode!.zRotation = UtilityFunction.degreesToRadiant(startingAngle)
             spriteNode!.zPosition = posZ;
             movementAngles.min = UtilityFunction.degreesToRadiant(minAngle)
@@ -63,7 +63,7 @@ class Speedo : SKScene{
             
             colliderNode = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
             colliderNode!.name = name+"Collider";
-            var punto = UtilityFunction.findXY(maxH-10 , centerX: posX, centerY: posY, angle: UtilityFunction.degreesToRadiant(90));
+            var punto = UtilityFunction.findXY(maxH , centerX: posX, centerY: posY, angle: UtilityFunction.degreesToRadiant(90));
             colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y - spriteNode!.position.y)
             colliderNode!.zPosition = posZ;
             //            colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2 - 7)
@@ -224,7 +224,9 @@ class Speedo : SKScene{
         self.grid.physicsBody = nil;
         self.addChild(self.grid)
         
-        self.needle = Needle(spriteName: "ago4", w: 30, maxH: ((self.size.height - self.offset.h)/2) - 17, posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle);
+        //        ((self.size.height - self.offset.h)/2) - 17
+        
+        self.needle = Needle(spriteName: "needle.png", w: ((self.size.width - self.offset.w)/2 - 30)/3, maxH: ((self.size.width - self.offset.w)/2 - 30), posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle, anchorPoint: CGPoint(x: 0.5,y: 0.15));
         
         self.yellowSection = YellowSection(startingLevel: self.currentLevel, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: ((self.size.width - self.offset.w)/2 - 17), yellowSectionName: self.yellowSectionShapeName);
         
@@ -236,13 +238,14 @@ class Speedo : SKScene{
             self.addChild(yellowNode);
         }
         
-        self.vetro = SKSpriteNode(imageNamed: "glass.png");
+        //        self.vetro = SKSpriteNode(imageNamed: "glass.png");
+        self.vetro = SKSpriteNode(imageNamed: "vetro3.png");
         self.vetro.name = self.vetroNodeName;
         self.vetro.position = CGPoint(x: self.centerX, y: self.centerY)
         self.vetro.size = CGSize(width: self.size.width - self.offset.w - 20, height: self.size.width - self.offset.h - 20);
         
         self.vetro.physicsBody = nil;
-        self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
+//                self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
 //        self.vetro.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
         self.vetro.lightingBitMask = 1;
         self.vetro.zPosition = 2
@@ -269,7 +272,8 @@ class Speedo : SKScene{
         self.ambientLight = SKLightNode()
         self.ambientLight.name = self.lightNodeName
         self.ambientLight.falloff = 0;
-        self.ambientLight.position = CGPoint(x: 250, y: 60)
+//        self.ambientLight.position = CGPoint(x: 250, y: 60)
+                self.ambientLight.position = CGPoint(x: 20, y: 300)
         self.ambientLight.categoryBitMask = 1
         self.addChild(self.ambientLight)
         
