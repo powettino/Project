@@ -220,6 +220,14 @@
 			name = speedo;
 			sourceTree = "<group>";
 		};
+		4D57E6D21B62B45500D74A84 /* old */ = {
+			isa = PBXGroup;
+			children = (
+				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
+			);
+			name = old;
+			sourceTree = "<group>";
+		};
 		4D8456011B13C437007269B8 /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,10 +241,10 @@
 		4D8456041B13D109007269B8 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				4D57E6D21B62B45500D74A84 /* old */,
 				4D30E7EF1B34F58B00C0EE33 /* SKTUtils */,
 				4D30E7DF1B346F6500C0EE33 /* utility */,
 				4D8456061B166296007269B8 /* spritekit */,
-				EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */,
 				EB22B0AB1A6BD2E000FED987 /* ViewController.swift */,
 				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
 				4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */,

@@ -247,22 +247,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         return changed;
     }
     
-    private func getAccelleratorViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
-    {
-        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(view)
-        NSLog("res: \(res.rawValue)")
-        switch (res){
-        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
-            return (0,25)
-        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
-            return (0,55)
-        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
-            return (0,75)
-        default:
-            return (0,0);
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -272,12 +256,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         //            }
         //        }
         
-        var offset = getAccelleratorViewOffset(self.view)
-        
-        self.acceleratorView.frame.size.width = self.view.frame.width
-        self.acceleratorView.frame.size.height = self.view.frame.width
-        self.acceleratorView.frame.origin.x = 0
-        self.acceleratorView.frame.origin.y = self.view.frame.height - self.acceleratorView.frame.size.height - offset.h
+        setElementPositionFromDimension()
         
         self.scene = Speedo(size: self.acceleratorView.bounds.size)
         self.acceleratorView.showsFPS = true
@@ -289,8 +268,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         scene?.startingActionDelegate = self;
         scene?.enableTouchStartGame(true);
         
-        self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, self.slidingMenu.frame.origin.y-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
+        
         self.fadingView.hidden=true
+        
         self.labelText.alpha=0
         self.labelCount.alpha=0
         self.copyLabelCount.alpha=0
@@ -311,10 +291,23 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.menu.layer.cornerRadius=30
         self.menu.menuDelegate = self
         self.menu.backgroundColor = UIColor.redColor()
-                self.menu.backgroundColor = UIColor(patternImage: UIImage(named: "sfondoMenu.jpg")!)
+        self.menu.backgroundColor = UIColor(patternImage: UIImage(named: "sfondoMenu.jpg")!)
         
         let deviceNumberType = UtilityFunction.IOSDeviceUtility.checkDevice(view)
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "sfondo\(deviceNumberType.rawValue).png")!)
+    }
+    
+    private func setElementPositionFromDimension(){
+        
+        var offset = Speedo.getAccelleratorViewOffset(self.view)
+        
+        self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, 63-self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
+        self.acceleratorView.frame.size.width = self.view.frame.width
+        self.acceleratorView.frame.size.height = self.view.frame.width
+        self.acceleratorView.frame.origin.x = 0
+        self.acceleratorView.frame.origin.y = self.view.frame.height - self.acceleratorView.frame.size.height - offset.h
+        self.fadingView.frame.origin.x = (self.view.frame.size.width-self.fadingView.frame.size.width) / 2
+        self.fadingView.frame.origin.y = self.acceleratorView.frame.origin.y + 30
     }
     
     func counterDescreaseFunction(){
@@ -333,7 +326,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler:{
             finished in
             self.restartGame()
-            //            self.started = false
         }))
         self.presentViewController(alert, animated: true, completion: {})
     }
@@ -364,11 +356,13 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
             )
         }else{
             self.counterMessageGame -= 1
-            var middleFrame = CGRectMake(self.view.frame.width/2 - self.labelCount.frame.width/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
-            var middleFrameCopy = CGRectMake(self.view.frame.width/2 - self.copyLabelCount.frame.width/2, self.copyLabelCount.frame.origin.y, self.copyLabelCount.frame.width, self.copyLabelCount.frame.height);
+            println("valore> \((self.fadingView.frame.width - self.labelCount.frame.width)/2)")
+            var middleFrame = CGRectMake((self.fadingView.frame.width - self.labelCount.frame.width)/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
             
             UtilityFunction.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval, complex: ((self.counterMessageGame==2) ? "left" : "right"), finalComplention: nil);
+            
             UtilityFunction.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.copyLabelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval,complex: ((self.counterMessageGame==1) ? "left" : "right"), finalComplention: nil);
+            
             self.labelCount.text = String(self.counterMessageGame)
             self.copyLabelCount.text = String(self.counterMessageGame)
         }
@@ -383,7 +377,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
                 self.scene?.animateText(nil)
             }
         }
-        //        }
+        //    }
     }
     
     
@@ -456,7 +450,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
                     UtilityFunction.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.copyLabelCount, middlePosition: self.copyLabelCount.frame, completeDuration: duration, complex: "left", finalComplention: nil);
                     
                     self.timerMessageGame = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("messageGame"), userInfo: nil, repeats: true)
-                    
                 }
             )
         default :

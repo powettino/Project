@@ -28,6 +28,22 @@ class Speedo : SKScene{
         static let Empty : UInt32 = 0b0
     }
     
+    static func getAccelleratorViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
+    {
+        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(view)
+        NSLog("res: \(res.rawValue)")
+        switch (res){
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
+            return (0,25)
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
+            return (0,55)
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
+            return (0,75)
+        default:
+            return (0,0);
+        }
+    }
+    
     struct Needle{
         
         internal enum NeedleSpeed : NSTimeInterval{

@@ -13,7 +13,6 @@
             <string>Blazed</string>
             <string>Blazed</string>
             <string>Blazed</string>
-            <string>Blazed</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -234,13 +233,6 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Giocatore" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oLW-fK-mpS">
-                                <rect key="frame" x="10" y="82" width="114" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="20"/>
-                                <color key="textColor" red="0.1313796704677293" green="0.59434442934782616" blue="0.031300427226995164" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V9x-6F-RzB">
                                 <rect key="frame" x="54" y="82" width="101" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -260,13 +252,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="20"/>
                                 <color key="textColor" red="1" green="0.5304173884382346" blue="0.11122614292732791" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gNh-CS-7wn">
-                                <rect key="frame" x="10" y="111" width="114" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.98213861030000005" green="1" blue="0.94754036789999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KKV-eO-xB1">
@@ -332,7 +317,7 @@
                             </view>
                             <view contentMode="scaleToFill" id="scR-hz-rh7">
                                 <rect key="frame" x="0.0" y="271" width="320" height="214"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congrats!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="wGK-1e-Ytx">
                                         <rect key="frame" x="8" y="15" width="304" height="74"/>
@@ -344,8 +329,8 @@
                                         <size key="shadowOffset" width="6" height="2"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="wlb-GD-Q6S">
-                                        <rect key="frame" x="127" y="107" width="62" height="76"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="129" y="107" width="62" height="76"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="65"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -353,8 +338,8 @@
                                         <size key="shadowOffset" width="6" height="2"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" id="mpY-At-1eQ">
-                                        <rect key="frame" x="127" y="107" width="62" height="76"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="129" y="107" width="62" height="76"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="65"/>
                                         <color key="textColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" red="1" green="0.12621465700000001" blue="0.084656420440000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -364,12 +349,12 @@
                                 </subviews>
                             </view>
                             <view contentMode="scaleToFill" id="3t0-IR-rbN">
-                                <rect key="frame" x="26" y="0.0" width="268" height="370"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="26" y="-293" width="268" height="370"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" id="eL5-q3-SBj">
                                         <rect key="frame" x="0.0" y="63" width="268" height="307"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <segue destination="HYq-f6-zjd" kind="embed" identifier="tableSegue" id="xUw-3g-xfR"/>
                                         </connections>
@@ -415,7 +400,6 @@
                         <outlet property="labelText" destination="wGK-1e-Ytx" id="EWS-ac-bgv"/>
                         <outlet property="levelText" destination="FB4-0f-hOQ" id="MER-my-A0U"/>
                         <outlet property="modalita" destination="Yxu-iV-6QS" id="XZa-3Y-JUd"/>
-                        <outlet property="nomePlayer" destination="gNh-CS-7wn" id="f0Y-Ia-9ua"/>
                         <outlet property="opzioni" destination="EzE-tu-iXC" id="fAd-Mx-fZx"/>
                         <outlet property="puntiAttuali" destination="KKV-eO-xB1" id="cjy-Ba-3nQ"/>
                         <outlet property="record" destination="938-wC-2eI" id="jhF-c9-fJs"/>
