@@ -326,7 +326,7 @@ class Speedo : SKScene{
         self.vetro.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
     }
     
-    func restoreGlass(){
+    func normalGlass(){
         self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
     }
     
@@ -377,7 +377,6 @@ class Speedo : SKScene{
             
             var smokeEmitter = SKEmitterNode(fileNamed: "SmokeBrake");
             smokeEmitter.name = self.smokeNodeName
-            //        self.smokeEmitter.position = CGPointMake(self.label.frame.width/2, 0)
             smokeEmitter.position = CGPointMake(self.centerX+(self.label.frame.width/2), self.centerY+50)
             
             self.runAction(SKAction.waitForDuration(0.3), completion: {self.addChild(smokeEmitter)});
@@ -396,6 +395,10 @@ class Speedo : SKScene{
     func stopNeedle(){
         self.running=false;
         self.needle.stopRotation();
+    }
+    
+    func isRunning() -> Bool{
+        return self.running
     }
     
     func resetSpeedo(){
