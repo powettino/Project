@@ -24,10 +24,10 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Blazed.ttf</string>
-		<string>Flame.ttf</string>
-		<string>budmo-jigglish.ttf</string>
-		<string>budmo-jiggler.ttf</string>
+		<string>risorse/fonts/Blazed.ttf</string>
+		<string>risorse/fonts/budmo-jiggler.ttf</string>
+		<string>risorse/fonts/budmo-jigglish.ttf</string>
+		<string>risorse/fonts/Flame.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

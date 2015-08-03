@@ -209,7 +209,7 @@ class Speedo : SKScene{
     private var currentLevel : Int = 1
     private var colliso : Bool = false;
     private var running : Bool = false
-    private final let offset : (w: CGFloat, h: CGFloat) = (15,15)
+    private final let offset : (w: CGFloat, h: CGFloat) = (35,35)
     
     private var label: SKLabelNode!
     private var grid : SKSpriteNode!
@@ -233,7 +233,7 @@ class Speedo : SKScene{
         self.centerX = self.size.width/2;
         self.centerY = self.size.height/2;
         
-        self.grid = SKSpriteNode(imageNamed: "speedo.png");
+        self.grid = SKSpriteNode(imageNamed: "risorse/speedo/speedo.png");
         self.grid.name = self.gridNodeName;
         self.grid.position = CGPoint(x: self.centerX, y: self.centerY)
         self.grid.size = CGSize(width: self.size.width - self.offset.w, height: self.size.width - self.offset.h);
@@ -242,7 +242,7 @@ class Speedo : SKScene{
         
         //        ((self.size.height - self.offset.h)/2) - 17
         
-        self.needle = Needle(spriteName: "needle.png", w: ((self.size.width - self.offset.w)/2 - 30)/3, maxH: ((self.size.width - self.offset.w)/2 - 30), posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle, anchorPoint: CGPoint(x: 0.5,y: 0.15));
+        self.needle = Needle(spriteName: "risorse/speedo/needle.png", w: ((self.size.width - self.offset.w)/2 - 30)/3, maxH: ((self.size.width - self.offset.w)/2 - 30), posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle, anchorPoint: CGPoint(x: 0.5,y: 0.15));
         
         self.yellowSection = YellowSection(startingLevel: self.currentLevel, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: ((self.size.width - self.offset.w)/2 - 17), yellowSectionName: self.yellowSectionShapeName);
         
@@ -255,7 +255,7 @@ class Speedo : SKScene{
         }
         
         //        self.vetro = SKSpriteNode(imageNamed: "glass.png");
-        self.vetro = SKSpriteNode(imageNamed: "vetro3.png");
+        self.vetro = SKSpriteNode(imageNamed: "risorse/speedo/vetro3.png");
         self.vetro.name = self.vetroNodeName;
         self.vetro.position = CGPoint(x: self.centerX, y: self.centerY)
         self.vetro.size = CGSize(width: self.size.width - self.offset.w - 20, height: self.size.width - self.offset.h - 20);
@@ -323,11 +323,11 @@ class Speedo : SKScene{
     }
     
     func brakeGlass(){
-        self.vetro.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
+        self.vetro.normalTexture = SKTexture(imageNamed: "risorse/normalMaps/brokenGlass.jpg")
     }
     
     func normalGlass(){
-        self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
+        self.vetro.normalTexture = SKTexture(imageNamed: "risorse/normalMaps/lightNormalGlass.jpg")
     }
     
     func setNeedleSpeed(speed : Needle.NeedleSpeed){
@@ -376,6 +376,7 @@ class Speedo : SKScene{
             });
             
             var smokeEmitter = SKEmitterNode(fileNamed: "SmokeBrake");
+            smokeEmitter.particleTexture = SKTexture(imageNamed: "risorse/effects/spark.png")
             smokeEmitter.name = self.smokeNodeName
             smokeEmitter.position = CGPointMake(self.centerX+(self.label.frame.width/2), self.centerY+50)
             

@@ -303,24 +303,26 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.menu.layer.cornerRadius=30
         self.menu.menuDelegate = self
         self.menu.backgroundColor = UIColor.redColor()
-        self.menu.backgroundColor = UIColor(patternImage: UIImage(named: "sfondoMenu.jpg")!)
+        self.menu.backgroundColor = UIColor(patternImage: UIImage(named: "risorse/backgrounds/sfondoMenu.jpg")!)
         
         let deviceNumberType = UtilityFunction.IOSDeviceUtility.checkDevice(view)
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "sfondo\(deviceNumberType.rawValue).png")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "risorse/backgrounds/sfondo\(deviceNumberType.rawValue).png")!)
         
-        self.windowInformations.layer.cornerRadius = 5
-        self.windowInformations.layer.borderColor = UIColor(patternImage: UIImage(named: "texture.png")!).CGColor
+        self.windowInformations.layer.cornerRadius = 15
+        self.windowInformations.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture.png")!).CGColor
         self.windowInformations.layer.borderWidth = 10
-        self.windowInformations.layer.shadowColor = UIColor.redColor().CGColor
-        self.windowInformations.layer.shadowOffset = CGSize()
-        self.windowInformations.layer.shadowRadius = 10
-        self.windowInformations.layer.shadowOpacity = 1
+//        self.windowInformations.layer.shadowColor = UIColor.redColor().CGColor
+//        self.windowInformations.layer.shadowOffset = CGSize()
+//        self.windowInformations.layer.shadowRadius = 5
+//        self.windowInformations.layer.shadowOpacity = 1
+        self.windowInformations.backgroundColor = UIColor(white: 100, alpha: 0.2)
         
-        self.puntiAttuali.layer.borderColor = UIColor(patternImage: UIImage(named: "texture_mini.png")!).CGColor
+        
+        self.puntiAttuali.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
         self.puntiAttuali.layer.borderWidth = 3
         self.puntiAttuali.layer.cornerRadius = 10
         
-        self.currentLevel.layer.borderColor = UIColor(patternImage: UIImage(named: "texture_mini.png")!).CGColor
+        self.currentLevel.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
         self.currentLevel.layer.borderWidth = 3
         self.currentLevel.layer.cornerRadius = 10
     }
@@ -359,13 +361,13 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.fadingView.frame.origin.x = (self.view.frame.size.width-self.fadingView.frame.size.width) / 2
         self.fadingView.frame.origin.y = self.acceleratorView.frame.origin.y + 30
         
-        self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, -self.slidingMenu.frame.size.height, self.view.frame.size.width, self.slidingMenu.frame.size.height)
+        self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, -self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         
         self.slidingMenu.layer.zPosition = 10
         
-        self.windowInformations.frame = CGRectMake(self.windowInformations.frame.origin.x, self.windowInformations.frame.origin.y, self.view.frame.size.width, self.windowInformations.frame.size.height)
+        self.windowInformations.frame = CGRectMake(5, self.windowInformations.frame.origin.y+5, self.view.frame.size.width-10, self.windowInformations.frame.size.height)
         
-        self.informationView.frame.size.width = self.view.frame.size.width
+        self.informationView.frame.size.width = self.view.frame.size.width-10
         
         
         println("ooo \(self.view.frame.size.height - self.acceleratorView.frame.size.height - offset.h)")
@@ -380,7 +382,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         
         self.pointText.frame.origin.x = (self.view.frame.size.width/2 - 15) - self.pointText.frame.size.width - 30
         
-        self.gameTitle.frame.origin.x = (self.view.frame.size.width - self.gameTitle.frame.size.width) / 2
+        self.gameTitle.frame.origin.x = ((self.view.frame.size.width - 10) - self.gameTitle.frame.size.width) / 2
         self.playButton.frame.origin.x = (self.view.frame.size.width - self.playButton.frame.size.width) / 2
     }
     

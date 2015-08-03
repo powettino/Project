@@ -46,5 +46,5 @@ class MenuTable : UITableView{
     
     @IBAction func changingSurvival(sender: AnyObject) {
         self.menuDelegate?.changedSurvival();
-    }
+    }        
 }

@@ -245,8 +245,8 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Catch The Speed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Ou-uw-O7R">
                                                 <rect key="frame" x="0.0" y="13" width="320" height="51"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="25"/>
-                                                <color key="textColor" red="0.96750710227272729" green="0.27785367762618635" blue="0.020068705359703565" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="23"/>
+                                                <color key="textColor" red="1" green="0.020990041410197557" blue="0.24908602130403246" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="shadowColor" red="1" green="0.93408371784785105" blue="0.069484225237409047" alpha="1" colorSpace="calibratedRGB"/>
                                                 <size key="shadowOffset" width="1" height="-1"/>
@@ -269,7 +269,7 @@
                                                 <rect key="frame" x="190" y="188" width="92" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="20"/>
-                                                <color key="textColor" red="0.064535148371367201" green="0.23744844371246898" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" red="1" green="0.53041738839999997" blue="0.11122614290000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FB4-0f-hOQ">
@@ -282,7 +282,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Jhr-iC-n2m">
                                                 <rect key="frame" x="11" y="84" width="298" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="28"/>
+                                                <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="26"/>
                                                 <color key="tintColor" red="1" green="0.035692988270000003" blue="0.01248054837" alpha="1" colorSpace="calibratedRGB"/>
                                                 <size key="titleShadowOffset" width="3" height="1"/>
                                                 <state key="normal" title="Play Soft">
