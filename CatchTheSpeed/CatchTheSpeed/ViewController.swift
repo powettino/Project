@@ -441,20 +441,20 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
-            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.low)
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.low)
             self.speedoScene?.enableFailDelegate(true);
         case ModeGame.stressing:
-            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.medium)
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.medium)
             //            self.timeLabel.text = String(self.counterTimerMode)
             //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
             self.speedoScene?.enableFailDelegate(false);
         case ModeGame.survival:
-            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fast)
             self.speedoScene?.enableFailDelegate(true);
         case ModeGame.astonishing:
             //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
             //            self.timeLabel.text = String(self.counterTimerMode)
-            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fastest)
             self.speedoScene?.enableFailDelegate(false);
         default:
             break

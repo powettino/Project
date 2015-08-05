@@ -47,307 +47,10 @@ class Speedo : SKScene{
         default:
             return (0,0);
         }
-    }
-    
-    struct TimerCounter{
-        var second1: SKSpriteNode?
-        var second2: SKSpriteNode?
-        var current : Int
-        var fire : Double
-        var second1ActionName : String = "second1Action"
-        var second2ActionName : String = "second2Action"
-        var internalSpeedo : Speedo
-        init(speedo : Speedo, nameFirst : String, nameSecond : String, fireTimer : Double, w: CGFloat, h: CGFloat, posX : CGFloat, posY : CGFloat, posZ : CGFloat){
-            current = 60
-            internalSpeedo = speedo;
-            fire = fireTimer
-            second1 = SKSpriteNode(imageNamed: "risorse/speedo/numbers/number"+String(current / 10)+".png");
-            second2 = SKSpriteNode(imageNamed: "risorse/speedo/numbers/number"+String(current % 10)+".png");
-            second1?.name = nameFirst;
-            second2?.name = nameSecond;
-            second1?.size = CGSize(width: w, height: h)
-            second2?.size = CGSize(width: w, height: h)
-            second1?.anchorPoint = CGPoint(x:1,y:0)
-            second2?.anchorPoint = CGPoint(x: 0, y: 0)
-            second1?.position = CGPoint(x: posX, y: posY)
-            second2?.position = CGPoint(x: posX, y: posY)
-            second1?.zPosition = posZ;
-            second2?.zPosition = posZ;
-        }
+    }    
         
-        mutating func restoreTimer(){
-            println("llll  1 \(self.current)")
-            second1?.texture = SKTexture(imageNamed: "risorse/speedo/numbers/number"+String(self.current / 10)+".png");
-            self.second2?.texture = SKTexture(imageNamed: "risorse/speedo/numbers/number"+String(self.current % 10)+".png");
-        }
-        
-        mutating func startCounter(){
-            var block1 = SKAction.sequence([
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number6.png")],
-                    timePerFrame: self.fire),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number5.png")],
-                    timePerFrame: self.fire*10),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number4.png")],
-                    timePerFrame: self.fire*10),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number3.png")],
-                    timePerFrame: self.fire*10),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number2.png")],
-                    timePerFrame: self.fire*10),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number1.png")],
-                    timePerFrame: self.fire*10),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number0.png")],
-                    timePerFrame: self.fire*10)
-                ])
-            
-            var block2 = SKAction.sequence([
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number0.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    if(self.current==0){
-                        self.stopCounter()
-                        self.internalSpeedo.timerDelegate?.timerEnded();
-                    }
-                    
-                    self.current--
-                    println("seco 0 \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number9.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number8.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number7.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number6.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number5.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number4.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number3.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number2.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")}),
-                SKAction.animateWithTextures([
-                    SKTexture(imageNamed: "risorse/speedo/numbers/number1.png")],
-                    timePerFrame: self.fire),
-                SKAction.runBlock({
-                    self.current--
-                    println("seco \(self.current)")})
-                ])
-            
-            second1?.runAction(
-                SKAction.repeatAction(
-                    block1,
-                    count: 1),
-                withKey: self.second1ActionName)
-            second2?.runAction(
-                SKAction.repeatAction(
-                    block2,
-                    count: 7),
-                withKey: self.second2ActionName)
-            
-        }
-        
-        mutating func pauseCounter(paused : Bool){
-            second1?.paused = paused
-            second2?.paused = paused
-        }
-        
-        mutating func stopCounter(){
-            second1?.removeAllActions()
-            second2?.removeAllActions()
-        }
-    }
-    
-    struct Needle{
-        
-        internal enum NeedleSpeed : NSTimeInterval{
-            case fastest = 0.5
-            case fast = 0.8
-            case medium = 1
-            case low = 1.5
-        }
-        
-        var speed : NeedleSpeed!
-        var movementAngles : (min: CGFloat, max: CGFloat)
-        var collisionCategory : UInt32 = PhysicsCategory.NeedleP;
-        var contactCollisionCategory  : UInt32 = PhysicsCategory.CollisionBlockP
-        var collisionBitMask : UInt32 = PhysicsCategory.Empty
-        var spriteNode : SKSpriteNode?
-        var colliderNode : SKSpriteNode?
-        var rotationLabel : String = "rotationAction"
-        
-        init(spriteName : String, w: CGFloat, maxH:CGFloat, posX : CGFloat, posY : CGFloat, posZ : CGFloat, name: String, startingAngle : Double, minAngle : Double, maxAngle : Double, anchorPoint: CGPoint){
-            speed = NeedleSpeed.low
-            spriteNode = SKSpriteNode(imageNamed: spriteName);
-            spriteNode!.name = name
-            spriteNode!.position = CGPoint(x: posX, y: posY)
-            spriteNode!.size = CGSize(width: w, height: maxH)
-            spriteNode!.anchorPoint = anchorPoint
-            spriteNode!.zRotation = UtilityFunction.degreesToRadiant(startingAngle)
-            spriteNode!.zPosition = posZ;
-            movementAngles.min = UtilityFunction.degreesToRadiant(minAngle)
-            movementAngles.max = UtilityFunction.degreesToRadiant(maxAngle)
-            
-            var colliderWidth : CGFloat = 10;
-            var colliderHeight : CGFloat = 10;
-            
-            colliderNode = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
-            colliderNode!.name = name+"Collider";
-            var punto = UtilityFunction.findXY(maxH , centerX: posX, centerY: posY, angle: UtilityFunction.degreesToRadiant(90));
-            colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y - spriteNode!.position.y)
-            colliderNode!.zPosition = posZ;
-            //            colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2 - 7)
-            //            colliderNode!.physicsBody?.categoryBitMask = collisionCategory;
-            //            colliderNode!.physicsBody?.contactTestBitMask = contactCollisionCategory;
-            //            colliderNode!.physicsBody?.collisionBitMask = collisionBitMask
-            //            colliderNode!.physicsBody?.dynamic = true;
-            //            colliderNode!.physicsBody?.usesPreciseCollisionDetection = true;
-            
-            spriteNode?.addChild(colliderNode!);
-        }
-        
-        mutating func setSpeed(newSpeed : NeedleSpeed){
-            speed = newSpeed;
-        }
-        
-        mutating func increaseSpeedTo(value: CGFloat){
-            spriteNode!.runAction(SKAction.speedTo(value, duration: 0.5));
-        }
-        
-        mutating func setStartPosition(startingAngle : Double){
-            spriteNode!.zRotation = UtilityFunction.degreesToRadiant(startingAngle)
-        }
-        
-        mutating func startRotation(){
-            let forwardRotation = SKAction.rotateToAngle(movementAngles.min, duration: speed.rawValue, shortestUnitArc: false);
-            let backwardRotation = SKAction.rotateToAngle(movementAngles.max, duration: speed.rawValue, shortestUnitArc: false);
-            var seq = SKAction.sequence([forwardRotation, backwardRotation]);
-            spriteNode?.runAction(
-                SKAction.repeatActionForever(seq)
-                , withKey: rotationLabel
-            );
-        }
-        
-        mutating func pauseRotation(paused: Bool){
-            spriteNode?.paused = paused;
-        }
-        
-        mutating func stopRotation(){
-            spriteNode?.removeActionForKey(rotationLabel)
-        }
-    }
-    
-    struct YellowSection {
-        var referenceAngles : (angles: (max: CGFloat, min: CGFloat, dim: CGFloat), radius : CGFloat)!
-        var yellowShape : SKShapeNode?
-        var yellowName : String!
-        var colliderNode : SKSpriteNode?
-        var centerPoint : (x: CGFloat, y: CGFloat)
-        
-        init(startingLevel: Int, minDegree : Double, maxDegree : Double, centerX: CGFloat, centerY: CGFloat, rad: CGFloat, yellowSectionName : String){
-            referenceAngles = (YellowSection.calcAngleOnLevel(startingLevel, minDegreeAngle: minDegree, maxDegreeAngle: maxDegree), rad);
-            centerPoint.x = centerX;
-            centerPoint.y = centerY;
-            yellowName = yellowSectionName;
-            updateNodes()
-        }
-        
-        mutating func updateSection(level: Int, refMinDegree : Double, refMaxDegree : Double, radius : CGFloat){
-            referenceAngles = (YellowSection.calcAngleOnLevel(level, minDegreeAngle: refMinDegree, maxDegreeAngle: refMaxDegree), radius);
-            updateNodes();
-        }
-        
-        mutating func updateNodes(){
-            var pathToDraw = CGPathCreateMutable()
-            
-            CGPathMoveToPoint(pathToDraw, nil, centerPoint.x, centerPoint.y)
-            CGPathAddArc(pathToDraw, nil, centerPoint.x, centerPoint.y, referenceAngles.radius, referenceAngles.angles.max, referenceAngles.angles.min, true);
-            
-            CGPathAddLineToPoint(pathToDraw, nil, centerPoint.x, centerPoint.y)
-            yellowShape = SKShapeNode(path:pathToDraw)
-            yellowShape!.name = yellowName;
-            yellowShape!.path = pathToDraw
-            yellowShape!.strokeColor = SKColor.orangeColor()
-            yellowShape!.glowWidth = 0.6
-            yellowShape!.fillColor = SKColor.orangeColor().colorWithAlphaComponent(0.6);
-            
-            var offset : CGFloat = 0;
-            var punto = UtilityFunction.findXY(referenceAngles.radius-offset, centerX: centerPoint.x, centerY: centerPoint.y, angle: referenceAngles.angles.max);
-            var corda = (2  * (referenceAngles.radius-offset)) * (sin(referenceAngles.angles.dim/2));
-            
-            colliderNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: corda, height: 10));
-            colliderNode!.name = yellowName+"Collider";
-            colliderNode!.position = CGPoint(x: punto.x, y: punto.y);
-            colliderNode!.anchorPoint = CGPoint(x: 0, y: 1);
-            colliderNode!.zRotation = (referenceAngles.angles.max - (referenceAngles.angles.dim/2)) - UtilityFunction.degreesToRadiant(90)
-            //            colliderNode!.physicsBody = SKPhysicsBody(rectangleOfSize: colliderNode!.frame.size)
-            //            colliderNode!.physicsBody?.categoryBitMask = PhysicsCategory.CollisionBlockP
-            //            colliderNode!.physicsBody?.contactTestBitMask = PhysicsCategory.NeedleP
-            //            colliderNode!.physicsBody?.collisionBitMask = PhysicsCategory.Empty;
-            //            colliderNode!.physicsBody?.dynamic=false;
-            //            colliderNode!.physicsBody?.usesPreciseCollisionDetection=true;
-            yellowShape?.addChild(colliderNode!)
-        }
-        
-        private static func calcAngleOnLevel(level : Int, minDegreeAngle : Double, maxDegreeAngle: Double) -> (max : CGFloat, min : CGFloat, dim : CGFloat){
-            
-            // si applica una correzione di 90 gradi dovuta agli assi del piano di presentazione
-            // NSLog("Calcolo dai punti di riferimento: \(minDegreeAngle+90) - \(maxDegreeAngle+90)");
-            var fixedAngles : (min: Double, max: Double) = (minDegreeAngle + 90, maxDegreeAngle + 90)
-            var dimensionAngle = (fixedAngles.max - fixedAngles.min) / Double((level + 7))
-            
-            //NSLog("Dimensione angolo: \(dimensionAngle) - minimo: \( fixedAngles.min )");
-            dimensionAngle = dimensionAngle < Speedo.minSectionDimension ? Speedo.minSectionDimension : dimensionAngle;
-            
-            var rnd: Double = UtilityFunction.randomDouble( (fixedAngles.min + dimensionAngle),  max: (fixedAngles.max))
-            //NSLog("Punto random: \(rnd)");
-            
-            return ( UtilityFunction.degreesToRadiant(rnd), UtilityFunction.degreesToRadiant(rnd-dimensionAngle), UtilityFunction.degreesToRadiant(dimensionAngle));
-        }
-    }
-    
     private final let lightNodeName : String = "lightNode"
-    private final let yellowSectionShapeName : String = "yellowNode"
+    private final let collisionSectionShapeName : String = "yellowNode"
     private final let gridNodeName :String = "gridNode"
     private final let vetroNodeName :String = "vetroNode"
     private final let needleNodeName : String = "needleNode"
@@ -374,11 +77,11 @@ class Speedo : SKScene{
     private var ambientLight : SKLightNode!
     private var vetro : SKSpriteNode!
     private var needle : Needle!
-    private var yellowSection : YellowSection!
+    private var collisionSection : CollisionSection!
     private var timerCounter : TimerCounter!
     private var maxAngle : CGFloat!
     private var minAngle : CGFloat!
-    private static var minSectionDimension : Double = 10;
+    private var minSectionDimension : Double = 10;
     private var centerX : CGFloat!;
     private var centerY : CGFloat!;
     
@@ -404,7 +107,7 @@ class Speedo : SKScene{
         
         self.needle = Needle(spriteName: "risorse/speedo/needle.png", w: ((self.size.width - self.offset.w)/2 - 30)/3, maxH: ((self.size.width - self.offset.w)/2 - 30), posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle, anchorPoint: CGPoint(x: 0.5,y: 0.15));
         
-        self.yellowSection = YellowSection(startingLevel: self.currentLevel, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: ((self.size.width - self.offset.w)/2 - 17), yellowSectionName: self.yellowSectionShapeName);
+        self.collisionSection = CollisionSection(startingLevel: self.currentLevel, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, minDimension: minSectionDimension, centerX: self.centerX, centerY: self.centerY, rad: ((self.size.width - self.offset.w)/2 - 17), collisionSectionName: self.collisionSectionShapeName);
         
         self.timerCounter = TimerCounter(speedo: self, nameFirst: timerNodeFirstName, nameSecond: timerNodeSecondName,fireTimer: 1, w: self.size.width / 9, h: self.size.height/10, posX: self.centerX , posY: self.centerY - (self.size.height/10) - 25, posZ: 0)
         
@@ -412,7 +115,7 @@ class Speedo : SKScene{
             self.addChild(needleNode);
         }
         
-        if let  yellowNode = self.yellowSection.yellowShape {
+        if let  yellowNode = self.collisionSection.collisionShape {
             self.addChild(yellowNode);
         }
         
@@ -460,7 +163,7 @@ class Speedo : SKScene{
     //questa funziona sovrascrive l'aggiornamento dell'oggetto spritekit
     //per aggiornare la collisione tra i due oggetti
     override func update(currentTime: NSTimeInterval) {
-        var intersecato = self.needle.colliderNode!.intersectsNode(self.yellowSection.colliderNode!);
+        var intersecato = self.needle.colliderNode!.intersectsNode(self.collisionSection.colliderNode!);
         if(intersecato && !self.colliso){
             self.colliso = true;
         }
@@ -615,17 +318,17 @@ class Speedo : SKScene{
         //                obj.removeFromParent();
         //            }
         //        }
-        self.enumerateChildNodesWithName(self.yellowSectionShapeName) {
+        self.enumerateChildNodesWithName(self.collisionSectionShapeName) {
             node, stop in
             node.removeFromParent();
         }
         
-        self.yellowSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : (self.grid.size.height/2)-18);
-        self.addChild(self.yellowSection.yellowShape!);
+        self.collisionSection.updateSection(self.currentLevel, refMinDegree: self.minDegreeNeedleAngle, refMaxDegree: self.maxDegreeNeedleAngle, radius : (self.grid.size.height/2)-18, minDimension: minSectionDimension);
+        self.addChild(self.collisionSection.collisionShape!);
     }
     
-    func isMinimunSectionDimension() -> Bool{
-        return (self.yellowSection.referenceAngles.angles.dim == UtilityFunction.degreesToRadiant(Speedo.minSectionDimension));
-    }
+//    func isMinimunSectionDimension() -> Bool{
+//        return (self.collisionSection.referenceAngles.angles.dim == UtilityFunction.degreesToRadiant(Speedo.minSectionDimension));
+//    }
 }
 
