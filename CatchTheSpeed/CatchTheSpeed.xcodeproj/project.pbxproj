@@ -136,7 +136,6 @@
 			children = (
 				4D57E6E41B6E303E00D74A84 /* utility */,
 				4D30E7EF1B34F58B00C0EE33 /* SKTUtils */,
-				4D8456061B166296007269B8 /* spritekit */,
 				EB22B0AB1A6BD2E000FED987 /* ViewController.swift */,
 				4DD1BC1E1AAE23850050B018 /* Speedo.swift */,
 				4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */,
@@ -177,6 +176,7 @@
 			children = (
 				4D57E6DA1B6E2BED00D74A84 /* risorse */,
 				4D57E6D21B62B45500D74A84 /* old */,
+				4D8456061B166296007269B8 /* spritekit */,
 				4D8456041B13D109007269B8 /* classes */,
 				EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */,
 				EB22B0AD1A6BD2E000FED987 /* Main.storyboard */,

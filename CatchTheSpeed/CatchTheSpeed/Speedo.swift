@@ -20,6 +20,11 @@ protocol StartingActionDelegate{
     func startedGame();
 }
 
+protocol TimerDelegate{
+    func timerEnded();
+}
+
+
 class Speedo : SKScene{
     
     struct PhysicsCategory {
@@ -28,7 +33,7 @@ class Speedo : SKScene{
         static let Empty : UInt32 = 0b0
     }
     
-    static func getAccelleratorViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
+    static func getSpeedoViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
     {
         var res =  UtilityFunction.IOSDeviceUtility.checkDevice(view)
         NSLog("res: \(res.rawValue)")
@@ -41,6 +46,155 @@ class Speedo : SKScene{
             return (0,75)
         default:
             return (0,0);
+        }
+    }
+    
+    struct TimerCounter{
+        var second1: SKSpriteNode?
+        var second2: SKSpriteNode?
+        var current : Int
+        var fire : Double
+        var second1ActionName : String = "second1Action"
+        var second2ActionName : String = "second2Action"
+        var internalSpeedo : Speedo
+        init(speedo : Speedo, nameFirst : String, nameSecond : String, fireTimer : Double, w: CGFloat, h: CGFloat, posX : CGFloat, posY : CGFloat, posZ : CGFloat){
+            current = 60
+            internalSpeedo = speedo;
+            fire = fireTimer
+            second1 = SKSpriteNode(imageNamed: "risorse/speedo/numbers/number"+String(current / 10)+".png");
+            second2 = SKSpriteNode(imageNamed: "risorse/speedo/numbers/number"+String(current % 10)+".png");
+            second1?.name = nameFirst;
+            second2?.name = nameSecond;
+            second1?.size = CGSize(width: w, height: h)
+            second2?.size = CGSize(width: w, height: h)
+            second1?.anchorPoint = CGPoint(x:1,y:0)
+            second2?.anchorPoint = CGPoint(x: 0, y: 0)
+            second1?.position = CGPoint(x: posX, y: posY)
+            second2?.position = CGPoint(x: posX, y: posY)
+            second1?.zPosition = posZ;
+            second2?.zPosition = posZ;
+        }
+        
+        mutating func restoreTimer(){
+            println("llll  1 \(self.current)")
+            second1?.texture = SKTexture(imageNamed: "risorse/speedo/numbers/number"+String(self.current / 10)+".png");
+            self.second2?.texture = SKTexture(imageNamed: "risorse/speedo/numbers/number"+String(self.current % 10)+".png");
+        }
+        
+        mutating func startCounter(){
+            var block1 = SKAction.sequence([
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number6.png")],
+                    timePerFrame: self.fire),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number5.png")],
+                    timePerFrame: self.fire*10),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number4.png")],
+                    timePerFrame: self.fire*10),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number3.png")],
+                    timePerFrame: self.fire*10),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number2.png")],
+                    timePerFrame: self.fire*10),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number1.png")],
+                    timePerFrame: self.fire*10),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number0.png")],
+                    timePerFrame: self.fire*10)
+                ])
+            
+            var block2 = SKAction.sequence([
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number0.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    if(self.current==0){
+                        self.stopCounter()
+                        self.internalSpeedo.timerDelegate?.timerEnded();
+                    }
+                    
+                    self.current--
+                    println("seco 0 \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number9.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number8.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number7.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number6.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number5.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number4.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number3.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number2.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")}),
+                SKAction.animateWithTextures([
+                    SKTexture(imageNamed: "risorse/speedo/numbers/number1.png")],
+                    timePerFrame: self.fire),
+                SKAction.runBlock({
+                    self.current--
+                    println("seco \(self.current)")})
+                ])
+            
+            second1?.runAction(
+                SKAction.repeatAction(
+                    block1,
+                    count: 1),
+                withKey: self.second1ActionName)
+            second2?.runAction(
+                SKAction.repeatAction(
+                    block2,
+                    count: 7),
+                withKey: self.second2ActionName)
+            
+        }
+        
+        mutating func pauseCounter(paused : Bool){
+            second1?.paused = paused
+            second2?.paused = paused
+        }
+        
+        mutating func stopCounter(){
+            second1?.removeAllActions()
+            second2?.removeAllActions()
         }
     }
     
@@ -200,9 +354,12 @@ class Speedo : SKScene{
     private final let labelNodeName : String = "labelNode"
     private final let smokeNodeName : String = "smokeNode"
     private final let labelStandardText : String = "SPEED UP"
+    private final let timerNodeFirstName : String = "timerNodeFirst"
+    private final let timerNodeSecondName : String = "timerNodeSecond"
     
     private var enableFail = false;
     private var enableTouchStartGame = false;
+    private var enableTimer = false;
     private final let minDegreeNeedleAngle : Double = -136   //-46
     private final let maxDegreeNeedleAngle : Double = 136   //226
     //    private final let radius : CGFloat = 132;
@@ -211,12 +368,14 @@ class Speedo : SKScene{
     private var running : Bool = false
     private final let offset : (w: CGFloat, h: CGFloat) = (35,35)
     
+    
     private var label: SKLabelNode!
     private var grid : SKSpriteNode!
     private var ambientLight : SKLightNode!
     private var vetro : SKSpriteNode!
     private var needle : Needle!
     private var yellowSection : YellowSection!
+    private var timerCounter : TimerCounter!
     private var maxAngle : CGFloat!
     private var minAngle : CGFloat!
     private static var minSectionDimension : Double = 10;
@@ -225,6 +384,7 @@ class Speedo : SKScene{
     
     var scoreDelegate : ScoreDelegate?
     var startingActionDelegate : StartingActionDelegate?
+    var timerDelegate : TimerDelegate?
     
     override func didMoveToView(view: SKView) {
         self.view?.allowsTransparency = true
@@ -246,6 +406,8 @@ class Speedo : SKScene{
         
         self.yellowSection = YellowSection(startingLevel: self.currentLevel, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, centerX: self.centerX, centerY: self.centerY, rad: ((self.size.width - self.offset.w)/2 - 17), yellowSectionName: self.yellowSectionShapeName);
         
+        self.timerCounter = TimerCounter(speedo: self, nameFirst: timerNodeFirstName, nameSecond: timerNodeSecondName,fireTimer: 1, w: self.size.width / 9, h: self.size.height/10, posX: self.centerX , posY: self.centerY - (self.size.height/10) - 25, posZ: 0)
+        
         if let needleNode = self.needle.spriteNode {
             self.addChild(needleNode);
         }
@@ -261,8 +423,8 @@ class Speedo : SKScene{
         self.vetro.size = CGSize(width: self.size.width - self.offset.w - 20, height: self.size.width - self.offset.h - 20);
         
         self.vetro.physicsBody = nil;
-//                self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
-//        self.vetro.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
+        //                self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
+        //        self.vetro.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
         self.vetro.lightingBitMask = 1;
         self.vetro.zPosition = 2
         
@@ -288,11 +450,23 @@ class Speedo : SKScene{
         self.ambientLight = SKLightNode()
         self.ambientLight.name = self.lightNodeName
         self.ambientLight.falloff = 0;
-//        self.ambientLight.position = CGPoint(x: 250, y: 60)
-                self.ambientLight.position = CGPoint(x: 20, y: 300)
+        //        self.ambientLight.position = CGPoint(x: 250, y: 60)
+        self.ambientLight.position = CGPoint(x: 20, y: 300)
         self.ambientLight.categoryBitMask = 1
         self.addChild(self.ambientLight)
         
+    }
+    
+    //questa funziona sovrascrive l'aggiornamento dell'oggetto spritekit
+    //per aggiornare la collisione tra i due oggetti
+    override func update(currentTime: NSTimeInterval) {
+        var intersecato = self.needle.colliderNode!.intersectsNode(self.yellowSection.colliderNode!);
+        if(intersecato && !self.colliso){
+            self.colliso = true;
+        }
+        if(!intersecato && self.colliso){
+            self.colliso=false;
+        }
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -308,17 +482,10 @@ class Speedo : SKScene{
             if(self.enableTouchStartGame){
                 self.running = true;
                 self.startingActionDelegate?.startedGame();
+                if(self.enableTimer){
+                    self.timerCounter.startCounter();
+                }
             }
-        }
-    }
-    
-    override func update(currentTime: NSTimeInterval) {
-        var intersecato = self.needle.colliderNode!.intersectsNode(self.yellowSection.colliderNode!);
-        if(intersecato && !self.colliso){
-            self.colliso = true;
-        }
-        if(!intersecato && self.colliso){
-            self.colliso=false;
         }
     }
     
@@ -344,6 +511,24 @@ class Speedo : SKScene{
     
     func enableFailDelegate(enable : Bool){
         self.enableFail = enable;
+    }
+    
+    func enableTimer(enable : Bool)
+    {
+        if(enable && !self.enableTimer){
+            if let second1 = self.timerCounter.second1 {
+                self.addChild(second1)
+            }
+            
+            if let second2 = self.timerCounter.second2 {
+                self.addChild(second2)
+            }
+        }
+        if(!enable && self.enableTimer){
+            UtilityFunction.SpriteKitUtility.removeNodesFromParentWIthNames(self, nodesName: [self.timerNodeFirstName, self.timerNodeSecondName])
+        }
+        
+        self.enableTimer = enable;
     }
     
     func animateText(text : String?){
@@ -387,15 +572,16 @@ class Speedo : SKScene{
         }
     }
     
-    func startGame(){
+    func startSpeedo(){
         self.needle.startRotation();
         self.running=true;
         NSLog("velocita: \(self.needle.speed.rawValue)");
     }
     
-    func stopNeedle(){
+    func stopSpeedo(){
         self.running=false;
         self.needle.stopRotation();
+        self.timerCounter.stopCounter();
     }
     
     func isRunning() -> Bool{
@@ -403,15 +589,17 @@ class Speedo : SKScene{
     }
     
     func resetSpeedo(){
-        self.stopNeedle();
+        self.stopSpeedo();
         self.needle.increaseSpeedTo(1.0);
         self.needle.setStartPosition(maxDegreeNeedleAngle)
         self.currentLevel = 1;
         self.updateCollisionSection(self.currentLevel);
+        self.timerCounter.restoreTimer()
     }
     
-    func pauseNeedle(paused: Bool){
+    func pauseSpeedo(paused: Bool){
         self.needle.pauseRotation(paused)
+        self.timerCounter.pauseCounter(paused)
     }
     
     func setLevel(level: Int){

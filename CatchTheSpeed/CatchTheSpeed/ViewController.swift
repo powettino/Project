@@ -16,16 +16,16 @@ extension SKNode {
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! Speedo
+            let speedoScene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! Speedo
             archiver.finishDecoding()
-            return scene
+            return speedoScene
         } else {
             return nil
         }
     }
 }
 
-class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, OptionMenuDelegate{
+class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, TimerDelegate, OptionMenuDelegate{
     
     @IBOutlet weak var copyLabelCount: UILabel!
     @IBOutlet weak var labelText: UILabel!
@@ -52,7 +52,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
     }
     
     @IBAction func optionClick(sender: AnyObject) {
-        self.scene?.pauseNeedle(true);
+        self.speedoScene?.pauseSpeedo(true);
         if(!self.optionOpened){
             var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
             UIView.animateWithDuration(0.3 , delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
@@ -82,9 +82,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
     var timerMessageGame = NSTimer()
     var currentPoint = 0
     var counterTimerMode = 60
-    var timerStressingMode = NSTimer()
+    //    var timerStressingMode = NSTimer()
     var optionOpened :Bool = false
-    var scene : Speedo?;
+    var speedoScene : Speedo?;
     var menu : MenuTable!
     
     var recordPoint : Int {
@@ -131,34 +131,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
     
     func changedSounds() {
         NSLog("cambiato sound");
-        switch (self.modGame){
-        case ModeGame.soft:
-            self.modGame=ModeGame.stressing
-        case ModeGame.stressing:
-            self.modGame = ModeGame.soft
-        case ModeGame.survival:
-            self.modGame=ModeGame.astonishing
-        case ModeGame.astonishing:
-            self.modGame = ModeGame.survival
-        default:
-            break;
-        }
     }
     
     func changedEffects() {
         NSLog("cambiato effects");
-        switch (self.modGame){
-        case ModeGame.soft:
-            self.modGame=ModeGame.stressing
-        case ModeGame.stressing:
-            self.modGame = ModeGame.soft
-        case ModeGame.survival:
-            self.modGame=ModeGame.astonishing
-        case ModeGame.astonishing:
-            self.modGame = ModeGame.survival
-        default:
-            break;
-        }
     }
     
     func closeMenu(){
@@ -170,16 +146,17 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         
         self.optionOpened = false
         if(self.changeModeView()){
-            self.scene?.resetSpeedo()
+            //            self.speedoScene?.resetSpeedo()
             self.restartGame()
         }
-        self.scene?.pauseNeedle(false);
+        self.speedoScene?.pauseSpeedo(false);
     }
     
     func restartGame(){
+        self.speedoScene?.resetSpeedo();
         self.slideInformationView(SlideScore.down)
         self.timerMessageGame.invalidate()
-        self.timerStressingMode.invalidate()
+        //        self.timerStressingMode.invalidate()
         self.fadingView.alpha = 0
         self.fadingView.hidden = false
         self.labelText.alpha=0
@@ -191,15 +168,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.puntiAttuali.text = String(self.currentPoint)
         self.currentLevel.text = String(self.level)
         self.counterTimerMode = 60
-        //        self.timeLabel.text = (self.timeLabel.text == "-") ? "-" : String(self.counterTimerMode)
-        self.scene?.resetSpeedo();
         self.counterMessageGame=3
     }
     
     func updateRecord(){
         if(self.currentPoint > self.recordPoint){
             self.recordPoint = self.currentPoint
-            //            self.record.text = String(self.recordPoint)
         }
     }
     
@@ -235,24 +209,22 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
             NSLog("Cambio modalita in soft");
             self.labelText.text = "Congrats!"
             self.playButton.setTitle("Play Soft", forState: UIControlState.Normal)
-            //            self.timeLabel.text = "-"
+            self.speedoScene?.enableTimer(false);
             changed=true;
         case (ModeGame.stressing, _):
             NSLog("Cambio modalita in stressing");
-            //            self.timeLabel.text = String(self.counterTimerMode)
             self.playButton.setTitle("Play Stressing", forState: UIControlState.Normal)
-            //            NSLog("time: \(self.timeLabel.text)")
+            self.speedoScene?.enableTimer(true);
             changed=true;
         case (ModeGame.survival, _):
             NSLog("Cambio modalita in survival");
             self.playButton.setTitle("Play Survival", forState: UIControlState.Normal)
-            //            self.timeLabel.text = "-"
+            self.speedoScene?.enableTimer(false);
             changed=true;
         case (ModeGame.astonishing, _) :
             NSLog("Cambio modalita in astonishing");
             self.playButton.setTitle("Play Astonishing", forState: UIControlState.Normal)
-            //            self.timeLabel.text = String(self.counterTimerMode)
-            //            NSLog("time: \(self.timeLabel.text)")
+            self.speedoScene?.enableTimer(true);
             changed=true;
         default:
             break
@@ -271,15 +243,16 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         
         setElementPositionFromDimension()
         
-        self.scene = Speedo(size: self.acceleratorView.bounds.size)
+        self.speedoScene = Speedo(size: self.acceleratorView.bounds.size)
         self.acceleratorView.showsFPS = true
         self.acceleratorView.showsNodeCount = true
-        self.scene?.size = self.acceleratorView.bounds.size
-        self.scene?.scaleMode = SKSceneScaleMode.ResizeFill
-        self.acceleratorView.presentScene(self.scene!)
-        scene?.scoreDelegate = self;
-        scene?.startingActionDelegate = self;
-        scene?.enableTouchStartGame(true);
+        self.speedoScene?.size = self.acceleratorView.bounds.size
+        self.speedoScene?.scaleMode = SKSceneScaleMode.ResizeFill
+        self.acceleratorView.presentScene(self.speedoScene!)
+        speedoScene?.scoreDelegate = self;
+        speedoScene?.startingActionDelegate = self;
+        speedoScene?.timerDelegate = self;
+        speedoScene?.enableTouchStartGame(true);
         
         self.fadingView.hidden=true
         
@@ -311,10 +284,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.windowInformations.layer.cornerRadius = 15
         self.windowInformations.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture.png")!).CGColor
         self.windowInformations.layer.borderWidth = 10
-//        self.windowInformations.layer.shadowColor = UIColor.redColor().CGColor
-//        self.windowInformations.layer.shadowOffset = CGSize()
-//        self.windowInformations.layer.shadowRadius = 5
-//        self.windowInformations.layer.shadowOpacity = 1
+        //        self.windowInformations.layer.shadowColor = UIColor.redColor().CGColor
+        //        self.windowInformations.layer.shadowOffset = CGSize()
+        //        self.windowInformations.layer.shadowRadius = 5
+        //        self.windowInformations.layer.shadowOpacity = 1
         self.windowInformations.backgroundColor = UIColor(white: 100, alpha: 0.2)
         
         
@@ -350,7 +323,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
     
     private func setElementPositionFromDimension(){
         
-        var offset = Speedo.getAccelleratorViewOffset(self.view)
+        var offset = Speedo.getSpeedoViewOffset(self.view)
         
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
@@ -386,16 +359,17 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.playButton.frame.origin.x = (self.view.frame.size.width - self.playButton.frame.size.width) / 2
     }
     
-    func counterDescreaseFunction(){
-        if(self.counterTimerMode == 0){
-            self.timerStressingMode.invalidate()
-            self.selectAlert()
-            self.scene?.stopNeedle();
-        }else{
-            self.counterTimerMode--
-            //            self.timeLabel.text = String(counterTimerMode)
-        }
-    }
+    //    func counterDescreaseFunction(){
+    //        if(self.counterTimerMode == 0){
+    //            self.timerStressingMode.invalidate()
+    //            self.selectAlert()
+    //            self.speedoScene?.stopSpeedo();
+    //        }else{
+    //            self.counterTimerMode--
+    //            //            self.speedoScene?.updateTimer(self.counterTimerMode)
+    //            //            self.timeLabel.text = String(counterTimerMode)
+    //        }
+    //    }
     
     func showEndAlert(title : String, message : String, action: String){
         var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -424,11 +398,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
                     self.counterMessageGame=3
                     self.labelCount.text = String(self.counterMessageGame)
                     self.copyLabelCount.text = String(self.counterMessageGame)
-                    self.scene?.setLevel(self.level);
+                    self.speedoScene?.setLevel(self.level);
                     if(!self.optionOpened){
-                        self.scene?.pauseNeedle(false);
+                        self.speedoScene?.pauseSpeedo(false);
                     }
-                    self.scene?.updateCollisionSection(nil);
+                    self.speedoScene?.updateCollisionSection(nil);
                 }
             )
         }else{
@@ -446,50 +420,56 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
     }
     
     func checkTimeToSpeedUp(){
-        //        if(self.scene?.isMinimunSectionDimension() == true){
+        //        if(self.speedoScene?.isMinimunSectionDimension() == true){
         if(self.level >= 5){
             var increasing : CGFloat = CGFloat(self.level) / 25.0
-            self.scene?.increaseSpeedTo(increasing);
+            self.speedoScene?.increaseSpeedTo(increasing);
             if((self.level % 5) == 0){
-                self.scene?.animateText(nil)
+                self.speedoScene?.animateText(nil)
             }
         }
         //    }
+    }
+    
+    func timerEnded(){
+        //        self.timerStressingMode.invalidate()
+        self.selectAlert()
+        self.speedoScene?.stopSpeedo();
     }
     
     func startedGame() {
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
-            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.low)
-            self.scene?.enableFailDelegate(true);
+            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.low)
+            self.speedoScene?.enableFailDelegate(true);
         case ModeGame.stressing:
-            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.medium)
+            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.medium)
             //            self.timeLabel.text = String(self.counterTimerMode)
-            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
-            self.scene?.enableFailDelegate(false);
+            //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
+            self.speedoScene?.enableFailDelegate(false);
         case ModeGame.survival:
-            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
-            self.scene?.enableFailDelegate(true);
+            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fast)
+            self.speedoScene?.enableFailDelegate(true);
         case ModeGame.astonishing:
-            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
+            //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
             //            self.timeLabel.text = String(self.counterTimerMode)
-            self.scene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
-            self.scene?.enableFailDelegate(false);
+            self.speedoScene?.setNeedleSpeed(Speedo.Needle.NeedleSpeed.fastest)
+            self.speedoScene?.enableFailDelegate(false);
         default:
             break
         }
         self.slideInformationView(SlideScore.top);
-        self.scene?.startGame()
+        self.speedoScene?.startSpeedo()
     }
     
     func setFail(){
         switch self.modGame{
         case ModeGame.soft:
-            self.scene?.stopNeedle();
+            self.speedoScene?.stopSpeedo();
             self.selectAlert();
         case ModeGame.survival:
-            self.scene?.stopNeedle();
+            self.speedoScene?.stopSpeedo();
             self.selectAlert()
         default:
             break;
@@ -504,10 +484,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, O
         self.currentLevel.text = String(self.level)
         switch self.modGame {
         case ModeGame.stressing, ModeGame.astonishing, ModeGame.survival:
-            self.scene?.updateCollisionSection(self.level);
+            self.speedoScene?.updateCollisionSection(self.level);
             self.checkTimeToSpeedUp()
         case ModeGame.soft:
-            self.scene?.pauseNeedle(true);
+            self.speedoScene?.pauseSpeedo(true);
             var origFrame = self.fadingView.frame
             self.fadingView.frame = CGRectMake(origFrame.origin.x, origFrame.origin.y, origFrame.width, 0)
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {

@@ -8,8 +8,23 @@
 
 import Foundation
 import UIKit
+import SpriteKit
 
 class UtilityFunction{
+    
+    class SpriteKitUtility {
+        static func removeNodeFromParentWithName(parent: SKNode , nodeName : String){
+            parent.enumerateChildNodesWithName(nodeName) {
+                node, stop in
+                node.removeFromParent();
+            }
+        }
+        static func removeNodesFromParentWIthNames(parent: SKNode , nodesName : [String]){
+            for name in nodesName{
+                removeNodeFromParentWithName(parent, nodeName: name)
+            }
+        }
+    }
     
     class IOSDeviceUtility {
         
@@ -128,6 +143,8 @@ class UtilityFunction{
             )
         }
     }
+    
+    
     
     
     
