@@ -327,8 +327,8 @@ class Speedo : SKScene{
         self.addChild(self.collisionSection.collisionShape!);
     }
     
-//    func isMinimunSectionDimension() -> Bool{
-//        return (self.collisionSection.referenceAngles.angles.dim == UtilityFunction.degreesToRadiant(Speedo.minSectionDimension));
-//    }
+    func isMinimunSectionDimension() -> Bool{
+        return (self.collisionSection.referenceAngles.angles.dim == UtilityFunction.degreesToRadiant(self.minSectionDimension));
+    }
 }
 

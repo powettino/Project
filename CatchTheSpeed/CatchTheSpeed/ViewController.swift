@@ -334,9 +334,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.fadingView.frame.origin.x = (self.view.frame.size.width-self.fadingView.frame.size.width) / 2
         self.fadingView.frame.origin.y = self.acceleratorView.frame.origin.y + 30
         
-        self.slidingMenu.frame = CGRectMake(self.slidingMenu.frame.origin.x, -self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
-        
+            self.slidingMenu.frame = CGRectMake((self.view.frame.size.width-self.container.frame.size.width)/2, -self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.slidingMenu.layer.zPosition = 10
+        
         
         self.windowInformations.frame = CGRectMake(5, self.windowInformations.frame.origin.y+5, self.view.frame.size.width-10, self.windowInformations.frame.size.height)
         
@@ -420,15 +420,15 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func checkTimeToSpeedUp(){
-        //        if(self.speedoScene?.isMinimunSectionDimension() == true){
-        if(self.level >= 5){
-            var increasing : CGFloat = CGFloat(self.level) / 25.0
-            self.speedoScene?.increaseSpeedTo(increasing);
-            if((self.level % 5) == 0){
-                self.speedoScene?.animateText(nil)
+        if(self.speedoScene?.isMinimunSectionDimension() == true){
+            if(self.level >= 5){
+                var increasing : CGFloat = CGFloat(self.level) / 25.0
+                self.speedoScene?.increaseSpeedTo(increasing);
+                if((self.level % 5) == 0){
+                    self.speedoScene?.animateText(nil)
+                }
             }
         }
-        //    }
     }
     
     func timerEnded(){
@@ -445,7 +445,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             self.speedoScene?.enableFailDelegate(true);
         case ModeGame.stressing:
             self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.medium)
-            //            self.timeLabel.text = String(self.counterTimerMode)
             //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
             self.speedoScene?.enableFailDelegate(false);
         case ModeGame.survival:
@@ -453,7 +452,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             self.speedoScene?.enableFailDelegate(true);
         case ModeGame.astonishing:
             //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
-            //            self.timeLabel.text = String(self.counterTimerMode)
             self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fastest)
             self.speedoScene?.enableFailDelegate(false);
         default:
