@@ -51,6 +51,22 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.startedGame()
     }
     
+    @IBAction func provaClick(sender: AnyObject) {
+        var permissions = [ "public_profile", "email"]
+
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
+            if let user = user {
+                if user.isNew {
+                    println("User signed up and logged in through Facebook!")
+                } else {
+                    println("User logged in through Facebook!")
+                }
+            } else {
+                println("Uh oh. The user cancelled the Facebook login.")
+            }
+        })
+        
+    }
     @IBAction func optionClick(sender: AnyObject) {
         self.speedoScene?.pauseSpeedo(true);
         if(!self.optionOpened){
@@ -86,6 +102,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var optionOpened :Bool = false
     var speedoScene : Speedo?;
     var menu : MenuTable!
+//    var loginFB : FBSDKLoginButton! = FBSDKLoginButton()
     
     var recordPoint : Int {
         get{
@@ -249,10 +266,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.speedoScene?.size = self.acceleratorView.bounds.size
         self.speedoScene?.scaleMode = SKSceneScaleMode.ResizeFill
         self.acceleratorView.presentScene(self.speedoScene!)
-        speedoScene?.scoreDelegate = self;
-        speedoScene?.startingActionDelegate = self;
-        speedoScene?.timerDelegate = self;
-        speedoScene?.enableTouchStartGame(true);
+        self.speedoScene?.scoreDelegate = self;
+        self.speedoScene?.startingActionDelegate = self;
+        self.speedoScene?.timerDelegate = self;
+        self.speedoScene?.enableTouchStartGame(true);
         
         self.fadingView.hidden=true
         
@@ -298,9 +315,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.currentLevel.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
         self.currentLevel.layer.borderWidth = 3
         self.currentLevel.layer.cornerRadius = 10
+        
     }
     
-    func slideInformationView(position : SlideScore){
+    private func slideInformationView(position : SlideScore){
         if(position.rawValue != self.informationView.frame.origin.y){
             var slidingFrame = CGRectMake(self.informationView.frame.origin.x, position.rawValue, self.informationView.frame.size.width, self.informationView.frame.size.height)
             
@@ -328,13 +346,14 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
         self.acceleratorView.frame.origin.x = 0
-        self.acceleratorView.frame.origin.y = self.view.frame.height - self.acceleratorView.frame.size.height - offset.h
+        self.acceleratorView.frame.origin.y = self.view.frame.height -
+            self.acceleratorView.frame.size.height - offset.h
         self.acceleratorView.layer.zPosition = 2
         
         self.fadingView.frame.origin.x = (self.view.frame.size.width-self.fadingView.frame.size.width) / 2
         self.fadingView.frame.origin.y = self.acceleratorView.frame.origin.y + 30
         
-            self.slidingMenu.frame = CGRectMake((self.view.frame.size.width-self.container.frame.size.width)/2, -self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
+        self.slidingMenu.frame = CGRectMake((self.view.frame.size.width-self.container.frame.size.width)/2, -self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.slidingMenu.layer.zPosition = 10
         
         
@@ -357,7 +376,23 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         
         self.gameTitle.frame.origin.x = ((self.view.frame.size.width - 10) - self.gameTitle.frame.size.width) / 2
         self.playButton.frame.origin.x = (self.view.frame.size.width - self.playButton.frame.size.width) / 2
+        
+        //l'anchor point di base e' al centro del bottone
+        var altezzaAcc = self.acceleratorView.frame.origin.y+self.acceleratorView.frame.size.height
+        //        self.loginFB.frame.origin = CGPoint(x: ((self.view.frame.size.width-self.loginFB.frame.size.width)/2), y: self.view.frame.size.height - ((self.view.frame.height-altezzaAcc+offset.h)/2))
+        
+//        self.loginFB.frame.origin = CGPoint(x: ((self.view.frame.size.width-self.loginFB.frame.size.width)/2), y: self.view.frame.size.height - self.loginFB.frame.size.height - 10 )
+//        
+//        loginFB.layer.zPosition = 3
+//        println("adasd \(self.view.frame.height-altezzaAcc) \(self.acceleratorView.frame.origin.y) \(offset.h)")
+//        
+//        var permissions = [ "public_profile", "email", "user_friends" ]
+//        
+//        
+//        self.view.addSubview(loginFB)
     }
+    
+    
     
     //    func counterDescreaseFunction(){
     //        if(self.counterTimerMode == 0){
