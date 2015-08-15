@@ -10,9 +10,10 @@ import Foundation
 import UIKit
 
 
-class ScoreView: UIViewController{
-        
+class ScoreView: ViewController{
+    
     
     override func viewDidLoad() {
     }
+    
 }

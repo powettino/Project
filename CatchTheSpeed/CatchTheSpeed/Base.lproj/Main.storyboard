@@ -293,16 +293,6 @@
                                                     <action selector="playMod:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="3FR-e7-Hpn"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="t3T-11-Ydd">
-                                                <rect key="frame" x="23" y="84" width="46" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Button">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="provaClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gpP-4R-Zye"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -361,6 +351,23 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="t3T-11-Ydd" userLabel="Login with Facbook">
+                                <rect key="frame" x="90" y="475" width="136" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Connect">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="FBButtonClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="uOK-FC-dsq"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="Nci-6d-u1h">
+                                <rect key="frame" x="142" y="241" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.064535148370000003" green="0.23744844370000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <gestureRecognizers/>
                     </view>
@@ -391,6 +398,7 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
+                        <outlet property="FBButton" destination="t3T-11-Ydd" id="WJq-xh-Bac"/>
                         <outlet property="acceleratorView" destination="6SP-Wf-V6S" id="HPK-pd-dDU"/>
                         <outlet property="container" destination="eL5-q3-SBj" id="j9K-Eb-IY5"/>
                         <outlet property="copyLabelCount" destination="wlb-GD-Q6S" id="bOi-Ix-4Wy"/>
@@ -401,6 +409,7 @@
                         <outlet property="labelCount" destination="mpY-At-1eQ" id="KEb-Nw-bEl"/>
                         <outlet property="labelText" destination="wGK-1e-Ytx" id="EWS-ac-bgv"/>
                         <outlet property="levelText" destination="U7c-Wc-4Dp" id="JqR-6t-HfM"/>
+                        <outlet property="loading" destination="Nci-6d-u1h" id="hQo-WE-335"/>
                         <outlet property="opzioni" destination="EzE-tu-iXC" id="fAd-Mx-fZx"/>
                         <outlet property="playButton" destination="Jhr-iC-n2m" id="IUY-M7-G8A"/>
                         <outlet property="pointText" destination="K35-LW-uPS" id="IeQ-Qm-r3m"/>

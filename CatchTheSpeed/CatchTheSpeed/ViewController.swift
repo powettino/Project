@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import Social
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -25,60 +26,7 @@ extension SKNode {
     }
 }
 
-class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, TimerDelegate, OptionMenuDelegate{
-    
-    @IBOutlet weak var copyLabelCount: UILabel!
-    @IBOutlet weak var labelText: UILabel!
-    //    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var labelCount: UILabel!
-    @IBOutlet weak var fadingView: UIView!
-    @IBOutlet weak var puntiAttuali: UILabel!
-    //    @IBOutlet weak var record: UILabel!
-    @IBOutlet weak var nomePlayer: UILabel!
-    @IBOutlet weak var opzioni: UIBarButtonItem!
-    @IBOutlet weak var slidingMenu: UIView!
-    @IBOutlet weak var acceleratorView: SKView!
-    @IBOutlet weak var container: UIView!
-    @IBOutlet weak var informationView: UIView!
-    @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var windowInformations: UIView!
-    @IBOutlet weak var pointText: UILabel!
-    @IBOutlet weak var levelText: UILabel!
-    @IBOutlet weak var currentLevel: UILabel!
-    
-    @IBOutlet weak var gameTitle: UILabel!
-    @IBAction func playMod(sender: AnyObject) {
-        self.startedGame()
-    }
-    
-    @IBAction func provaClick(sender: AnyObject) {
-        var permissions = [ "public_profile", "email"]
-
-        PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
-            if let user = user {
-                if user.isNew {
-                    println("User signed up and logged in through Facebook!")
-                } else {
-                    println("User logged in through Facebook!")
-                }
-            } else {
-                println("Uh oh. The user cancelled the Facebook login.")
-            }
-        })
-        
-    }
-    @IBAction func optionClick(sender: AnyObject) {
-        self.speedoScene?.pauseSpeedo(true);
-        if(!self.optionOpened){
-            var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
-            UIView.animateWithDuration(0.3 , delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
-                self.slidingMenu.frame = newFrame;
-                } , completion:(nil))
-            self.optionOpened=true
-        }else{
-            self.closeMenu()
-        }
-    }
+class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, TimerDelegate, OptionMenuDelegate, PFLogInViewControllerDelegate{
     
     enum ModeGame : Int {
         case soft = 100
@@ -102,7 +50,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var optionOpened :Bool = false
     var speedoScene : Speedo?;
     var menu : MenuTable!
-//    var loginFB : FBSDKLoginButton! = FBSDKLoginButton()
+    var userLogged : Bool = false;
+    var read_permissions = [ "public_profile", "email"]
+    var write_permissions = ["publish_actions"]
+    
     
     var recordPoint : Int {
         get{
@@ -111,6 +62,72 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }
         set(value){
             NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "recordCatch")
+        }
+    }
+    
+    
+    @IBOutlet weak var copyLabelCount: UILabel!
+    @IBOutlet weak var labelText: UILabel!
+    //    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var labelCount: UILabel!
+    @IBOutlet weak var fadingView: UIView!
+    @IBOutlet weak var puntiAttuali: UILabel!
+    //    @IBOutlet weak var record: UILabel!
+    @IBOutlet weak var nomePlayer: UILabel!
+    @IBOutlet weak var opzioni: UIBarButtonItem!
+    @IBOutlet weak var slidingMenu: UIView!
+    @IBOutlet weak var acceleratorView: SKView!
+    @IBOutlet weak var container: UIView!
+    @IBOutlet weak var informationView: UIView!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var windowInformations: UIView!
+    @IBOutlet weak var pointText: UILabel!
+    @IBOutlet weak var levelText: UILabel!
+    @IBOutlet weak var currentLevel: UILabel!
+    @IBOutlet weak var loading: UIActivityIndicatorView!
+    @IBOutlet weak var FBButton: UIButton!
+    @IBOutlet weak var gameTitle: UILabel!
+    
+    @IBAction func playMod(sender: AnyObject) {
+        self.startedGame()
+    }
+    
+    @IBAction func FBButtonClick(sender: AnyObject) {
+        self.loading.startAnimating()
+        if(self.userLogged){
+            PFUser.logOut()
+            println("User logged out")
+            self.FBButton.setTitle("Login", forState: UIControlState.Normal)
+            self.userLogged = false
+        }else{
+            PFFacebookUtils.logInInBackgroundWithPublishPermissions(self.write_permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
+                if let user = user {
+                    if user.isNew {
+                        println("User signed up and logged in through Facebook!")
+                        self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
+                    } else {
+                        println("User logged in through Facebook!")
+                        self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
+                    }
+                    self.userLogged = true
+                } else {
+                    println("Uh oh. The user cancelled the Facebook login.")
+                }
+            })
+        }
+        self.loading.stopAnimating()
+    }
+    
+    @IBAction func optionClick(sender: AnyObject) {
+        self.speedoScene?.pauseSpeedo(true);
+        if(!self.optionOpened){
+            var newFrame =  CGRectMake(self.slidingMenu.frame.origin.x, 0, self.slidingMenu.frame.size.width , self.slidingMenu.frame.size.height)
+            UIView.animateWithDuration(0.3 , delay: 0, options: UIViewAnimationOptions.TransitionFlipFromTop, animations: {
+                self.slidingMenu.frame = newFrame;
+                } , completion:(nil))
+            self.optionOpened=true
+        }else{
+            self.closeMenu()
         }
     }
     
@@ -188,29 +205,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.counterMessageGame=3
     }
     
-    func updateRecord(){
-        if(self.currentPoint > self.recordPoint){
-            self.recordPoint = self.currentPoint
-        }
-    }
-    
-    func selectAlert(){
-        switch(self.recordPoint, self.modGame){
-        case (self.currentPoint-1, _):
-            self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!")
-        case (_, ModeGame.stressing):
-            self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again")
-        case (_, ModeGame.soft):
-            self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness...")
-        case (_, ModeGame.survival):
-            self.showEndAlert("Nice try", message: "You will reborn...again...", action: "Let me live")
-        case (_, ModeGame.astonishing):
-            self.showEndAlert("Nothing to blame", message: "It still hard for you", action: "I'm not giving up")
-        default:
-            break;
-        }
-    }
-    
     private func changeModeView() -> Bool{
         var changed : Bool! = false;
         switch (self.modGame, self.playButton.titleLabel!.text!.substringFromIndex(advance(self.playButton.titleLabel!.text!.startIndex, 5))) {
@@ -249,6 +243,45 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         return changed;
     }
     
+    private func checkLoginStatus() -> Bool{
+        self.loading?.startAnimating()
+        if let user = PFUser.currentUser(){
+            if(PFFacebookUtils.isLinkedWithUser(user)){
+                NSLog("FAcebook logged")
+                self.loading?.stopAnimating()
+                return true;
+            }
+            NSLog("Parse logged")
+        }
+        self.loading?.stopAnimating()
+        return false;
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.recordPoint=0
+        
+        if(checkLoginStatus()){
+            println("User already logged from start")
+            self.FBButton?.setTitle("Disconnect", forState: UIControlState.Normal)
+            self.userLogged = true;
+            
+        }
+        //        if let user = PFUser.currentUser() {
+        //            // Customize the Log In View Controller
+        //            var logInViewController = PFLogInViewController()
+        //            logInViewController.delegate = self
+        //            logInViewController.facebookPermissions = self.read_permissions
+        //            logInViewController.fields = PFLogInFields.Facebook | PFLogInFields.DismissButton
+        //
+        //
+        //            self.presentViewController(logInViewController, animated: true, completion: (nil))
+        //
+        //        }
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -260,9 +293,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         
         setElementPositionFromDimension()
         
+        self.loading.layer.zPosition=10
+        
         self.speedoScene = Speedo(size: self.acceleratorView.bounds.size)
-        self.acceleratorView.showsFPS = true
-        self.acceleratorView.showsNodeCount = true
         self.speedoScene?.size = self.acceleratorView.bounds.size
         self.speedoScene?.scaleMode = SKSceneScaleMode.ResizeFill
         self.acceleratorView.presentScene(self.speedoScene!)
@@ -316,6 +349,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.currentLevel.layer.borderWidth = 3
         self.currentLevel.layer.cornerRadius = 10
         
+        
     }
     
     private func slideInformationView(position : SlideScore){
@@ -346,8 +380,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
         self.acceleratorView.frame.origin.x = 0
-        self.acceleratorView.frame.origin.y = self.view.frame.height -
-            self.acceleratorView.frame.size.height - offset.h
+        //        self.acceleratorView.center = self.view.center
+        self.acceleratorView.frame.origin.y = (self.view.frame.height -
+            self.acceleratorView.frame.size.height - offset.h)
         self.acceleratorView.layer.zPosition = 2
         
         self.fadingView.frame.origin.x = (self.view.frame.size.width-self.fadingView.frame.size.width) / 2
@@ -362,7 +397,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.informationView.frame.size.width = self.view.frame.size.width-10
         
         
-        println("ooo \(self.view.frame.size.height - self.acceleratorView.frame.size.height - offset.h)")
+        //        println("ooo \(self.view.frame.size.height - self.acceleratorView.frame.size.height - offset.h)")
         
         self.currentLevel.frame.origin.x = self.view.frame.size.width + 10
         self.currentLevel.frame.size.width = self.view.frame.size.width/2 - 15
@@ -377,43 +412,105 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.gameTitle.frame.origin.x = ((self.view.frame.size.width - 10) - self.gameTitle.frame.size.width) / 2
         self.playButton.frame.origin.x = (self.view.frame.size.width - self.playButton.frame.size.width) / 2
         
-        //l'anchor point di base e' al centro del bottone
-        var altezzaAcc = self.acceleratorView.frame.origin.y+self.acceleratorView.frame.size.height
-        //        self.loginFB.frame.origin = CGPoint(x: ((self.view.frame.size.width-self.loginFB.frame.size.width)/2), y: self.view.frame.size.height - ((self.view.frame.height-altezzaAcc+offset.h)/2))
+        self.FBButton.frame.size.width = 110
+        self.FBButton.frame.size.height = 25
+        self.FBButton.setBackgroundImage(UIImage(named: "risorse/buttons/fb_s.png"), forState: UIControlState.Normal)
+        self.FBButton.setBackgroundImage(UIImage(named: "risorse/buttons/fb_s_pressed.png"), forState: UIControlState.Selected)
         
-//        self.loginFB.frame.origin = CGPoint(x: ((self.view.frame.size.width-self.loginFB.frame.size.width)/2), y: self.view.frame.size.height - self.loginFB.frame.size.height - 10 )
-//        
-//        loginFB.layer.zPosition = 3
-//        println("adasd \(self.view.frame.height-altezzaAcc) \(self.acceleratorView.frame.origin.y) \(offset.h)")
-//        
-//        var permissions = [ "public_profile", "email", "user_friends" ]
-//        
-//        
-//        self.view.addSubview(loginFB)
+        self.FBButton.frame.origin = CGPoint(x: ((self.view.frame.size.width-self.FBButton.frame.size.width)/2), y: self.view.frame.size.height - self.FBButton.frame.size.height - 10)
+        self.FBButton.layer.zPosition = 3
     }
     
+    func endGame(){
+        NSLog("record: \(self.recordPoint) - current: \(self.currentPoint)")
+        switch(self.recordPoint<self.currentPoint, self.modGame){
+        case (true, _) :
+            self.recordPoint = self.currentPoint
+            self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!", enableShare: true)
+        case (_, ModeGame.stressing):
+            self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again", enableShare: false)
+        case (_, ModeGame.soft):
+            self.showEndAlert("OH NO!!!", message: "Omg, you have lost! LOSER!", action: "Sadness :(",enableShare: false)
+        case (_, ModeGame.survival):
+            self.showEndAlert("Nice try", message: "You will reborn...again...", action: "Let me live",enableShare: false)
+        case (_, ModeGame.astonishing):
+            self.showEndAlert("Nothing to blame", message: "It still hard for you", action: "I'm not giving up",enableShare: false)
+        default:
+            break;
+        }
+    }
     
+    private func postOnFacebook(){
+        var post = FBSDKGraphRequest(graphPath: "/me/feed", parameters: [
+            "message":"I have just score \(self.recordPoint) points on Catch The Speed!!\n Do you think you can beat me?"], HTTPMethod: "POST" );
+        post.startWithCompletionHandler({
+            (connection:FBSDKGraphRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+            if(error != nil){
+                println(error)
+                var postCompleted = UIAlertController(title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert)
+                postCompleted.addAction(UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil)))
+                self.presentViewController(postCompleted, animated: true, completion: {})
+            }else{
+                println(result)
+                var postCompleted = UIAlertController(title: "Done", message: "Well done, you have shared your results on Facebook", preferredStyle: UIAlertControllerStyle.Alert)
+                postCompleted.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                self.presentViewController(postCompleted, animated: true, completion: {})
+            }
+        })
+        
+    }
     
-    //    func counterDescreaseFunction(){
-    //        if(self.counterTimerMode == 0){
-    //            self.timerStressingMode.invalidate()
-    //            self.selectAlert()
-    //            self.speedoScene?.stopSpeedo();
-    //        }else{
-    //            self.counterTimerMode--
-    //            //            self.speedoScene?.updateTimer(self.counterTimerMode)
-    //            //            self.timeLabel.text = String(counterTimerMode)
-    //        }
-    //    }
-    
-    func showEndAlert(title : String, message : String, action: String){
+    func showEndAlert(title : String, message : String, action: String, enableShare: Bool){
         var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Destructive, handler:{
+        
+        if(enableShare){
+            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
+                var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                facebookSheet.setInitialText("Share on Facebook")
+                self.presentViewController(facebookSheet, animated: true, completion: nil)
+            } else {
+                alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler:{
+                    finished in
+                    if(self.checkLoginStatus()){
+                        self.postOnFacebook()
+                    }else{
+                        var alertLogin = UIAlertController(title: "Perform login", message: "Do you want to connect with facebook?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                        alertLogin.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler:{
+                            finished in
+                            PFFacebookUtils.logInInBackgroundWithPublishPermissions(self.write_permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
+                                if(error == nil){
+                                    if let user = user {
+                                        self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
+                                        self.userLogged = true
+                                        self.postOnFacebook()
+                                    } else {
+                                        println("Uh oh. The user cancelled the Facebook connection.")
+                                        var alertNoLogin = UIAlertController(title: "Error", message: "Login cancelled.", preferredStyle: UIAlertControllerStyle.Alert)
+                                        alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                                        self.presentViewController(alertNoLogin, animated:true, completion:{})
+                                    }
+                                }else{
+                                    var alertNoLogin = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                                    self.presentViewController(alertNoLogin, animated:true, completion:{})
+                                }
+                            })
+                        }))
+                        alertLogin.addAction(UIAlertAction(title:"No", style:UIAlertActionStyle.Cancel, handler:(nil)))
+                        self.presentViewController(alertLogin, animated: true, completion: {})
+                    }
+                    self.restartGame()
+                }))
+            }
+        }
+        alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Default, handler:{
             finished in
             //            self.slideInformationView(SlideScore.top)
             self.restartGame()
         }))
+        
         self.presentViewController(alert, animated: true, completion: {})
+        
     }
     
     func messageGame(){
@@ -467,8 +564,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func timerEnded(){
-        //        self.timerStressingMode.invalidate()
-        self.selectAlert()
+        self.endGame()
         self.speedoScene?.stopSpeedo();
     }
     
@@ -480,13 +576,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             self.speedoScene?.enableFailDelegate(true);
         case ModeGame.stressing:
             self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.medium)
-            //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
             self.speedoScene?.enableFailDelegate(false);
         case ModeGame.survival:
             self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fast)
             self.speedoScene?.enableFailDelegate(true);
         case ModeGame.astonishing:
-            //            self.timerStressingMode = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("counterDescreaseFunction"), userInfo: nil, repeats: true)
             self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fastest)
             self.speedoScene?.enableFailDelegate(false);
         default:
@@ -500,10 +594,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         switch self.modGame{
         case ModeGame.soft:
             self.speedoScene?.stopSpeedo();
-            self.selectAlert();
+            self.endGame();
         case ModeGame.survival:
             self.speedoScene?.stopSpeedo();
-            self.selectAlert()
+            self.endGame()
         default:
             break;
         }
@@ -512,7 +606,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     func setPoint(){
         self.currentPoint += self.modGame.rawValue
         self.level++
-        self.updateRecord()
         self.puntiAttuali.text = String(self.currentPoint)
         self.currentLevel.text = String(self.level)
         switch self.modGame {
