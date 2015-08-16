@@ -251,7 +251,7 @@
                                                 <color key="shadowColor" red="1" green="0.93408371784785105" blue="0.069484225237409047" alpha="1" colorSpace="calibratedRGB"/>
                                                 <size key="shadowOffset" width="1" height="-1"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Punti" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K35-LW-uPS">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K35-LW-uPS">
                                                 <rect key="frame" x="30" y="165" width="92" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="20"/>
@@ -363,10 +363,6 @@
                                     <action selector="FBButtonClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="uOK-FC-dsq"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="Nci-6d-u1h">
-                                <rect key="frame" x="143" y="240" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                         </subviews>
                         <gestureRecognizers/>
                     </view>
@@ -408,7 +404,6 @@
                         <outlet property="labelCount" destination="mpY-At-1eQ" id="KEb-Nw-bEl"/>
                         <outlet property="labelText" destination="wGK-1e-Ytx" id="EWS-ac-bgv"/>
                         <outlet property="levelText" destination="U7c-Wc-4Dp" id="JqR-6t-HfM"/>
-                        <outlet property="loading" destination="Nci-6d-u1h" id="hQo-WE-335"/>
                         <outlet property="opzioni" destination="EzE-tu-iXC" id="fAd-Mx-fZx"/>
                         <outlet property="playButton" destination="Jhr-iC-n2m" id="IUY-M7-G8A"/>
                         <outlet property="pointText" destination="K35-LW-uPS" id="IeQ-Qm-r3m"/>

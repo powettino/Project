@@ -53,6 +53,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var userLogged : Bool = false;
     var read_permissions = [ "public_profile", "email"]
     var write_permissions = ["publish_actions"]
+    var loadingBox: UIView = UIView()
+    var loadingView: UIView = UIView()
+    var loading: UIActivityIndicatorView! = UIActivityIndicatorView()
     
     
     var recordPoint : Int {
@@ -68,11 +71,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     @IBOutlet weak var copyLabelCount: UILabel!
     @IBOutlet weak var labelText: UILabel!
-    //    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var labelCount: UILabel!
     @IBOutlet weak var fadingView: UIView!
     @IBOutlet weak var puntiAttuali: UILabel!
-    //    @IBOutlet weak var record: UILabel!
     @IBOutlet weak var nomePlayer: UILabel!
     @IBOutlet weak var opzioni: UIBarButtonItem!
     @IBOutlet weak var slidingMenu: UIView!
@@ -84,7 +85,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     @IBOutlet weak var pointText: UILabel!
     @IBOutlet weak var levelText: UILabel!
     @IBOutlet weak var currentLevel: UILabel!
-    @IBOutlet weak var loading: UIActivityIndicatorView!
     @IBOutlet weak var FBButton: UIButton!
     @IBOutlet weak var gameTitle: UILabel!
     
@@ -93,7 +93,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     @IBAction func FBButtonClick(sender: AnyObject) {
-        self.loading.startAnimating()
+        self.showActivityIndicator()
         if(self.userLogged){
             PFUser.logOut()
             println("User logged out")
@@ -115,7 +115,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 }
             })
         }
-        self.loading.stopAnimating()
+        self.hideActivityIndicator()
     }
     
     @IBAction func optionClick(sender: AnyObject) {
@@ -349,6 +349,26 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.currentLevel.layer.borderWidth = 3
         self.currentLevel.layer.cornerRadius = 10
         
+        self.loadingView.frame = self.view.frame
+        self.loadingView.center = self.view.center
+        self.loadingView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
+        
+        self.loadingBox.frame = CGRectMake(0, 0, 80, 80)
+        self.loadingBox.center = self.view.center
+        self.loadingBox.backgroundColor = UIColor(red: 0.26, green: 0.26 , blue: 0.26, alpha: 0.7)
+        self.loadingBox.clipsToBounds = true
+        self.loadingBox.layer.cornerRadius = 10
+        
+        self.loading.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+        self.loading.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        self.loading.center = CGPointMake(self.loadingBox.frame.size.width / 2, self.loadingBox.frame.size.height / 2);
+        
+        self.loadingBox.addSubview(self.loading)
+        self.loadingView.addSubview(self.loadingBox)
+        self.view.addSubview(self.loadingView)
+        self.loadingView.hidden=true
+        self.loadingView.layer.zPosition = 20
+        
         
     }
     
@@ -363,7 +383,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             UIView.animateWithDuration(0.5 ,delay: position.rawValue != 0 ? 0 : 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.informationView.frame = slidingFrame;
                 }, completion:(nil))
-            
             
             UIView.animateWithDuration(0.5, delay: position.rawValue != 0 ? 0.2 : 0, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {self.currentLevel.frame = levelSlide
                 }, completion: (nil))
@@ -394,6 +413,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.acceleratorView.frame.origin.y = (self.view.frame.height -
             self.acceleratorView.frame.size.height - offset)
         self.acceleratorView.layer.zPosition = 2
+        self.fadingView.layer.zPosition = 2
         
         self.fadingView.frame.origin.x = (self.view.frame.size.width-self.fadingView.frame.size.width) / 2
         self.fadingView.frame.origin.y = self.acceleratorView.frame.origin.y + 30
@@ -428,6 +448,17 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.FBButton.layer.zPosition = 3
     }
     
+    
+    func showActivityIndicator() {
+        self.loadingView.hidden = false
+        self.loading.startAnimating()
+    }
+    
+    func hideActivityIndicator() {
+        self.loading.stopAnimating()
+        self.loadingView.hidden = true
+    }
+    
     func endGame(){
         NSLog("record: \(self.recordPoint) - current: \(self.currentPoint)")
         switch(self.recordPoint<self.currentPoint, self.modGame){
@@ -452,10 +483,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         var post = FBSDKGraphRequest(graphPath: "/me/photos", parameters: [
             "caption":message, "source":data], HTTPMethod: "POST" );
         
-        self.loading.startAnimating()
+        self.showActivityIndicator()
         post.startWithCompletionHandler({
             (connection:FBSDKGraphRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-            self.loading.stopAnimating()
+            self.hideActivityIndicator()
             if(error != nil){
                 println(error)
                 var postCompleted = UIAlertController(title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert)
