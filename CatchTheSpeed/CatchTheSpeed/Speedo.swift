@@ -33,22 +33,22 @@ class Speedo : SKScene{
         static let Empty : UInt32 = 0b0
     }
     
-    static func getSpeedoViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
-    {
-        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(view)
-        NSLog("res: \(res.rawValue)")
-        switch (res){
-        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
-            return (0,25)
-        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
-            return (0,55)
-        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
-            return (0,75)
-        default:
-            return (0,0);
-        }
-    }    
-        
+//    static func getSpeedoViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
+//    {
+//        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(view)
+//        NSLog("res: \(res.rawValue)")
+//        switch (res){
+//        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
+//            return (0,45)
+//        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
+//            return (0,55)
+//        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
+//            return (0,75)
+//        default:
+//            return (0,0);
+//        }
+//    }    
+    
     private final let lightNodeName : String = "lightNode"
     private final let collisionSectionShapeName : String = "yellowNode"
     private final let gridNodeName :String = "gridNode"
@@ -328,7 +328,7 @@ class Speedo : SKScene{
     }
     
     func isMinimunSectionDimension() -> Bool{
-        return (self.collisionSection.referenceAngles.angles.dim == UtilityFunction.degreesToRadiant(self.minSectionDimension));
+        return (self.collisionSection.referenceAngles.angles.dim == UtilityFunction.Math.degreesToRadiant(self.minSectionDimension));
     }
 }
 

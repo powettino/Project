@@ -97,7 +97,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         if(self.userLogged){
             PFUser.logOut()
             println("User logged out")
-            self.FBButton.setTitle("Login", forState: UIControlState.Normal)
+            self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
             self.userLogged = false
         }else{
             PFFacebookUtils.logInInBackgroundWithPublishPermissions(self.write_permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
@@ -375,14 +375,24 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     private func setElementPositionFromDimension(){
         
-        var offset = Speedo.getSpeedoViewOffset(self.view)
+        var offset : CGFloat;
+        switch (UtilityFunction.IOSDeviceUtility.checkDevice(self.view)){
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
+            offset=45
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
+            offset=55
+        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
+            offset=75
+        default:
+            offset=0
+        }
         
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
         self.acceleratorView.frame.origin.x = 0
         //        self.acceleratorView.center = self.view.center
         self.acceleratorView.frame.origin.y = (self.view.frame.height -
-            self.acceleratorView.frame.size.height - offset.h)
+            self.acceleratorView.frame.size.height - offset)
         self.acceleratorView.layer.zPosition = 2
         
         self.fadingView.frame.origin.x = (self.view.frame.size.width-self.fadingView.frame.size.width) / 2
@@ -395,9 +405,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.windowInformations.frame = CGRectMake(5, self.windowInformations.frame.origin.y+5, self.view.frame.size.width-10, self.windowInformations.frame.size.height)
         
         self.informationView.frame.size.width = self.view.frame.size.width-10
-        
-        
-        //        println("ooo \(self.view.frame.size.height - self.acceleratorView.frame.size.height - offset.h)")
         
         self.currentLevel.frame.origin.x = self.view.frame.size.width + 10
         self.currentLevel.frame.size.width = self.view.frame.size.width/2 - 15
@@ -412,8 +419,8 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.gameTitle.frame.origin.x = ((self.view.frame.size.width - 10) - self.gameTitle.frame.size.width) / 2
         self.playButton.frame.origin.x = (self.view.frame.size.width - self.playButton.frame.size.width) / 2
         
-        self.FBButton.frame.size.width = 110
-        self.FBButton.frame.size.height = 25
+        self.FBButton.frame.size.width = 220
+        self.FBButton.frame.size.height = 40
         self.FBButton.setBackgroundImage(UIImage(named: "risorse/buttons/fb_s.png"), forState: UIControlState.Normal)
         self.FBButton.setBackgroundImage(UIImage(named: "risorse/buttons/fb_s_pressed.png"), forState: UIControlState.Selected)
         
@@ -440,21 +447,31 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }
     }
     
-    private func postOnFacebook(){
-        var post = FBSDKGraphRequest(graphPath: "/me/feed", parameters: [
-            "message":"I have just score \(self.recordPoint) points on Catch The Speed!!\n Do you think you can beat me?"], HTTPMethod: "POST" );
+    private func postOnFacebook(message : String, image : UIImage?){
+        var data : NSData = UIImagePNGRepresentation(image)
+        var post = FBSDKGraphRequest(graphPath: "/me/photos", parameters: [
+            "caption":message, "source":data], HTTPMethod: "POST" );
+        
+        self.loading.startAnimating()
         post.startWithCompletionHandler({
             (connection:FBSDKGraphRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+            self.loading.stopAnimating()
             if(error != nil){
                 println(error)
                 var postCompleted = UIAlertController(title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert)
                 postCompleted.addAction(UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil)))
-                self.presentViewController(postCompleted, animated: true, completion: {})
+                self.presentViewController(postCompleted, animated: true, completion: {
+                    finished in
+                    self.restartGame()
+                })
             }else{
                 println(result)
                 var postCompleted = UIAlertController(title: "Done", message: "Well done, you have shared your results on Facebook", preferredStyle: UIAlertControllerStyle.Alert)
                 postCompleted.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                self.presentViewController(postCompleted, animated: true, completion: {})
+                self.presentViewController(postCompleted, animated: true, completion: {
+                    finished in
+                    self.restartGame()
+                })
             }
         })
         
@@ -464,17 +481,25 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
         if(enableShare){
-            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
-                var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-                facebookSheet.setInitialText("Share on Facebook")
-                self.presentViewController(facebookSheet, animated: true, completion: nil)
-            } else {
-                alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler:{
-                    finished in
+            alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler:{
+                finished in
+                var message : String = "I have just score \(self.recordPoint) points on Catch The Speed!!\n Do you think you can beat me?";
+                
+                var postImage = UtilityFunction.Imaging.screenShot(self.view, cropRect: CGRect(origin: self.windowInformations.frame.origin, size: self.windowInformations.frame.size))
+                
+                if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
+                    var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                    facebookSheet.setInitialText(message)
+                    facebookSheet.addImage(postImage)
+                    self.presentViewController(facebookSheet, animated: true, completion: {
+                        finished in
+                        self.restartGame()
+                    })
+                } else {
                     if(self.checkLoginStatus()){
-                        self.postOnFacebook()
+                        self.postOnFacebook(message, image: postImage)
                     }else{
-                        var alertLogin = UIAlertController(title: "Perform login", message: "Do you want to connect with facebook?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                        var alertLogin = UIAlertController(title: "Perform Connect", message: "Do you want to connect with facebook?", preferredStyle: UIAlertControllerStyle.ActionSheet)
                         alertLogin.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler:{
                             finished in
                             PFFacebookUtils.logInInBackgroundWithPublishPermissions(self.write_permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
@@ -482,26 +507,32 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                     if let user = user {
                                         self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
                                         self.userLogged = true
-                                        self.postOnFacebook()
+                                        self.postOnFacebook(message, image:postImage)
                                     } else {
                                         println("Uh oh. The user cancelled the Facebook connection.")
                                         var alertNoLogin = UIAlertController(title: "Error", message: "Login cancelled.", preferredStyle: UIAlertControllerStyle.Alert)
                                         alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                                        self.presentViewController(alertNoLogin, animated:true, completion:{})
+                                        self.presentViewController(alertNoLogin, animated:true, completion:{
+                                            finished in
+                                            self.restartGame()})
                                     }
                                 }else{
                                     var alertNoLogin = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
                                     alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                                    self.presentViewController(alertNoLogin, animated:true, completion:{})
+                                    self.presentViewController(alertNoLogin, animated:true, completion:{
+                                        finished in
+                                        self.restartGame()})
                                 }
                             })
                         }))
-                        alertLogin.addAction(UIAlertAction(title:"No", style:UIAlertActionStyle.Cancel, handler:(nil)))
+                        alertLogin.addAction(UIAlertAction(title:"No", style:UIAlertActionStyle.Cancel, handler:{
+                            finished in
+                            self.restartGame()
+                        }))
                         self.presentViewController(alertLogin, animated: true, completion: {})
                     }
-                    self.restartGame()
-                }))
-            }
+                }
+            }))
         }
         alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Default, handler:{
             finished in
@@ -542,9 +573,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             println("valore> \((self.fadingView.frame.width - self.labelCount.frame.width)/2)")
             var middleFrame = CGRectMake((self.fadingView.frame.width - self.labelCount.frame.width)/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
             
-            UtilityFunction.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval, complex: ((self.counterMessageGame==2) ? "left" : "right"), finalComplention: nil);
+            UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval, complex: ((self.counterMessageGame==2) ? "left" : "right"), finalComplention: nil);
             
-            UtilityFunction.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.copyLabelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval,complex: ((self.counterMessageGame==1) ? "left" : "right"), finalComplention: nil);
+            UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.copyLabelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval,complex: ((self.counterMessageGame==1) ? "left" : "right"), finalComplention: nil);
             
             self.labelCount.text = String(self.counterMessageGame)
             self.copyLabelCount.text = String(self.counterMessageGame)
@@ -626,9 +657,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     self.labelCount.alpha=1;
                     self.copyLabelCount.alpha=1;
                     var duration : NSTimeInterval = 0.8;
-                    UtilityFunction.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: self.labelCount.frame, completeDuration: duration,complex: "right", finalComplention: nil);
+                    UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: self.labelCount.frame, completeDuration: duration,complex: "right", finalComplention: nil);
                     
-                    UtilityFunction.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.copyLabelCount, middlePosition: self.copyLabelCount.frame, completeDuration: duration, complex: "left", finalComplention: nil);
+                    UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.copyLabelCount, middlePosition: self.copyLabelCount.frame, completeDuration: duration, complex: "left", finalComplention: nil);
                     
                     self.timerMessageGame = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("messageGame"), userInfo: nil, repeats: true)
                 }

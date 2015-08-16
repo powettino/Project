@@ -46,14 +46,14 @@ struct CollisionSection {
         collisionShape!.fillColor = SKColor.orangeColor().colorWithAlphaComponent(0.6);
         
         var offset : CGFloat = 0;
-        var punto = UtilityFunction.findXY(referenceAngles.radius-offset, centerX: centerPoint.x, centerY: centerPoint.y, angle: referenceAngles.angles.max);
+        var punto = UtilityFunction.Math.findXY(referenceAngles.radius-offset, centerX: centerPoint.x, centerY: centerPoint.y, angle: referenceAngles.angles.max);
         var corda = (2  * (referenceAngles.radius-offset)) * (sin(referenceAngles.angles.dim/2));
         
         colliderNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: corda, height: 10));
         colliderNode!.name = collisionName+"Collider";
         colliderNode!.position = CGPoint(x: punto.x, y: punto.y);
         colliderNode!.anchorPoint = CGPoint(x: 0, y: 1);
-        colliderNode!.zRotation = (referenceAngles.angles.max - (referenceAngles.angles.dim/2)) - UtilityFunction.degreesToRadiant(90)
+        colliderNode!.zRotation = (referenceAngles.angles.max - (referenceAngles.angles.dim/2)) - UtilityFunction.Math.degreesToRadiant(90)
         //            colliderNode!.physicsBody = SKPhysicsBody(rectangleOfSize: colliderNode!.frame.size)
         //            colliderNode!.physicsBody?.categoryBitMask = PhysicsCategory.CollisionBlockP
         //            colliderNode!.physicsBody?.contactTestBitMask = PhysicsCategory.NeedleP
@@ -73,9 +73,9 @@ struct CollisionSection {
         //NSLog("Dimensione angolo: \(dimensionAngle) - minimo: \( fixedAngles.min )");
         dimensionAngle = dimensionAngle < minSectionDimension ? minSectionDimension : dimensionAngle;
         
-        var rnd: Double = UtilityFunction.randomDouble( (fixedAngles.min + dimensionAngle),  max: (fixedAngles.max))
+        var rnd: Double = UtilityFunction.Math.randomDouble( (fixedAngles.min + dimensionAngle),  max: (fixedAngles.max))
         //NSLog("Punto random: \(rnd)");
         
-        return ( UtilityFunction.degreesToRadiant(rnd), UtilityFunction.degreesToRadiant(rnd-dimensionAngle), UtilityFunction.degreesToRadiant(dimensionAngle));
+        return ( UtilityFunction.Math.degreesToRadiant(rnd), UtilityFunction.Math.degreesToRadiant(rnd-dimensionAngle), UtilityFunction.Math.degreesToRadiant(dimensionAngle));
     }
 }

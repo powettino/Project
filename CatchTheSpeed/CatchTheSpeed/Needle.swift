@@ -36,17 +36,17 @@ struct Needle{
         spriteNode!.position = CGPoint(x: posX, y: posY)
         spriteNode!.size = CGSize(width: w, height: maxH)
         spriteNode!.anchorPoint = anchorPoint
-        spriteNode!.zRotation = UtilityFunction.degreesToRadiant(startingAngle)
+        spriteNode!.zRotation = UtilityFunction.Math.degreesToRadiant(startingAngle)
         spriteNode!.zPosition = posZ;
-        movementAngles.min = UtilityFunction.degreesToRadiant(minAngle)
-        movementAngles.max = UtilityFunction.degreesToRadiant(maxAngle)
+        movementAngles.min = UtilityFunction.Math.degreesToRadiant(minAngle)
+        movementAngles.max = UtilityFunction.Math.degreesToRadiant(maxAngle)
         
         var colliderWidth : CGFloat = 10;
         var colliderHeight : CGFloat = 10;
         
         colliderNode = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
         colliderNode!.name = name+"Collider";
-        var punto = UtilityFunction.findXY(maxH , centerX: posX, centerY: posY, angle: UtilityFunction.degreesToRadiant(90));
+        var punto = UtilityFunction.Math.findXY(maxH , centerX: posX, centerY: posY, angle: UtilityFunction.Math.degreesToRadiant(90));
         colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y - spriteNode!.position.y)
         colliderNode!.zPosition = posZ;
         //            colliderNode!.physicsBody = SKPhysicsBody(circleOfRadius: colliderWidth/2 - 7)
@@ -68,7 +68,7 @@ struct Needle{
     }
     
     mutating func setStartPosition(startingAngle : Double){
-        spriteNode!.zRotation = UtilityFunction.degreesToRadiant(startingAngle)
+        spriteNode!.zRotation = UtilityFunction.Math.degreesToRadiant(startingAngle)
     }
     
     mutating func startRotation(){
