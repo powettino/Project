@@ -252,7 +252,7 @@
                                                 <size key="shadowOffset" width="1" height="-1"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K35-LW-uPS">
-                                                <rect key="frame" x="30" y="165" width="92" height="21"/>
+                                                <rect key="frame" x="30" y="165" width="94" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Blazed" family="Blazed" pointSize="20"/>
                                                 <color key="textColor" red="1" green="0.5304173884382346" blue="0.11122614292732791" alpha="1" colorSpace="calibratedRGB"/>

@@ -56,17 +56,17 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var loadingBox: UIView = UIView()
     var loadingView: UIView = UIView()
     var loading: UIActivityIndicatorView! = UIActivityIndicatorView()
+    var recordArray : [Int : Int] = [ModeGame.soft.rawValue: 0, ModeGame.stressing.rawValue:0, ModeGame.survival.rawValue:0, ModeGame.astonishing.rawValue:0]
     
-    
-    var recordPoint : Int {
-        get{
-            let ud = NSUserDefaults.standardUserDefaults().integerForKey("recordCatch")
-            return ud
-        }
-        set(value){
-            NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "recordCatch")
-        }
-    }
+    //    var recordPoint : Int {
+    //        get{
+    //            let ud = NSUserDefaults.standardUserDefaults().integerForKey("recordCatch")
+    //            return ud
+    //        }
+    //        set(value){
+    //            NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "recordCatch")
+    //        }
+    //    }
     
     
     @IBOutlet weak var copyLabelCount: UILabel!
@@ -95,23 +95,43 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     @IBAction func FBButtonClick(sender: AnyObject) {
         self.showActivityIndicator()
         if(self.userLogged){
-            PFUser.logOut()
-            println("User logged out")
-            self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
-            self.userLogged = false
+            PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
+                if(error==nil){
+                    println("User logged out")
+                    var alertNoLogin = UIAlertController(title: "Logout", message: "User has successfully logged out", preferredStyle: UIAlertControllerStyle.Alert)
+                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                    self.presentViewController(alertNoLogin, animated:true, completion:{
+                        finished in
+                        self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
+                        self.userLogged = false
+                    })
+                }else{
+                    var alertNoLogin = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                    self.presentViewController(alertNoLogin, animated:true, completion:(nil))
+                }
+            })
         }else{
             PFFacebookUtils.logInInBackgroundWithPublishPermissions(self.write_permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
-                if let user = user {
-                    if user.isNew {
-                        println("User signed up and logged in through Facebook!")
-                        self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
+                if(error == nil){
+                    if let user = user {
+                        var alertNoLogin = UIAlertController(title: "Login", message: "User has successfully logged in", preferredStyle: UIAlertControllerStyle.Alert)
+                        alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                        self.presentViewController(alertNoLogin, animated:true, completion:{
+                            finished in
+                            self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
+                            self.userLogged = true
+                        })
                     } else {
-                        println("User logged in through Facebook!")
-                        self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
+                        println("Uh oh. The user cancelled the Facebook connection.")
+                        var alertNoLogin = UIAlertController(title: "Error", message: "Login cancelled.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                        self.presentViewController(alertNoLogin, animated:true, completion:(nil))
                     }
-                    self.userLogged = true
-                } else {
-                    println("Uh oh. The user cancelled the Facebook login.")
+                }else{
+                    var alertNoLogin = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
+                    self.presentViewController(alertNoLogin, animated:true, completion:(nil))
                 }
             })
         }
@@ -244,28 +264,39 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     private func checkLoginStatus() -> Bool{
-        self.loading?.startAnimating()
+        var result : Bool = false;
+        self.showActivityIndicator()
         if let user = PFUser.currentUser(){
             if(PFFacebookUtils.isLinkedWithUser(user)){
                 NSLog("FAcebook logged")
-                self.loading?.stopAnimating()
-                return true;
+                result = true;
             }
             NSLog("Parse logged")
         }
-        self.loading?.stopAnimating()
-        return false;
-        
+        self.hideActivityIndicator()
+        return result;
+    }
+    
+    internal func aggiornaRecordArray(){
+        var query = PFQuery(className: "Points")
+        query.whereKey("user", equalTo: PFUser.currentUser()!)
+            .findObjectsInBackgroundWithBlock { (punteggi:[AnyObject]?, erro:NSError?) -> Void in
+                if let punteggi = punteggi as? [PFObject]{
+                    for punteggio in punteggi{
+                        if let gameType = punteggio.objectForKey("game_type") as? Int{
+                            self.recordArray[gameType] = punteggio.objectForKey("score") as? Int
+                        }
+                    }
+                }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.recordPoint=0
-        
         if(checkLoginStatus()){
             println("User already logged from start")
             self.FBButton?.setTitle("Disconnect", forState: UIControlState.Normal)
             self.userLogged = true;
-            
+            self.aggiornaRecordArray()
         }
         //        if let user = PFUser.currentUser() {
         //            // Customize the Log In View Controller
@@ -460,10 +491,44 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func endGame(){
-        NSLog("record: \(self.recordPoint) - current: \(self.currentPoint)")
-        switch(self.recordPoint<self.currentPoint, self.modGame){
+        NSLog("record: \(self.recordArray[self.modGame.rawValue]) - current: \(self.currentPoint)")
+        switch(self.recordArray[self.modGame.rawValue]<self.currentPoint, self.modGame){
         case (true, _) :
-            self.recordPoint = self.currentPoint
+            self.recordArray[self.modGame.rawValue] = self.currentPoint
+            if self.userLogged{
+                var query = PFQuery(className:"Points")
+                query.whereKey("user", equalTo: PFUser.currentUser()!)
+                    .whereKey("game_type", equalTo: self.modGame.rawValue)
+                    .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
+                        if error != nil {
+                            println(error)
+                        } else if let punteggi = gameScores as? [PFObject]{
+                            //si aggiorna
+                            if(punteggi.count==0){
+                                println("entrato")
+                                var punteggio = PFObject(className:"Points")
+                                punteggio["score"] = self.currentPoint
+                                punteggio["user"] = PFUser.currentUser()!
+                                punteggio["level"] = self.currentLevel.text
+                                punteggio["game_type"] = self.modGame.rawValue
+                                punteggio.saveEventually({ (result:Bool, error:NSError?) -> Void in
+                                    if(result){
+                                        println("Record salvato \(result)")
+                                    }else{
+                                        println("errore nel salvataggio \(error?.localizedDescription)")
+                                    }
+                                })
+                            }else{
+                                for punteggio in punteggi{
+                                    //dovrebbe essere solo 1 per modalita' di gioco
+                                    punteggio["score"] = self.currentPoint
+                                    punteggio["level"] = self.currentLevel.text
+                                    punteggio.saveEventually()
+                                }
+                            }
+                        }
+                    })
+            }
             self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!", enableShare: true)
         case (_, ModeGame.stressing):
             self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again", enableShare: false)
@@ -505,7 +570,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 })
             }
         })
-        
     }
     
     func showEndAlert(title : String, message : String, action: String, enableShare: Bool){
@@ -514,7 +578,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         if(enableShare){
             alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler:{
                 finished in
-                var message : String = "I have just score \(self.recordPoint) points on Catch The Speed!!\n Do you think you can beat me?";
+                var message : String = "I have just score \(self.recordArray[self.modGame.rawValue]) points on Catch The Speed playing \(self.modGame)!!\n Do you think you can beat me?";
                 
                 var postImage = UtilityFunction.Imaging.screenShot(self.view, cropRect: CGRect(origin: self.windowInformations.frame.origin, size: self.windowInformations.frame.size))
                 
@@ -538,6 +602,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                     if let user = user {
                                         self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
                                         self.userLogged = true
+                                        self.aggiornaRecordArray()
                                         self.postOnFacebook(message, image:postImage)
                                     } else {
                                         println("Uh oh. The user cancelled the Facebook connection.")
@@ -572,7 +637,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }))
         
         self.presentViewController(alert, animated: true, completion: {})
-        
     }
     
     func messageGame(){
@@ -601,7 +665,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             )
         }else{
             self.counterMessageGame -= 1
-            println("valore> \((self.fadingView.frame.width - self.labelCount.frame.width)/2)")
+            //            println("valore> \((self.fadingView.frame.width - self.labelCount.frame.width)/2)")
             var middleFrame = CGRectMake((self.fadingView.frame.width - self.labelCount.frame.width)/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
             
             UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval, complex: ((self.counterMessageGame==2) ? "left" : "right"), finalComplention: nil);
@@ -631,6 +695,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func startedGame() {
+        println("Array= \(self.recordArray)")
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
