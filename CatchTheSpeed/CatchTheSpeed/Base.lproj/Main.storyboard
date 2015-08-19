@@ -125,7 +125,7 @@
                                                     <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="shadowOffset" width="-2" height="1"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Y2w-tH-uwu">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Y2w-tH-uwu">
                                                     <rect key="frame" x="187" y="9" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="onTintColor" red="1" green="0.035692988270000003" blue="0.01248054837" alpha="1" colorSpace="calibratedRGB"/>
@@ -154,7 +154,7 @@
                                                     <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="shadowOffset" width="-2" height="1"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="EDE-sn-37d">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="EDE-sn-37d">
                                                     <rect key="frame" x="187" y="9" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="onTintColor" red="1" green="0.035692988270000003" blue="0.01248054837" alpha="1" colorSpace="calibratedRGB"/>
@@ -217,8 +217,10 @@
                             </tableViewSection>
                         </sections>
                         <connections>
+                            <outlet property="audioSetter" destination="Y2w-tH-uwu" id="73H-cg-ac9"/>
                             <outlet property="dataSource" destination="HYq-f6-zjd" id="PgD-ky-WWV"/>
                             <outlet property="delegate" destination="HYq-f6-zjd" id="3PL-Re-Ihk"/>
+                            <outlet property="effectsSetter" destination="EDE-sn-37d" id="Kx2-CX-we4"/>
                         </connections>
                     </tableView>
                 </tableViewController>
@@ -384,7 +386,7 @@
                                 <action selector="openMenu:" destination="vXZ-lx-hvc" id="oNp-AT-CDm"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="How to" style="plain" id="g5N-vQ-L5s">
+                        <barButtonItem key="rightBarButtonItem" title="Chart" style="plain" id="g5N-vQ-L5s">
                             <connections>
                                 <action selector="prova:" destination="vXZ-lx-hvc" id="wOb-Mj-yZm"/>
                                 <segue destination="Kvl-1Q-9dr" kind="custom" identifier="anima" id="Jqh-3l-7f2"/>

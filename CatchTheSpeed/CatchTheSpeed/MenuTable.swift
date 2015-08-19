@@ -23,6 +23,8 @@ class MenuTable : UITableView{
     
     var menuDelegate : OptionMenuDelegate?
     
+    @IBOutlet weak var effectsSetter: UISwitch!
+    @IBOutlet weak var audioSetter: UISwitch!
     @IBAction func closeClick(sender: AnyObject) {
         self.menuDelegate?.closeMenu()
     }
@@ -46,5 +48,14 @@ class MenuTable : UITableView{
     
     @IBAction func changingSurvival(sender: AnyObject) {
         self.menuDelegate?.changedSurvival();
-    }        
+    }
+    
+    func setAudioSwitch(status: Bool){
+        self.audioSetter.setOn(status, animated: false)
+    }
+    
+    func setEffectsSwitch(status: Bool){
+        self.effectsSetter.setOn(status, animated: false)
+    }
+    
 }

@@ -33,22 +33,6 @@ class Speedo : SKScene{
         static let Empty : UInt32 = 0b0
     }
     
-//    static func getSpeedoViewOffset(view : UIView) -> (w: CGFloat, h: CGFloat)
-//    {
-//        var res =  UtilityFunction.IOSDeviceUtility.checkDevice(view)
-//        NSLog("res: \(res.rawValue)")
-//        switch (res){
-//        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
-//            return (0,45)
-//        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
-//            return (0,55)
-//        case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
-//            return (0,75)
-//        default:
-//            return (0,0);
-//        }
-//    }    
-    
     private final let lightNodeName : String = "lightNode"
     private final let collisionSectionShapeName : String = "yellowNode"
     private final let gridNodeName :String = "gridNode"
@@ -174,20 +158,20 @@ class Speedo : SKScene{
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         if(self.running){
-            if(self.colliso){
-                self.colliso = false;
-                self.currentLevel++;
-                self.scoreDelegate?.setPoint();
-            }else if(self.enableFail){
-                self.scoreDelegate?.setFail();
+            if (            self.needle!.isRotating()){
+                if(self.colliso){
+                    self.colliso = false;
+                    self.currentLevel++;
+                    self.scoreDelegate?.setPoint();
+                }else if(self.enableFail){
+                    self.scoreDelegate?.setFail();
+                }
             }
         }else{
             if(self.enableTouchStartGame){
                 self.running = true;
                 self.startingActionDelegate?.startedGame();
-                if(self.enableTimer){
-                    self.timerCounter.startCounter();
-                }
+                
             }
         }
     }
@@ -264,7 +248,7 @@ class Speedo : SKScene{
             });
             
             var smokeEmitter = SKEmitterNode(fileNamed: "SmokeBrake");
-            smokeEmitter.particleTexture = SKTexture(imageNamed: "risorse/effects/spark.png")
+            smokeEmitter.particleTexture = SKTexture(imageNamed: "risorse/visual_effects/spark.png")
             smokeEmitter.name = self.smokeNodeName
             smokeEmitter.position = CGPointMake(self.centerX+(self.label.frame.width/2), self.centerY+50)
             
@@ -276,6 +260,9 @@ class Speedo : SKScene{
     }
     
     func startSpeedo(){
+        if(self.enableTimer){
+            self.timerCounter.startCounter();
+        }
         self.needle.startRotation();
         self.running=true;
         NSLog("velocita: \(self.needle.speed.rawValue)");

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SpriteKit
+import AVFoundation
 
 class UtilityFunction{
     
@@ -159,7 +160,7 @@ class UtilityFunction{
             view.layer.renderInContext(UIGraphicsGetCurrentContext())
             var image : UIImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-//            var postImage = UIImage(named: "\(image)")
+            //            var postImage = UIImage(named: "\(image)")
             
             if let rect = cropRect{
                 image = UtilityFunction.Imaging.cropImage(image, cropRect: rect)
@@ -168,8 +169,17 @@ class UtilityFunction{
         }
     }
     
-    
-    
-    
-    
+    class Audio{
+        static func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer  {
+            var path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+            var url = NSURL.fileURLWithPath(path!)
+            
+            var error: NSError?
+            
+            var audioPlayer:AVAudioPlayer?
+            audioPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
+            
+            return audioPlayer!
+        }
+    }
 }

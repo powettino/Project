@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import Social
+import AVFoundation
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -26,7 +27,7 @@ extension SKNode {
     }
 }
 
-class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, TimerDelegate, OptionMenuDelegate, PFLogInViewControllerDelegate{
+class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, TimerDelegate, OptionMenuDelegate, PFLogInViewControllerDelegate, AVAudioPlayerDelegate{
     
     enum ModeGame : Int {
         case soft = 100
@@ -51,12 +52,15 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var speedoScene : Speedo?;
     var menu : MenuTable!
     var userLogged : Bool = false;
-    var read_permissions = [ "public_profile", "email"]
-    var write_permissions = ["publish_actions"]
-    var loadingBox: UIView = UIView()
-    var loadingView: UIView = UIView()
-    var loading: UIActivityIndicatorView! = UIActivityIndicatorView()
+    let read_permissions = [ "public_profile", "email"]
+    let write_permissions = ["publish_actions"]
+    let loadingBox: UIView = UIView()
+    let loadingView: UIView = UIView()
+    let loading: UIActivityIndicatorView! = UIActivityIndicatorView()
     var recordArray : [Int : Int] = [ModeGame.soft.rawValue: 0, ModeGame.stressing.rawValue:0, ModeGame.survival.rawValue:0, ModeGame.astonishing.rawValue:0]
+    var startEngineAudio = AVAudioPlayer()
+    var pointSetAudio = AVAudioPlayer()
+    var failSetAudio = AVAudioPlayer()
     
     //    var recordPoint : Int {
     //        get{
@@ -68,6 +72,25 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     //        }
     //    }
     
+    var audioStatus : Bool {
+        get{
+            let ud = NSUserDefaults.standardUserDefaults().boolForKey("audioStatus")
+            return ud
+        }
+        set(value){
+            NSUserDefaults.standardUserDefaults().setBool(value, forKey: "audioStatus")
+        }
+    }
+    
+    var effectsStatus : Bool {
+        get{
+            let ud = NSUserDefaults.standardUserDefaults().boolForKey("effectsStatus")
+            return ud
+        }
+        set(value){
+            NSUserDefaults.standardUserDefaults().setBool(value, forKey: "effectsStatus")
+        }
+    }
     
     @IBOutlet weak var copyLabelCount: UILabel!
     @IBOutlet weak var labelText: UILabel!
@@ -184,11 +207,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func changedSounds() {
-        NSLog("cambiato sound");
+        self.audioStatus = !self.audioStatus
     }
     
     func changedEffects() {
-        NSLog("cambiato effects");
+        self.effectsStatus = !self.effectsStatus
     }
     
     func closeMenu(){
@@ -210,7 +233,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.speedoScene?.resetSpeedo();
         self.slideInformationView(SlideScore.down)
         self.timerMessageGame.invalidate()
-        //        self.timerStressingMode.invalidate()
+        
         self.fadingView.alpha = 0
         self.fadingView.hidden = false
         self.labelText.alpha=0
@@ -298,19 +321,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             self.userLogged = true;
             self.aggiornaRecordArray()
         }
-        //        if let user = PFUser.currentUser() {
-        //            // Customize the Log In View Controller
-        //            var logInViewController = PFLogInViewController()
-        //            logInViewController.delegate = self
-        //            logInViewController.facebookPermissions = self.read_permissions
-        //            logInViewController.fields = PFLogInFields.Facebook | PFLogInFields.DismissButton
-        //
-        //
-        //            self.presentViewController(logInViewController, animated: true, completion: (nil))
-        //
-        //        }
-        
-        
     }
     
     override func viewDidLoad() {
@@ -371,7 +381,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         //        self.windowInformations.layer.shadowOpacity = 1
         self.windowInformations.backgroundColor = UIColor(white: 100, alpha: 0.2)
         
-        
         self.puntiAttuali.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
         self.puntiAttuali.layer.borderWidth = 3
         self.puntiAttuali.layer.cornerRadius = 10
@@ -400,7 +409,38 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.loadingView.hidden=true
         self.loadingView.layer.zPosition = 20
         
+        self.menu.setEffectsSwitch(self.effectsStatus)
+        self.menu.setAudioSwitch(self.audioStatus)
         
+        self.startEngineAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/start_car", type: "wav")
+        self.startEngineAudio.delegate = self
+        
+        self.pointSetAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/check", type: "mp3")
+        
+        self.failSetAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/wrong", type: "mp3")
+    }
+    
+    func audioPlayerDidFinishPlaying(AVAudioPlayer!, successfully: Bool) {
+        println("finito");
+        switch(self.modGame){
+        case ModeGame.soft:
+            self.counterMessageGame=3
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.low)
+            self.speedoScene?.enableFailDelegate(true);
+        case ModeGame.stressing:
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.medium)
+            self.speedoScene?.enableFailDelegate(false);
+        case ModeGame.survival:
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fast)
+            self.speedoScene?.enableFailDelegate(true);
+        case ModeGame.astonishing:
+            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fastest)
+            self.speedoScene?.enableFailDelegate(false);
+        default:
+            break
+        }
+        
+        self.speedoScene?.startSpeedo()
     }
     
     private func slideInformationView(position : SlideScore){
@@ -452,7 +492,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.slidingMenu.frame = CGRectMake((self.view.frame.size.width-self.container.frame.size.width)/2, -self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.slidingMenu.layer.zPosition = 10
         
-        
         self.windowInformations.frame = CGRectMake(5, self.windowInformations.frame.origin.y+5, self.view.frame.size.width-10, self.windowInformations.frame.size.height)
         
         self.informationView.frame.size.width = self.view.frame.size.width-10
@@ -492,6 +531,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     func endGame(){
         NSLog("record: \(self.recordArray[self.modGame.rawValue]) - current: \(self.currentPoint)")
+        if(self.effectsStatus){
+            if(self.failSetAudio.playing){
+                self.failSetAudio.stop()
+            }
+            self.failSetAudio.play()
+        }
         switch(self.recordArray[self.modGame.rawValue]<self.currentPoint, self.modGame){
         case (true, _) :
             self.recordArray[self.modGame.rawValue] = self.currentPoint
@@ -695,26 +740,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func startedGame() {
-        println("Array= \(self.recordArray)")
-        switch(self.modGame){
-        case ModeGame.soft:
-            self.counterMessageGame=3
-            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.low)
-            self.speedoScene?.enableFailDelegate(true);
-        case ModeGame.stressing:
-            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.medium)
-            self.speedoScene?.enableFailDelegate(false);
-        case ModeGame.survival:
-            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fast)
-            self.speedoScene?.enableFailDelegate(true);
-        case ModeGame.astonishing:
-            self.speedoScene?.setNeedleSpeed(Needle.NeedleSpeed.fastest)
-            self.speedoScene?.enableFailDelegate(false);
-        default:
-            break
-        }
         self.slideInformationView(SlideScore.top);
-        self.speedoScene?.startSpeedo()
+        if(self.effectsStatus){
+            self.startEngineAudio.play()
+        }else{
+            self.audioPlayerDidFinishPlaying(nil, successfully: true)
+        }
     }
     
     func setFail(){
@@ -731,6 +762,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func setPoint(){
+        if(self.effectsStatus){
+            if(self.pointSetAudio.playing){
+                self.pointSetAudio.stop()
+            }
+            self.pointSetAudio.play()
+        }
         self.currentPoint += self.modGame.rawValue
         self.level++
         self.puntiAttuali.text = String(self.currentPoint)
