@@ -61,7 +61,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var timerMessageGame = NSTimer()
     var currentPoint = 0
     var counterTimerMode = 60
-    //    var timerStressingMode = NSTimer()
     var optionOpened :Bool = false
     var speedoScene : Speedo?;
     var menu : MenuTable!
@@ -135,22 +134,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
                 if(error==nil){
                     println("User logged out")
-                    //                    var alertNoLogin = UIAlertController(title: "Logout", message: "User has successfully logged out", preferredStyle: UIAlertControllerStyle.Alert)
-                    //                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                    //                    self.presentViewController(alertNoLogin, animated:true, completion:{
-                    //                        finished in
-                    //                        self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
-                    //                        self.userLogged = false
-                    //                    })
                     
                     UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Logout", message: "User has successfully logged out", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {finished in
                         self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
                         self.userLogged = false
                     })
                 }else{
-                    //                    var alertNoLogin = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-                    //                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                    //                    self.presentViewController(alertNoLogin, animated:true, completion:(nil))
                     
                     UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                 }
@@ -159,15 +148,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             PFFacebookUtils.logInInBackgroundWithPublishPermissions(self.write_permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
                 if(error == nil){
                     if let user = user {
-                        //                        var alertNoLogin = UIAlertController(title: "Login", message: "User has successfully logged in", preferredStyle: UIAlertControllerStyle.Alert)
-                        //                        alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                        //                        self.presentViewController(alertNoLogin, animated:true, completion:{
-                        //                            finished in
-                        //                            self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
-                        //                            self.userLogged = true
-                        //                            self.retrieveFBInformation()
-                        //                            self.updateRecordArray()
-                        //                        })
                         UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Login", message: "User has successfully logged in", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                             finished in
                             self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
@@ -178,15 +158,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         
                     } else {
                         println("Uh oh. The user cancelled the Facebook connection.")
-                        //                        var alertNoLogin = UIAlertController(title: "Error", message: "Login cancelled.", preferredStyle: UIAlertControllerStyle.Alert)
-                        //                        alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                        //                        self.presentViewController(alertNoLogin, animated:true, completion:(nil))
                         UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Login cancelled", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     }
                 }else{
-                    //                    var alertNoLogin = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-                    //                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                    //                    self.presentViewController(alertNoLogin, animated:true, completion:(nil))
                     UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: error!.localizedDescription , preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
                 }
@@ -390,10 +364,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 if(error != nil){
                     println("Error: \(error?.localizedDescription)")
                     self.userLogged = false
-                    println("Error: \(error!.localizedDescription)")
-                    //                    var errorAlert = UIAlertController(title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                    //                    errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                    //                    self.presentViewController(errorAlert, animated:true, completion:(nil))
                     
                     UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
@@ -612,7 +582,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.FBButton.layer.zPosition = 3
     }
     
-    
     func showActivityIndicator() {
         self.loadingView.hidden = false
         self.loading.startAnimating()
@@ -642,9 +611,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         if error != nil {
                             self.userLogged = false
                             println("Error: \(error!.localizedDescription)")
-                            //                            var errorAlert = UIAlertController(title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                            //                            errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                            //                            self.presentViewController(errorAlert, animated:true, completion:(nil))
                             UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                             
                         } else if let punteggi = gameScores as? [PFObject]{
@@ -661,9 +627,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                         println("Record salvato \(result)")
                                     }else{
                                         println("Error: \(error!.localizedDescription)")
-                                        //                                        var errorAlert = UIAlertController(title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                                        //                                        errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                                        //                                        self.presentViewController(errorAlert, animated:true, completion:(nil))
                                         
                                         UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                                     }
@@ -704,12 +667,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             self.hideActivityIndicator()
             if(error != nil){
                 println(error)
-                //                var postCompleted = UIAlertController(title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert)
-                //                postCompleted.addAction(UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil)))
-                //                self.presentViewController(postCompleted, animated: true, completion: {
-                //                    finished in
-                //                    self.restartGame()
-                //                })
                 UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                     finished in
                     self.restartGame()
@@ -732,7 +689,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func showEndAlert(title : String, message : String, action: String, enableShare: Bool){
-        //        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
         var actions : [UIAlertAction] = []
         
@@ -755,7 +711,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     if(self.checkLoginStatus()){
                         self.postOnFacebook(message, image: postImage)
                     }else{
-                        //                        var alertLogin = UIAlertController(title: "Perform Connect", message: "Do you want to connect with facebook?", preferredStyle: UIAlertControllerStyle.ActionSheet)
                         
                         var actionYes = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler:{
                             finished in
@@ -768,23 +723,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                         self.postOnFacebook(message, image:postImage)
                                     } else {
                                         println("Uh oh. The user cancelled the Facebook connection.")
-                                        //                                        var alertNoLogin = UIAlertController(title: "Error", message: "Login cancelled.", preferredStyle: UIAlertControllerStyle.Alert)
-                                        //                                        alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                                        //                                        self.presentViewController(alertNoLogin, animated:true, completion:{
-                                        //                                            finished in
-                                        //                                            self.restartGame()})
                                         UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Login cancelled", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion:{
                                             finished in
                                             self.restartGame()
                                         })
                                     }
                                 }else{
-                                    //                                    var alertNoLogin = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-                                    //                                    alertNoLogin.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil)))
-                                    //                                    self.presentViewController(alertNoLogin, animated:true, completion:{
-                                    //                                        finished in
-                                    //                                        self.restartGame()})
-                                    
                                     UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: error!.localizedDescription , preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                                         finished in
                                         self.restartGame()
@@ -799,8 +743,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         })
                         
                         UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Perform Connect", message: "Do you want to connect with facebook?", preferredStyle: UIAlertControllerStyle.ActionSheet, actions: [actionYes, actionNo], animated: true, completion: (nil))
-                        
-                        //                        self.presentViewController(alertLogin, animated: true, completion: {})
                     }
                 }
             })
@@ -813,8 +755,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         actions.append(actionNoShare)
         
         UtilityFunction.UIUtility.ShowAlertWithContent(self, title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert, actions: actions, animated: true, completion: (nil))
-        
-        //        self.presentViewController(alert, animated: true, completion: {})
     }
     
     func messageGame(){
