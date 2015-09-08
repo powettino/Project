@@ -95,6 +95,16 @@ class UtilityFunction{
         }
     }
     
+    class UIUtility{
+        static func ShowAlertWithContent(presenterView: UIViewController, title: String, message: String, preferredStyle: UIAlertControllerStyle, actions:[UIAlertAction], animated: Bool, completion: (() -> Void)?){
+            var genericAlert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+            for action in actions{
+                genericAlert.addAction(action)
+            }
+            presenterView.presentViewController(genericAlert, animated:animated, completion: completion)
+        }
+    }
+    
     class Math{
         static func degreesToRadiant(angle : Double) -> CGFloat{
             return CGFloat(angle * (M_PI / 180));
@@ -155,7 +165,7 @@ class UtilityFunction{
             return img
         }
         
-        static func screenShot(view: UIView, cropRect : CGRect?) -> UIImage{
+        static func takeScreenShot(view: UIView, cropRect : CGRect?) -> UIImage{
             UIGraphicsBeginImageContext(view.frame.size)
             view.layer.renderInContext(UIGraphicsGetCurrentContext())
             var image : UIImage = UIGraphicsGetImageFromCurrentImageContext()

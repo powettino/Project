@@ -30,6 +30,8 @@
 		4D00ABB21B796CA800DDD8CE /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D00ABAC1B796CA800DDD8CE /* FBSDKLoginKit.framework */; };
 		4D00ABB31B796CA800DDD8CE /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D00ABAD1B796CA800DDD8CE /* FBSDKMessengerShareKit.framework */; };
 		4D00ABB41B796CA800DDD8CE /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D00ABAE1B796CA800DDD8CE /* FBSDKShareKit.framework */; };
+		4D0377811B8FD6C300EA1309 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0377801B8FD6C300EA1309 /* ChartView.swift */; };
+		4D0377841B8FE59B00EA1309 /* ChartElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0377831B8FE59B00EA1309 /* ChartElement.swift */; };
 		4D30E8141B34F5CD00C0EE33 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E8081B34F5CD00C0EE33 /* CGFloat+Extensions.swift */; };
 		4D30E8151B34F5CD00C0EE33 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E8091B34F5CD00C0EE33 /* CGPoint+Extensions.swift */; };
 		4D30E8161B34F5CD00C0EE33 /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E80A1B34F5CD00C0EE33 /* CGVector+Extensions.swift */; };
@@ -48,7 +50,7 @@
 		4D57E6E81B718DB900D74A84 /* Needle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6E71B718DB900D74A84 /* Needle.swift */; };
 		4D57E6EA1B718E7D00D74A84 /* TimerCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6E91B718E7D00D74A84 /* TimerCounter.swift */; };
 		4D57E6EC1B718EB500D74A84 /* CollisionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6EB1B718EB500D74A84 /* CollisionSection.swift */; };
-		4D9808A91B5C113700ABB9F9 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9808A81B5C113700ABB9F9 /* ScoreView.swift */; };
+		4D7C28071B8F87DF00BBC8DA /* ChartCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */; };
 		4DA9C5B61B445E6C001BDD9D /* MenuTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
 		4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1E1AAE23850050B018 /* Speedo.swift */; };
@@ -96,6 +98,8 @@
 		4D00ABAD1B796CA800DDD8CE /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		4D00ABAE1B796CA800DDD8CE /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		4D00ABB61B796DF300DDD8CE /* CatchTheSpeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CatchTheSpeed-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D0377801B8FD6C300EA1309 /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		4D0377831B8FE59B00EA1309 /* ChartElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartElement.swift; sourceTree = "<group>"; };
 		4D30E8081B34F5CD00C0EE33 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		4D30E8091B34F5CD00C0EE33 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		4D30E80A1B34F5CD00C0EE33 /* CGVector+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
@@ -114,7 +118,7 @@
 		4D57E6E71B718DB900D74A84 /* Needle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Needle.swift; sourceTree = "<group>"; };
 		4D57E6E91B718E7D00D74A84 /* TimerCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerCounter.swift; sourceTree = "<group>"; };
 		4D57E6EB1B718EB500D74A84 /* CollisionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionSection.swift; sourceTree = "<group>"; };
-		4D9808A81B5C113700ABB9F9 /* ScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
+		4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCustomCell.swift; sourceTree = "<group>"; };
 		4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTable.swift; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
 		4DD1BC1E1AAE23850050B018 /* Speedo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedo.swift; sourceTree = "<group>"; };
@@ -225,6 +229,14 @@
 			name = Facebook;
 			sourceTree = "<group>";
 		};
+		4D0377821B8FE57800EA1309 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4D0377831B8FE59B00EA1309 /* ChartElement.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		4D30E7EF1B34F58B00C0EE33 /* SKTUtils */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,13 +286,15 @@
 		4D8456041B13D109007269B8 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				4D0377821B8FE57800EA1309 /* Model */,
 				4D00ABA51B775CD000DDD8CE /* Bridging */,
 				4D57E6E61B718D9A00D74A84 /* Speedo */,
 				4D57E6E41B6E303E00D74A84 /* utility */,
 				4D30E7EF1B34F58B00C0EE33 /* SKTUtils */,
 				EB22B0AB1A6BD2E000FED987 /* ViewController.swift */,
 				4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */,
-				4D9808A81B5C113700ABB9F9 /* ScoreView.swift */,
+				4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */,
+				4D0377801B8FD6C300EA1309 /* ChartView.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -461,7 +475,6 @@
 			files = (
 				4D57E6E81B718DB900D74A84 /* Needle.swift in Sources */,
 				4D57E6E31B6E301600D74A84 /* UtilityFunction.swift in Sources */,
-				4D9808A91B5C113700ABB9F9 /* ScoreView.swift in Sources */,
 				4D30E81E1B34F5CD00C0EE33 /* SKTTimingFunctions.swift in Sources */,
 				EB22B0CE1A6C1D5500FED987 /* AcceleratorView.swift in Sources */,
 				4D30E8161B34F5CD00C0EE33 /* CGVector+Extensions.swift in Sources */,
@@ -471,16 +484,19 @@
 				4D30E81C1B34F5CD00C0EE33 /* SKTAudio.swift in Sources */,
 				4D57E6EC1B718EB500D74A84 /* CollisionSection.swift in Sources */,
 				4D57E6EA1B718E7D00D74A84 /* TimerCounter.swift in Sources */,
+				4D7C28071B8F87DF00BBC8DA /* ChartCustomCell.swift in Sources */,
 				EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */,
 				4D30E81B1B34F5CD00C0EE33 /* SKNode+Extensions.swift in Sources */,
 				4D30E8181B34F5CD00C0EE33 /* SKAction+Extensions.swift in Sources */,
 				4DA9C5B61B445E6C001BDD9D /* MenuTable.swift in Sources */,
 				4D30E8191B34F5CD00C0EE33 /* SKAction+SpecialEffects.swift in Sources */,
+				4D0377841B8FE59B00EA1309 /* ChartElement.swift in Sources */,
 				4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */,
 				4D30E81D1B34F5CD00C0EE33 /* SKTEffects.swift in Sources */,
 				4D30E8171B34F5CD00C0EE33 /* Int+Extensions.swift in Sources */,
 				4D30E81F1B34F5CD00C0EE33 /* Vector3.swift in Sources */,
 				4D30E81A1B34F5CD00C0EE33 /* SKColor+Extensions.swift in Sources */,
+				4D0377811B8FD6C300EA1309 /* ChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

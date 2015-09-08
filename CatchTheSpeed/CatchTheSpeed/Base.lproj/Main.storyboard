@@ -12,6 +12,9 @@
             <string>Blazed</string>
             <string>Blazed</string>
         </mutableArray>
+        <mutableArray key="Flame.ttf">
+            <string>Flame</string>
+        </mutableArray>
         <mutableArray key="budmo-jiggler.ttf">
             <string>BudmoJiggler-Regular</string>
         </mutableArray>
@@ -388,8 +391,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Chart" style="plain" id="g5N-vQ-L5s">
                             <connections>
-                                <action selector="prova:" destination="vXZ-lx-hvc" id="wOb-Mj-yZm"/>
-                                <segue destination="Kvl-1Q-9dr" kind="custom" identifier="anima" id="Jqh-3l-7f2"/>
+                                <segue destination="8A5-Oc-GUd" kind="push" id="Ek0-Rg-9PW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -418,26 +420,93 @@
             </objects>
             <point key="canvasLocation" x="-902" y="-87"/>
         </scene>
-        <!--Score View-->
-        <scene sceneID="ad9-Yb-Whw">
+        <!--Chart View-->
+        <scene sceneID="C1X-ug-ZtF">
             <objects>
-                <viewController id="Kvl-1Q-9dr" customClass="ScoreView" customModule="CatchTheSpeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KYI-MD-eWJ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <viewController id="8A5-Oc-GUd" customClass="ChartView" customModule="CatchTheSpeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6ur-dW-UEJ" customClass="ChartCustomCell" customModule="CatchTheSpeed" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="1CJ-Uv-S6C">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prova" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Lo-yB-QNf">
+                                <rect key="frame" x="45" y="95" width="44" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" id="vSX-Hs-gg1">
+                                <rect key="frame" x="0.0" y="145" width="320" height="426"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chartCell" id="bG8-4O-x3h" customClass="ChartCustomCell" customModule="CatchTheSpeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="56"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bG8-4O-x3h" id="H1z-lM-lWy">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="55.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YKO-cu-PtE">
+                                                    <rect key="frame" x="21" y="3" width="50" height="51.5"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L7q-YE-FpW">
+                                                    <rect key="frame" x="85" y="3" width="133" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mod" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Flh-dp-8ig">
+                                                    <rect key="frame" x="85" y="30" width="81" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oyy-n7-XWG">
+                                                    <rect key="frame" x="174" y="29" width="44" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="74B-G9-WKB">
+                                                    <rect key="frame" x="226" y="8" width="86" height="39.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Flame" family="Flame" pointSize="30"/>
+                                                    <color key="textColor" red="1" green="0.02099004141" blue="0.24908602129999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="level" destination="oyy-n7-XWG" id="HXt-cX-fGZ"/>
+                                            <outlet property="logo" destination="YKO-cu-PtE" id="YRI-Pk-3Sq"/>
+                                            <outlet property="mod" destination="Flh-dp-8ig" id="Fa5-oC-YJd"/>
+                                            <outlet property="player" destination="L7q-YE-FpW" id="uSP-tZ-Rib"/>
+                                            <outlet property="score" destination="74B-G9-WKB" id="vjY-Tk-4cL"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="8A5-Oc-GUd" id="lYY-cI-L3K"/>
+                                    <outlet property="delegate" destination="8A5-Oc-GUd" id="idl-QO-gbA"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationItem key="navigationItem" id="o16-ol-cZT"/>
+                    <connections>
+                        <outlet property="chartTable" destination="vSX-Hs-gg1" id="baq-Tk-Vft"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aed-wy-kPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NaN-Md-EvO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-425" y="-85"/>
+            <point key="canvasLocation" x="-400" y="-97"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
