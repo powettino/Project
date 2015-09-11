@@ -77,64 +77,63 @@ struct TimerCounter{
                     self.stopCounter()
                     self.internalSpeedo.timerDelegate?.timerEnded();
                 }
-                
                 self.current--
-                println("seco 0 \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number9.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number8.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number7.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number6.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number5.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number4.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number3.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number2.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")}),
+            }),
             SKAction.animateWithTextures([
                 SKTexture(imageNamed: "risorse/speedo/numbers/number1.png")],
                 timePerFrame: self.fire),
             SKAction.runBlock({
                 self.current--
-                println("seco \(self.current)")})
-            ])
+            })
+        ])
         
         second1?.runAction(
             SKAction.repeatAction(

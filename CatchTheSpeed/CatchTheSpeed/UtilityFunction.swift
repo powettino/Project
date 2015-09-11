@@ -96,12 +96,53 @@ class UtilityFunction{
     }
     
     class UIUtility{
+        
+        static var loadingArray = [Int : UIView]()
+        
         static func ShowAlertWithContent(presenterView: UIViewController, title: String, message: String, preferredStyle: UIAlertControllerStyle, actions:[UIAlertAction], animated: Bool, completion: (() -> Void)?){
             var genericAlert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
             for action in actions{
                 genericAlert.addAction(action)
             }
             presenterView.presentViewController(genericAlert, animated:animated, completion: completion)
+        }
+        
+        static func showActivityIndicator(view: UIView, tag:Int) {
+            if loadingArray.indexForKey(tag) != nil{
+                UtilityFunction.UIUtility.hideActivityIndicator(view, tag: tag)
+            }
+            let loadingBox: UIView = UIView()
+            let loading: UIActivityIndicatorView! = UIActivityIndicatorView()
+            //
+            //                view.layer.borderColor = UIColor.redColor().CGColor
+            //                view.layer.borderWidth = 3
+            loadingBox.frame = CGRectMake(0, 0, view.frame.size.width < 80 ? view.frame.size.width : 80.0, view.frame.size.height < 80 ? view.frame.size.height : 80.0 )
+            
+            loadingBox.frame.origin.x = (view.frame.size.width - loadingBox.frame.size.width)/2
+            loadingBox.frame.origin.y = (view.frame.size.height - loadingBox.frame.size.height)/2
+            loadingBox.backgroundColor = UIColor(red: 0.26, green: 0.26 , blue: 0.26, alpha: 0.7)
+            loadingBox.clipsToBounds = true
+            loadingBox.layer.cornerRadius = 10
+            loadingBox.tag = tag
+            loadingBox.layer.zPosition = 99
+            
+            loading.frame = CGRectMake(0.0, 0.0, loadingBox.frame.size.width / 2, loadingBox.frame.size.height / 2);
+            loading.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+            loading.center = CGPointMake(loadingBox.frame.size.width / 2, loadingBox.frame.size.height / 2);
+            
+            loadingBox.addSubview(loading)
+            
+            println("aggiunto spinner con id \(tag)")
+            loadingArray.updateValue(loadingBox, forKey: tag)
+            view.addSubview(loadingBox)
+            
+            loading.startAnimating()
+        }
+        
+        static func hideActivityIndicator(view: UIView, tag: Int) {
+            println("rimossso spinner con id \(tag)")
+            loadingArray.removeValueForKey(tag)
+            view.viewWithTag(tag)?.removeFromSuperview()
         }
     }
     

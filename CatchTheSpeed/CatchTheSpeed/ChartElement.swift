@@ -18,13 +18,15 @@ internal struct ChartElement{
     var level : String
     var id : String
     var chartPosition : Int = 0
+    var picture : UIImage?
 
-    init(id: String , name : String, score: Int, mod: String, level:String )
+    init(id: String , name : String, score: Int, mod: String, level:String, chartPosition: Int)
     {
         self.name = name
         self.score = score
         self.mod = mod
         self.level = level
         self.id = id
+        self.chartPosition = chartPosition
     }
 }

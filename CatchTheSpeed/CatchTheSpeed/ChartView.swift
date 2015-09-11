@@ -16,45 +16,42 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var chartTable: UITableView!
     
     override func viewDidLoad() {
-        NSLog("Ho caricato load")
-        
-        var queryUsers = PFUser.query()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "risorse/backgrounds/sfondoMenu.jpg")!)
+        UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 20)
         
         var query = PFQuery(className:"Points")
         query.orderByDescending("score")
             .includeKey("user")
-            //            .whereKey("Users", matchesQuery: queryUsers!)
+            //                        .whereKey("Users", matchesQuery: queryUsers!)
             .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
                 if error != nil {
                     println(error)
                 } else if let infos = gameScores as? [PFObject]{
-                    for info in infos{
-                        let score = info["score"] as! Int
-                        let level = info["level"] as! String
-                        let profilePic = info["profilePicture"] as! PFFile
-                        
-                        profilePic.getDataInBackgroundWithBlock { (imageData, error) -> Void in
-                            if error == nil {
-                                
-                            }else{
-                                println("cannot load some image from")
+                    UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 20)
+                    for infoQuery in infos{
+                        let score = infoQuery["score"] as! Int
+                        let level = infoQuery["level"] as! String
+                        let profilePic = infoQuery["profilePicture"] as? PFFile
+                        if let picture = profilePic {
+                            picture.getDataInBackgroundWithBlock { (imageData, error) -> Void in
+                                if error == nil {
+                                    
+                                }else{
+                                    println("cannot load some image from")
+                                }
                             }
                         }
-                        let mod = ViewController.ModeGame(rawValue: info["game_type"] as! Int)
+                        let mod = ViewController.ModeGame(rawValue: infoQuery["game_type"] as! Int)
                         
-                        let name = (info["user"] as! PFUser).objectForKey("name") as! String
-//                        let name = relatedUser?.objectForKey("name") as! String
-                        self.chartElementArray.append(ChartElement(id: "a", name: name, score: score, mod: mod!.toString(), level: level))
-                        NSLog("con numero \(self.chartElementArray.count)")
+                        var user = infoQuery["user"] as! PFUser
+                        let name = user["name"] as! String
+                        self.chartElementArray.append(ChartElement(id: user.objectId!, name: name, score: score, mod: mod!.toString(), level: level, chartPosition: self.chartElementArray.count+1))
+                        println("con numero interno\(self.chartElementArray.count)")
                         self.chartTable.reloadData()
-                        //                            }
-                        //                        })
-                        
                     }
                     NSLog("con numero \(self.chartElementArray.count)")
                 }
             })
-        
     }
     
     func tableView(tableView:UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -63,29 +60,45 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func numberOfRowsInSection(section: Int) -> Int {
-        NSLog("Ho caricato row")
         return 1
     }
     
     func numberOfSectionsInTableView(tableView:UITableView) -> Int {
-        NSLog("Ho caricato section")
         return 1
     }
     
-    
     func tableView(tableView:UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
-        
         var reusableCell : ChartCustomCell? = tableView.dequeueReusableCellWithIdentifier("chartCell", forIndexPath: indexPath) as? ChartCustomCell
         if reusableCell==nil {
             reusableCell = ChartCustomCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "chartCell")
         }
         var element : ChartElement = self.chartElementArray[indexPath.row]
         reusableCell!.score.text = String(element.score)
-        reusableCell!.level.text = element.level
+        reusableCell!.level.text = "L: \(element.level)"
         reusableCell!.player.text = element.name
-        reusableCell!.mod.text = String(element.mod)
+        reusableCell!.mod.text = "M: \(String(element.mod))"
         
-        NSLog("ci sono passato")
+        UtilityFunction.UIUtility.showActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
+        var query = PFUser.query()
+        query?.getObjectInBackgroundWithId(element.id, block: { (result: PFObject?, error: NSError?) -> Void in
+            if error == nil{
+                let profilePic = result!["profilePicture"] as? PFFile
+                if let picture = profilePic {
+                    picture.getDataInBackgroundWithBlock { (imageData:NSData?, error: NSError?) -> Void in
+                        if error == nil {
+                            UtilityFunction.UIUtility.hideActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
+                            reusableCell!.picture.image = UIImage(data: imageData!)
+                        }else{
+                            println("Cannot load image from web")
+                        }
+                    }
+                }
+            }else{
+                println("Cannot load image from web")
+            }
+        })
+        
+        NSLog("ci sono passato elemento \(element.chartPosition)")
         
         return reusableCell!;
     }

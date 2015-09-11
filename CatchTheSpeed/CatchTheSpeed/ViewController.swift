@@ -50,7 +50,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }
     }
     
-    enum SlideScore : CGFloat {
+    enum SlideScoreEnum : CGFloat {
         case top = -140
         case down = 0
     }
@@ -129,7 +129,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     @IBAction func FBButtonClick(sender: AnyObject) {
-        self.showActivityIndicator()
+        UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 1)
         if(self.userLogged){
             PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
                 if(error==nil){
@@ -166,7 +166,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 }
             })
         }
-        self.hideActivityIndicator()
+        UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 1)
     }
     
     @IBAction func optionClick(sender: AnyObject) {
@@ -288,7 +288,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     func restartGame(){
         self.speedoScene?.resetSpeedo();
-        self.slideInformationView(SlideScore.down)
+        self.slideInformationView(SlideScoreEnum.down)
         self.timerMessageGame.invalidate()
         
         self.fadingView.alpha = 0
@@ -345,7 +345,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     private func checkLoginStatus() -> Bool{
         var result : Bool = false;
-        self.showActivityIndicator()
+        UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 2)
         if let user = PFUser.currentUser(){
             if(PFFacebookUtils.isLinkedWithUser(user)){
                 NSLog("FAcebook logged")
@@ -353,7 +353,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             }
             NSLog("Parse logged")
         }
-        self.hideActivityIndicator()
+        UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 2)
         return result;
     }
     
@@ -378,6 +378,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     override func viewDidAppear(animated: Bool) {
+        UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 3)
         if(checkLoginStatus()){
             println("User already logged from start")
             self.FBButton?.setTitle("Disconnect", forState: UIControlState.Normal)
@@ -385,6 +386,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             self.retrieveFBInformation()
             self.updateRecordArray()
         }
+        UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 3)
     }
     
     override func viewDidLoad() {
@@ -452,27 +454,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.currentLevel.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
         self.currentLevel.layer.borderWidth = 3
         self.currentLevel.layer.cornerRadius = 10
-        
-        self.loadingView.frame = self.view.frame
-        self.loadingView.center = self.view.center
-        self.loadingView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
-        
-        self.loadingBox.frame = CGRectMake(0, 0, 80, 80)
-        self.loadingBox.center = self.view.center
-        self.loadingBox.backgroundColor = UIColor(red: 0.26, green: 0.26 , blue: 0.26, alpha: 0.7)
-        self.loadingBox.clipsToBounds = true
-        self.loadingBox.layer.cornerRadius = 10
-        
-        self.loading.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
-        self.loading.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        self.loading.center = CGPointMake(self.loadingBox.frame.size.width / 2, self.loadingBox.frame.size.height / 2);
-        
-        self.loadingBox.addSubview(self.loading)
-        self.loadingView.addSubview(self.loadingBox)
-        self.view.addSubview(self.loadingView)
-        self.loadingView.hidden=true
-        self.loadingView.layer.zPosition = 20
-        
         self.menu.setEffectsSwitch(self.effectsStatus)
         self.menu.setAudioSwitch(self.audioStatus)
         
@@ -507,7 +488,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.speedoScene?.startSpeedo()
     }
     
-    private func slideInformationView(position : SlideScore){
+    private func slideInformationView(position : SlideScoreEnum){
         if(position.rawValue != self.informationView.frame.origin.y){
             var slidingFrame = CGRectMake(self.informationView.frame.origin.x, position.rawValue, self.informationView.frame.size.width, self.informationView.frame.size.height)
             
@@ -544,7 +525,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
         self.acceleratorView.frame.origin.x = 0
-        //        self.acceleratorView.center = self.view.center
+
         self.acceleratorView.frame.origin.y = (self.view.frame.height -
             self.acceleratorView.frame.size.height - offset)
         self.acceleratorView.layer.zPosition = 2
@@ -580,16 +561,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         
         self.FBButton.frame.origin = CGPoint(x: ((self.view.frame.size.width-self.FBButton.frame.size.width)/2), y: self.view.frame.size.height - self.FBButton.frame.size.height - 10)
         self.FBButton.layer.zPosition = 3
-    }
-    
-    func showActivityIndicator() {
-        self.loadingView.hidden = false
-        self.loading.startAnimating()
-    }
-    
-    func hideActivityIndicator() {
-        self.loading.stopAnimating()
-        self.loadingView.hidden = true
     }
     
     func endGame(){
@@ -661,10 +632,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         var post = FBSDKGraphRequest(graphPath: "/me/photos", parameters: [
             "caption":message, "source":data], HTTPMethod: "POST" );
         
-        self.showActivityIndicator()
+        UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 4)
         post.startWithCompletionHandler({
             (connection:FBSDKGraphRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-            self.hideActivityIndicator()
+            UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 4)
             if(error != nil){
                 println(error)
                 UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
@@ -695,7 +666,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         if(enableShare){
             var actionShare = UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler:{
                 finished in
-                var message : String = "I have just score \(self.recordArray[self.modGame.rawValue]) points on Catch The Speed playing \(self.modGame)!!\n Do you think you can beat me?";
+                var message : String = "I have just score \(self.recordArray[self.modGame.rawValue]!) points at level \(self.level) on Catch The Speed playing \"\(self.modGame.toString()) mode\"!!\n Do you think you can beat me?";
                 
                 var postImage = UtilityFunction.Imaging.takeScreenShot(self.view, cropRect: CGRect(origin: self.windowInformations.frame.origin, size: self.windowInformations.frame.size))
                 
@@ -813,7 +784,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func startedGame() {
-        self.slideInformationView(SlideScore.top);
+        self.slideInformationView(SlideScoreEnum.top);
         if(self.effectsStatus){
             self.startEngineAudio.play()
         }else{
