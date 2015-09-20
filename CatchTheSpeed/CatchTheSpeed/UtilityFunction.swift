@@ -124,7 +124,7 @@ class UtilityFunction{
             loadingBox.clipsToBounds = true
             loadingBox.layer.cornerRadius = 10
             loadingBox.tag = tag
-            loadingBox.layer.zPosition = 99
+            loadingBox.layer.zPosition = 50
             
             loading.frame = CGRectMake(0.0, 0.0, loadingBox.frame.size.width / 2, loadingBox.frame.size.height / 2);
             loading.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
@@ -141,8 +141,12 @@ class UtilityFunction{
         
         static func hideActivityIndicator(view: UIView, tag: Int) {
             println("rimossso spinner con id \(tag)")
-            loadingArray.removeValueForKey(tag)
-            view.viewWithTag(tag)?.removeFromSuperview()
+            var loadingBox = loadingArray.removeValueForKey(tag)
+            loadingBox?.removeFromSuperview()
+        }
+        
+        static func removeAllSubviews(view: UIView){
+            view.subviews.map({$0.removeFromSuperview()})
         }
     }
     

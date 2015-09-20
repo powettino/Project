@@ -368,9 +368,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
                 }else if let punteggi = punteggi as? [PFObject]{
+                    println("trovati \(punteggi.count) record per questo user")
                     for punteggio in punteggi{
                         if let gameType = punteggio.objectForKey("game_type") as? Int{
                             self.recordArray[gameType] = punteggio.objectForKey("score") as? Int
+                            println("il punteggio per gioco \(gameType) impostato e' \(self.recordArray[gameType])")
                         }
                     }
                 }
@@ -563,6 +565,46 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.FBButton.layer.zPosition = 3
     }
     
+    func saveRecordOnline()
+    {var query = PFQuery(className:"Points")
+        query.whereKey("user", equalTo: PFUser.currentUser()!)
+            .whereKey("game_type", equalTo: self.modGame.rawValue)
+            .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
+                if error != nil {
+                    self.userLogged = false
+                    println("Error: \(error!.localizedDescription)")
+                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                    
+                } else if let punteggi = gameScores as? [PFObject]{
+                    //si aggiorna
+                    if(punteggi.count==0){
+                        println("entrato")
+                        var punteggio = PFObject(className:"Points")
+                        punteggio["score"] = self.currentPoint
+                        punteggio["user"] = PFUser.currentUser()!
+                        punteggio["level"] = self.currentLevel.text
+                        punteggio["game_type"] = self.modGame.rawValue
+                        punteggio.saveEventually({ (result:Bool, error:NSError?) -> Void in
+                            if(result){
+                                println("Record salvato \(result)")
+                            }else{
+                                println("Error: \(error!.localizedDescription)")
+                                
+                                UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                            }
+                        })
+                    }else{
+                        for punteggio in punteggi{
+                            //dovrebbe essere solo 1 per modalita' di gioco
+                            punteggio["score"] = self.currentPoint
+                            punteggio["level"] = self.currentLevel.text
+                            punteggio.saveEventually()
+                        }
+                    }
+                }
+            })
+    }
+    
     func endGame(){
         NSLog("record: \(self.recordArray[self.modGame.rawValue]) - current: \(self.currentPoint)")
         if(self.effectsStatus){
@@ -574,45 +616,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         switch(self.recordArray[self.modGame.rawValue]<self.currentPoint, self.modGame){
         case (true, _) :
             self.recordArray[self.modGame.rawValue] = self.currentPoint
-            if self.userLogged{
-                var query = PFQuery(className:"Points")
-                query.whereKey("user", equalTo: PFUser.currentUser()!)
-                    .whereKey("game_type", equalTo: self.modGame.rawValue)
-                    .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
-                        if error != nil {
-                            self.userLogged = false
-                            println("Error: \(error!.localizedDescription)")
-                            UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
-                            
-                        } else if let punteggi = gameScores as? [PFObject]{
-                            //si aggiorna
-                            if(punteggi.count==0){
-                                println("entrato")
-                                var punteggio = PFObject(className:"Points")
-                                punteggio["score"] = self.currentPoint
-                                punteggio["user"] = PFUser.currentUser()!
-                                punteggio["level"] = self.currentLevel.text
-                                punteggio["game_type"] = self.modGame.rawValue
-                                punteggio.saveEventually({ (result:Bool, error:NSError?) -> Void in
-                                    if(result){
-                                        println("Record salvato \(result)")
-                                    }else{
-                                        println("Error: \(error!.localizedDescription)")
-                                        
-                                        UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
-                                    }
-                                })
-                            }else{
-                                for punteggio in punteggi{
-                                    //dovrebbe essere solo 1 per modalita' di gioco
-                                    punteggio["score"] = self.currentPoint
-                                    punteggio["level"] = self.currentLevel.text
-                                    punteggio.saveEventually()
-                                }
-                            }
-                        }
-                    })
-            }
+            //            if self.userLogged{
+            //                self.saveRecordOnline()
+            //            }
             self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!", enableShare: true)
         case (_, ModeGame.stressing):
             self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again", enableShare: false)
@@ -671,6 +677,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 var postImage = UtilityFunction.Imaging.takeScreenShot(self.view, cropRect: CGRect(origin: self.windowInformations.frame.origin, size: self.windowInformations.frame.size))
                 
                 if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
+                    if self.userLogged{
+                        self.saveRecordOnline()
+                    }
                     var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
                     facebookSheet.setInitialText(message)
                     facebookSheet.addImage(postImage)
@@ -680,6 +689,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     })
                 } else {
                     if(self.checkLoginStatus()){
+                        self.saveRecordOnline()
                         self.postOnFacebook(message, image: postImage)
                     }else{
                         
@@ -691,7 +701,17 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                         self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
                                         self.userLogged = true
                                         self.updateRecordArray()
-                                        self.postOnFacebook(message, image:postImage)
+                                        //Si ripete l'operazione perche' non si era loggati
+                                        if(self.recordArray[self.modGame.rawValue]<self.currentPoint){
+                                            self.recordArray[self.modGame.rawValue]=self.currentPoint
+                                            self.saveRecordOnline()
+                                            self.postOnFacebook(message, image:postImage)
+                                        }else{
+                                            UtilityFunction.UIUtility.showAlertWithContent(self, title: "Sorry", message: "You weren't logged in, your result isn't the best. Try a new shot!", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion:{
+                                                finished in
+                                                self.restartGame()
+                                            })
+                                        }
                                     } else {
                                         println("Uh oh. The user cancelled the Facebook connection.")
                                         UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Login cancelled", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion:{
@@ -704,7 +724,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                         finished in
                                         self.restartGame()
                                     })
-                                    
                                 }
                             })
                         })
