@@ -135,20 +135,20 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 if(error==nil){
                     println("User logged out")
                     
-                    UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Logout", message: "User has successfully logged out", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {finished in
+                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "Logout", message: "User has successfully logged out", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {finished in
                         self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
                         self.userLogged = false
                     })
                 }else{
                     
-                    UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                 }
             })
         }else{
             PFFacebookUtils.logInInBackgroundWithPublishPermissions(self.write_permissions,  block: {  (user: PFUser?, error: NSError?) -> Void in
                 if(error == nil){
                     if let user = user {
-                        UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Login", message: "User has successfully logged in", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
+                        UtilityFunction.UIUtility.showAlertWithContent(self, title: "Login", message: "User has successfully logged in", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                             finished in
                             self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
                             self.userLogged = true
@@ -158,10 +158,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         
                     } else {
                         println("Uh oh. The user cancelled the Facebook connection.")
-                        UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Login cancelled", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                        UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Login cancelled", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     }
                 }else{
-                    UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: error!.localizedDescription , preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: error!.localizedDescription , preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
                 }
             })
@@ -365,7 +365,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     println("Error: \(error?.localizedDescription)")
                     self.userLogged = false
                     
-                    UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
                 }else if let punteggi = punteggi as? [PFObject]{
                     for punteggio in punteggi{
@@ -457,7 +457,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.menu.setEffectsSwitch(self.effectsStatus)
         self.menu.setAudioSwitch(self.audioStatus)
         
-        self.startEngineAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/start_car", type: "wav")
+        self.startEngineAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/start_car_cut", type: "wav")
         self.startEngineAudio.delegate = self
         
         self.pointSetAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/check", type: "mp3")
@@ -525,7 +525,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.acceleratorView.frame.size.width = self.view.frame.width
         self.acceleratorView.frame.size.height = self.view.frame.width
         self.acceleratorView.frame.origin.x = 0
-
+        
         self.acceleratorView.frame.origin.y = (self.view.frame.height -
             self.acceleratorView.frame.size.height - offset)
         self.acceleratorView.layer.zPosition = 2
@@ -582,7 +582,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         if error != nil {
                             self.userLogged = false
                             println("Error: \(error!.localizedDescription)")
-                            UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                            UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                             
                         } else if let punteggi = gameScores as? [PFObject]{
                             //si aggiorna
@@ -599,7 +599,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                     }else{
                                         println("Error: \(error!.localizedDescription)")
                                         
-                                        UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                                        UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                                     }
                                 })
                             }else{
@@ -638,7 +638,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 4)
             if(error != nil){
                 println(error)
-                UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
+                UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Operation failed", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                     finished in
                     self.restartGame()
                 })
@@ -651,7 +651,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     self.restartGame()
                 })
                 
-                UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Done", message: "Well done, you have shared your results on Facebook", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
+                UtilityFunction.UIUtility.showAlertWithContent(self, title: "Done", message: "Well done, you have shared your results on Facebook", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Sorry", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                     finished in
                     self.restartGame()
                 })
@@ -694,13 +694,13 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                         self.postOnFacebook(message, image:postImage)
                                     } else {
                                         println("Uh oh. The user cancelled the Facebook connection.")
-                                        UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: "Login cancelled", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion:{
+                                        UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Login cancelled", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion:{
                                             finished in
                                             self.restartGame()
                                         })
                                     }
                                 }else{
-                                    UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Error", message: error!.localizedDescription , preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
+                                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: error!.localizedDescription , preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                                         finished in
                                         self.restartGame()
                                     })
@@ -710,10 +710,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         })
                         var actionNo = UIAlertAction(title:"No", style:UIAlertActionStyle.Cancel, handler:{
                             finished in
-                            self.restartGame()
+                            UtilityFunction.UIUtility.showAlertWithContent(self, title: "Sorry", message: "You cannot share points without performing login action", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {finished in
+                                self.restartGame()
+                            })
                         })
                         
-                        UtilityFunction.UIUtility.ShowAlertWithContent(self, title: "Perform Connect", message: "Do you want to connect with facebook?", preferredStyle: UIAlertControllerStyle.ActionSheet, actions: [actionYes, actionNo], animated: true, completion: (nil))
+                        UtilityFunction.UIUtility.showAlertWithContent(self, title: "Perform Connect", message: "Do you want to connect with facebook?", preferredStyle: UIAlertControllerStyle.ActionSheet, actions: [actionYes, actionNo], animated: true, completion: (nil))
                     }
                 }
             })
@@ -725,7 +727,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         })
         actions.append(actionNoShare)
         
-        UtilityFunction.UIUtility.ShowAlertWithContent(self, title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert, actions: actions, animated: true, completion: (nil))
+        UtilityFunction.UIUtility.showAlertWithContent(self, title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert, actions: actions, animated: true, completion: (nil))
     }
     
     func messageGame(){

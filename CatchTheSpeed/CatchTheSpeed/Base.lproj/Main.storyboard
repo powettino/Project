@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6UQ-7P-TyN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6UQ-7P-TyN">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -14,6 +14,7 @@
             <string>Blazed</string>
         </mutableArray>
         <mutableArray key="Flame.ttf">
+            <string>Flame</string>
             <string>Flame</string>
         </mutableArray>
         <mutableArray key="budmo-jiggler.ttf">
@@ -441,25 +442,25 @@
                                 <color key="shadowColor" red="1" green="0.93408371779999999" blue="0.069484225240000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <size key="shadowOffset" width="-1" height="-1"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="63" sectionHeaderHeight="22" sectionFooterHeight="22" id="vSX-Hs-gg1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="vSX-Hs-gg1">
                                 <rect key="frame" x="0.0" y="145" width="320" height="426"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chartCell" id="bG8-4O-x3h" customClass="ChartCustomCell" customModule="CatchTheSpeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="63"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="bG8-4O-x3h" id="H1z-lM-lWy">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="62.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YKO-cu-PtE">
-                                                    <rect key="frame" x="21" y="3" width="50" height="56.5"/>
+                                                    <rect key="frame" x="47" y="7" width="60" height="60.5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L7q-YE-FpW">
-                                                    <rect key="frame" x="85" y="3" width="133" height="25"/>
+                                                    <rect key="frame" x="113" y="3" width="200" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="24"/>
                                                     <color key="textColor" red="0.91764705882352937" green="0.98431372549019602" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -467,17 +468,8 @@
                                                     <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <size key="shadowOffset" width="-1" height="1"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mod" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Flh-dp-8ig">
-                                                    <rect key="frame" x="85" y="30" width="81" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
-                                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <size key="shadowOffset" width="-1" height="1"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oyy-n7-XWG">
-                                                    <rect key="frame" x="174" y="29" width="44" height="21"/>
+                                                    <rect key="frame" x="104" y="50" width="125" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
                                                     <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -486,10 +478,28 @@
                                                     <size key="shadowOffset" width="-1" height="1"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="74B-G9-WKB">
-                                                    <rect key="frame" x="226" y="8" width="86" height="39.5"/>
+                                                    <rect key="frame" x="230" y="30" width="86" height="39.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Flame" family="Flame" pointSize="30"/>
                                                     <color key="textColor" red="0.91775385275740051" green="0.98421259562408403" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <size key="shadowOffset" width="-2" height="2"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1oP-9N-QRJ">
+                                                    <rect key="frame" x="4" y="6" width="37" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Flame" family="Flame" pointSize="44"/>
+                                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="shadowOffset" width="-2" height="2"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mod" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Flh-dp-8ig">
+                                                    <rect key="frame" x="104" y="28" width="125" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <size key="shadowOffset" width="-1" height="1"/>
@@ -499,6 +509,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="chartPosition" destination="1oP-9N-QRJ" id="Odt-0T-sWC"/>
                                             <outlet property="level" destination="oyy-n7-XWG" id="HXt-cX-fGZ"/>
                                             <outlet property="mod" destination="Flh-dp-8ig" id="Fa5-oC-YJd"/>
                                             <outlet property="picture" destination="YKO-cu-PtE" id="MOM-0F-i66"/>

@@ -99,7 +99,7 @@ class UtilityFunction{
         
         static var loadingArray = [Int : UIView]()
         
-        static func ShowAlertWithContent(presenterView: UIViewController, title: String, message: String, preferredStyle: UIAlertControllerStyle, actions:[UIAlertAction], animated: Bool, completion: (() -> Void)?){
+        static func showAlertWithContent(presenterView: UIViewController, title: String, message: String, preferredStyle: UIAlertControllerStyle, actions:[UIAlertAction], animated: Bool, completion: (() -> Void)?){
             var genericAlert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
             for action in actions{
                 genericAlert.addAction(action)

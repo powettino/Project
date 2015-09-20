@@ -31,22 +31,22 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
                     for infoQuery in infos{
                         let score = infoQuery["score"] as! Int
                         let level = infoQuery["level"] as! String
-                        let profilePic = infoQuery["profilePicture"] as? PFFile
-                        if let picture = profilePic {
-                            picture.getDataInBackgroundWithBlock { (imageData, error) -> Void in
-                                if error == nil {
-                                    
-                                }else{
-                                    println("cannot load some image from")
-                                }
-                            }
-                        }
+//                        let profilePic = infoQuery["profilePicture"] as? PFFile
+//                        if let picture = profilePic {
+//                            picture.getDataInBackgroundWithBlock { (imageData, error) -> Void in
+//                                if error == nil {
+//                                    
+//                                }else{
+//                                    println("cannot load some image from")
+//                                }
+//                            }
+//                        }
                         let mod = ViewController.ModeGame(rawValue: infoQuery["game_type"] as! Int)
                         
                         var user = infoQuery["user"] as! PFUser
                         let name = user["name"] as! String
                         self.chartElementArray.append(ChartElement(id: user.objectId!, name: name, score: score, mod: mod!.toString(), level: level, chartPosition: self.chartElementArray.count+1))
-                        println("con numero interno\(self.chartElementArray.count)")
+//                        println("con numero interno\(self.chartElementArray.count)")
                         self.chartTable.reloadData()
                     }
                     NSLog("con numero \(self.chartElementArray.count)")
@@ -55,7 +55,7 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(tableView:UITableView, numberOfRowsInSection section: Int) -> Int {
-        NSLog("Ho caricato datasource \(self.chartElementArray.count)")
+//        NSLog("Ho caricato datasource \(self.chartElementArray.count)")
         return self.chartElementArray.count
     }
     
@@ -74,9 +74,10 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         var element : ChartElement = self.chartElementArray[indexPath.row]
         reusableCell!.score.text = String(element.score)
-        reusableCell!.level.text = "L: \(element.level)"
+        reusableCell!.level.text = "Level: \(element.level)"
         reusableCell!.player.text = element.name
-        reusableCell!.mod.text = "M: \(String(element.mod))"
+        reusableCell!.mod.text = "Mod: \(String(element.mod))"
+        reusableCell!.chartPosition.text = "\(String(element.chartPosition))˚"
         
         UtilityFunction.UIUtility.showActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
         var query = PFUser.query()
@@ -98,7 +99,7 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
             }
         })
         
-        NSLog("ci sono passato elemento \(element.chartPosition)")
+//        NSLog("ci sono passato elemento \(element.chartPosition)")
         
         return reusableCell!;
     }
