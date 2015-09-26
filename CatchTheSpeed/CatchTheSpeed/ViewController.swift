@@ -189,6 +189,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             if(error != nil){
                 println("Error: \(error.localizedDescription)")
                 self.userLogged=false
+                self.FBButton?.setTitle("Connect", forState: UIControlState.Normal)
+                PFUser.logOutInBackground()
+                println("Utente sloggato forzatamente")
+                UtilityFunction.UIUtility.showAlertWithContent(self, title: "No connection available", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)], animated: true, completion: nil)
             }else{
                 if let loginResult = result as? Dictionary<String, AnyObject>{
                     let name:String = loginResult["name"] as AnyObject? as! String
@@ -226,6 +230,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         user["email"] = emailValue
                     }
                     user.saveInBackground()
+                    self.userLogged = true;
+                    self.FBButton?.setTitle("Disconnect", forState: UIControlState.Normal)
+                    self.updateRecordArray()
                 }
             }
         })
@@ -343,7 +350,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         return changed;
     }
     
-    private func checkLoginStatus() -> Bool{
+    private func checkUserStatus() -> Bool{
         var result : Bool = false;
         UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 2)
         if let user = PFUser.currentUser(){
@@ -381,12 +388,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     override func viewDidAppear(animated: Bool) {
         UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 3)
-        if(checkLoginStatus()){
-            println("User already logged from start")
-            self.FBButton?.setTitle("Disconnect", forState: UIControlState.Normal)
-            self.userLogged = true;
+        if(checkUserStatus()){
+            println("User linked from start")
             self.retrieveFBInformation()
-            self.updateRecordArray()
         }
         UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 3)
     }
@@ -688,7 +692,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         self.restartGame()
                     })
                 } else {
-                    if(self.checkLoginStatus()){
+                    if(self.checkUserStatus()){
                         self.saveRecordOnline()
                         self.postOnFacebook(message, image: postImage)
                     }else{

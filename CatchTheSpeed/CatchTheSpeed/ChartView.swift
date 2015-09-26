@@ -25,22 +25,14 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
             //                        .whereKey("Users", matchesQuery: queryUsers!)
             .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
                 if error != nil {
+                    UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 20)
+                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "No connection available", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)], animated: true, completion: nil)
                     println(error)
                 } else if let infos = gameScores as? [PFObject]{
                     UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 20)
                     for infoQuery in infos{
                         let score = infoQuery["score"] as! Int
                         let level = infoQuery["level"] as! String
-                        //                        let profilePic = infoQuery["profilePicture"] as? PFFile
-                        //                        if let picture = profilePic {
-                        //                            picture.getDataInBackgroundWithBlock { (imageData, error) -> Void in
-                        //                                if error == nil {
-                        //
-                        //                                }else{
-                        //                                    println("cannot load some image from")
-                        //                                }
-                        //                            }
-                        //                        }
                         let mod = ViewController.ModeGame(rawValue: infoQuery["game_type"] as! Int)
                         
                         var user = infoQuery["user"] as! PFUser
@@ -55,7 +47,6 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(tableView:UITableView, numberOfRowsInSection section: Int) -> Int {
-        //        NSLog("Ho caricato datasource \(self.chartElementArray.count)")
         return self.chartElementArray.count
     }
     
