@@ -123,6 +123,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     @IBOutlet weak var currentLevel: UILabel!
     @IBOutlet weak var FBButton: UIButton!
     @IBOutlet weak var gameTitle: UILabel!
+    @IBOutlet weak var borderInformationView: UIView!
     
     @IBAction func playMod(sender: AnyObject) {
         self.startedGame()
@@ -445,13 +446,22 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "risorse/backgrounds/sfondo\(deviceNumberType.rawValue).png")!)
         
         self.windowInformations.layer.cornerRadius = 15
-        self.windowInformations.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture.png")!).CGColor
+        self.windowInformations.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_gialla.png")!).CGColor
         self.windowInformations.layer.borderWidth = 10
         //        self.windowInformations.layer.shadowColor = UIColor.redColor().CGColor
         //        self.windowInformations.layer.shadowOffset = CGSize()
         //        self.windowInformations.layer.shadowRadius = 5
         //        self.windowInformations.layer.shadowOpacity = 1
         self.windowInformations.backgroundColor = UIColor(white: 100, alpha: 0.2)
+        self.windowInformations.layer.zPosition = 1
+        
+        self.borderInformationView.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture1.png")!).CGColor
+        self.borderInformationView.layer.cornerRadius = 15
+        self.borderInformationView.layer.borderWidth = 10
+        self.borderInformationView.backgroundColor = UIColor.clearColor()
+        self.borderInformationView.layer.zPosition = 2
+        
+        UIView.animateWithDuration(5, delay: 0, options: UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.Repeat | UIViewAnimationOptions.CurveEaseInOut, animations: {self.borderInformationView.alpha = 0.0}, completion: (nil))
         
         self.puntiAttuali.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
         self.puntiAttuali.layer.borderWidth = 3
@@ -544,6 +554,8 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.slidingMenu.layer.zPosition = 10
         
         self.windowInformations.frame = CGRectMake(5, self.windowInformations.frame.origin.y+5, self.view.frame.size.width-10, self.windowInformations.frame.size.height)
+        
+        self.borderInformationView.frame = CGRectMake(5, self.borderInformationView.frame.origin.y+5, self.view.frame.size.width-10, self.borderInformationView.frame.size.height)
         
         self.informationView.frame.size.width = self.view.frame.size.width-10
         

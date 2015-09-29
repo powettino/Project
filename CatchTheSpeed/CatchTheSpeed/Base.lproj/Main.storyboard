@@ -244,6 +244,11 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="LKd-a9-fJx">
+                                <rect key="frame" x="0.0" y="63" width="320" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" id="32u-uO-K9U">
                                 <rect key="frame" x="0.0" y="63" width="320" height="140"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -404,6 +409,7 @@
                     <connections>
                         <outlet property="FBButton" destination="t3T-11-Ydd" id="WJq-xh-Bac"/>
                         <outlet property="acceleratorView" destination="6SP-Wf-V6S" id="HPK-pd-dDU"/>
+                        <outlet property="borderInformationView" destination="LKd-a9-fJx" id="QzF-to-ruP"/>
                         <outlet property="container" destination="eL5-q3-SBj" id="j9K-Eb-IY5"/>
                         <outlet property="copyLabelCount" destination="wlb-GD-Q6S" id="bOi-Ix-4Wy"/>
                         <outlet property="currentLevel" destination="FB4-0f-hOQ" id="1Nm-q6-xrR"/>
