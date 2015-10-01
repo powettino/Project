@@ -20,9 +20,9 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
         UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 20)
         
         var query = PFQuery(className:"Points")
+        query.limit = 10
         query.orderByDescending("score")
             .includeKey("user")
-            //                        .whereKey("Users", matchesQuery: queryUsers!)
             .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
                 if error != nil {
                     UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 20)

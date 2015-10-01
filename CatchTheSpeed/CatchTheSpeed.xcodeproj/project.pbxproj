@@ -61,11 +61,17 @@
 		4D405CCF1BBB7AB8007F802B /* budmo-jigglish.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CC81BBB7AB8007F802B /* budmo-jigglish.ttf */; };
 		4D405CD01BBB7AB8007F802B /* Flame.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CC91BBB7AB8007F802B /* Flame.ttf */; };
 		4D405CD11BBB7AB8007F802B /* Flame.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CC91BBB7AB8007F802B /* Flame.ttf */; };
+		4D48B6461BBCC74B00FE639F /* sfondoMenu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4D48B6451BBCC74B00FE639F /* sfondoMenu.jpg */; };
+		4D48B6491BBCC7CD00FE639F /* sfondo5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D48B6481BBCC7CD00FE639F /* sfondo5.png */; };
+		4D48B64B1BBCCD1500FE639F /* InterfaceControllerSoft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D48B64A1BBCCD1500FE639F /* InterfaceControllerSoft.swift */; };
 		4D57E6DB1B6E2BED00D74A84 /* risorse in Resources */ = {isa = PBXBuildFile; fileRef = 4D57E6DA1B6E2BED00D74A84 /* risorse */; };
 		4D57E6E31B6E301600D74A84 /* UtilityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6E21B6E301600D74A84 /* UtilityFunction.swift */; };
 		4D57E6E81B718DB900D74A84 /* Needle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6E71B718DB900D74A84 /* Needle.swift */; };
 		4D57E6EA1B718E7D00D74A84 /* TimerCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6E91B718E7D00D74A84 /* TimerCounter.swift */; };
 		4D57E6EC1B718EB500D74A84 /* CollisionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6EB1B718EB500D74A84 /* CollisionSection.swift */; };
+		4D6A225C1BBCD817003E11EF /* InterfaceControllerStressing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A225B1BBCD817003E11EF /* InterfaceControllerStressing.swift */; };
+		4D6A225E1BBCD864003E11EF /* InterfaceControllerSurvival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A225D1BBCD864003E11EF /* InterfaceControllerSurvival.swift */; };
+		4D6A22601BBCD87F003E11EF /* InterfaceControllerAstonishing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A225F1BBCD87F003E11EF /* InterfaceControllerAstonishing.swift */; };
 		4D7C28071B8F87DF00BBC8DA /* ChartCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */; };
 		4DA9C5B61B445E6C001BDD9D /* MenuTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
@@ -172,11 +178,17 @@
 		4D405CC71BBB7AB8007F802B /* budmo-jiggler.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "budmo-jiggler.ttf"; sourceTree = "<group>"; };
 		4D405CC81BBB7AB8007F802B /* budmo-jigglish.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "budmo-jigglish.ttf"; sourceTree = "<group>"; };
 		4D405CC91BBB7AB8007F802B /* Flame.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Flame.ttf; sourceTree = "<group>"; };
+		4D48B6451BBCC74B00FE639F /* sfondoMenu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sfondoMenu.jpg; sourceTree = "<group>"; };
+		4D48B6481BBCC7CD00FE639F /* sfondo5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sfondo5.png; sourceTree = "<group>"; };
+		4D48B64A1BBCCD1500FE639F /* InterfaceControllerSoft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerSoft.swift; sourceTree = "<group>"; };
 		4D57E6DA1B6E2BED00D74A84 /* risorse */ = {isa = PBXFileReference; lastKnownFileType = folder; path = risorse; sourceTree = "<group>"; };
 		4D57E6E21B6E301600D74A84 /* UtilityFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunction.swift; sourceTree = "<group>"; };
 		4D57E6E71B718DB900D74A84 /* Needle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Needle.swift; sourceTree = "<group>"; };
 		4D57E6E91B718E7D00D74A84 /* TimerCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerCounter.swift; sourceTree = "<group>"; };
 		4D57E6EB1B718EB500D74A84 /* CollisionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionSection.swift; sourceTree = "<group>"; };
+		4D6A225B1BBCD817003E11EF /* InterfaceControllerStressing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerStressing.swift; sourceTree = "<group>"; };
+		4D6A225D1BBCD864003E11EF /* InterfaceControllerSurvival.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerSurvival.swift; sourceTree = "<group>"; };
+		4D6A225F1BBCD87F003E11EF /* InterfaceControllerAstonishing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerAstonishing.swift; sourceTree = "<group>"; };
 		4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCustomCell.swift; sourceTree = "<group>"; };
 		4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTable.swift; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
@@ -325,12 +337,11 @@
 		4D405C9D1BBB648B007F802B /* CatchTheSpeed WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				4D6A22611BBCDA5A003E11EF /* classes */,
 				4D405CD31BBB7B47007F802B /* risorse */,
-				4D405CA11BBB648B007F802B /* InterfaceController.swift */,
 				4D405CA31BBB648B007F802B /* NotificationController.swift */,
 				4D405CA51BBB648B007F802B /* Images.xcassets */,
 				4D405C9E1BBB648B007F802B /* Supporting Files */,
-				4D405CBF1BBB6D77007F802B /* ChartRowController.swift */,
 			);
 			path = "CatchTheSpeed WatchKit Extension";
 			sourceTree = "<group>";
@@ -365,6 +376,7 @@
 		4D405CD31BBB7B47007F802B /* risorse */ = {
 			isa = PBXGroup;
 			children = (
+				4D48B6471BBCC75200FE639F /* background */,
 				4D405CD41BBB7B52007F802B /* font */,
 			);
 			name = risorse;
@@ -379,6 +391,15 @@
 				4D405CC91BBB7AB8007F802B /* Flame.ttf */,
 			);
 			name = font;
+			sourceTree = "<group>";
+		};
+		4D48B6471BBCC75200FE639F /* background */ = {
+			isa = PBXGroup;
+			children = (
+				4D48B6481BBCC7CD00FE639F /* sfondo5.png */,
+				4D48B6451BBCC74B00FE639F /* sfondoMenu.jpg */,
+			);
+			name = background;
 			sourceTree = "<group>";
 		};
 		4D57E6D21B62B45500D74A84 /* old */ = {
@@ -406,6 +427,27 @@
 				4D57E6EB1B718EB500D74A84 /* CollisionSection.swift */,
 			);
 			name = Speedo;
+			sourceTree = "<group>";
+		};
+		4D6A22611BBCDA5A003E11EF /* classes */ = {
+			isa = PBXGroup;
+			children = (
+				4D6A22621BBCDA6C003E11EF /* controller */,
+			);
+			name = classes;
+			sourceTree = "<group>";
+		};
+		4D6A22621BBCDA6C003E11EF /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				4D405CA11BBB648B007F802B /* InterfaceController.swift */,
+				4D48B64A1BBCCD1500FE639F /* InterfaceControllerSoft.swift */,
+				4D6A225B1BBCD817003E11EF /* InterfaceControllerStressing.swift */,
+				4D6A225D1BBCD864003E11EF /* InterfaceControllerSurvival.swift */,
+				4D6A225F1BBCD87F003E11EF /* InterfaceControllerAstonishing.swift */,
+				4D405CBF1BBB6D77007F802B /* ChartRowController.swift */,
+			);
+			name = controller;
 			sourceTree = "<group>";
 		};
 		4D8456041B13D109007269B8 /* classes */ = {
@@ -624,7 +666,9 @@
 			files = (
 				4D405CCA1BBB7AB8007F802B /* Blazed.ttf in Resources */,
 				4D405CCE1BBB7AB8007F802B /* budmo-jigglish.ttf in Resources */,
+				4D48B6461BBCC74B00FE639F /* sfondoMenu.jpg in Resources */,
 				4D405CCC1BBB7AB8007F802B /* budmo-jiggler.ttf in Resources */,
+				4D48B6491BBCC7CD00FE639F /* sfondo5.png in Resources */,
 				4D405CAA1BBB648B007F802B /* CatchTheSpeed WatchKit App.app in Resources */,
 				4D405CD01BBB7AB8007F802B /* Flame.ttf in Resources */,
 				4D405CA61BBB648B007F802B /* Images.xcassets in Resources */,
@@ -671,7 +715,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D6A225C1BBCD817003E11EF /* InterfaceControllerStressing.swift in Sources */,
+				4D6A22601BBCD87F003E11EF /* InterfaceControllerAstonishing.swift in Sources */,
 				4D405CA41BBB648B007F802B /* NotificationController.swift in Sources */,
+				4D48B64B1BBCCD1500FE639F /* InterfaceControllerSoft.swift in Sources */,
+				4D6A225E1BBCD864003E11EF /* InterfaceControllerSurvival.swift in Sources */,
 				4D405CC01BBB6D77007F802B /* ChartRowController.swift in Sources */,
 				4D405CA21BBB648B007F802B /* InterfaceController.swift in Sources */,
 			);
@@ -990,6 +1038,7 @@
 				4D405CBB1BBB648B007F802B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4D405CBD1BBB648B007F802B /* Build configuration list for PBXNativeTarget "CatchTheSpeed WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -998,6 +1047,7 @@
 				4D405CB91BBB648B007F802B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB22B09F1A6BD2E000FED987 /* Build configuration list for PBXProject "CatchTheSpeed" */ = {
 			isa = XCConfigurationList;

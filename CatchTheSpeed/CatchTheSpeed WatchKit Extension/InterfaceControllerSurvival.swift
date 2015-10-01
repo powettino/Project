@@ -10,7 +10,7 @@ import WatchKit
 import Foundation
 
 
-class InterfaceController: WKInterfaceController {
+class InterfaceControllerSurvival: WKInterfaceController {
     
     
     @IBOutlet weak var titleChart: WKInterfaceLabel!
@@ -24,27 +24,33 @@ class InterfaceController: WKInterfaceController {
         //                NSLog("\(fontname)")
         //            }
         //        }
-        
-        //        WKInterfaceController.openParentApplication(["request": "refreshData"],
-        //            reply: { (replyInfo, error) -> Void in
-        //                // TODO: process reply data
-        //                NSLog("Reply: \(replyInfo)")
-        //        })        // Configure interface objects here.
+        //                self.getChart()
     }
     
     internal func getChart(){
         
-        var urlReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user")!)
+        var params = ["game_type":ModeGame.survival.rawValue]
+        var error : NSError?
+        var whereClause = (NSString(data: NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &error)!, encoding: NSUTF8StringEncoding))?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        //
+        
+        var urlReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user&where=\(whereClause!)")!)
+        
+        //        var urlReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user")!)
         
         urlReq.HTTPMethod = "GET"
         urlReq.setValue("7Zn8mV9WPMzBprhPiZDcqOVxlGc6UYNpmTN4qQLs", forHTTPHeaderField: "X-Parse-Application-Id")
         urlReq.setValue("Rv9xdCM7GzTvTz13VeCzE8UEB0UPpmWMC29lAg0k", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
+        urlReq.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlReq.addValue("application/json", forHTTPHeaderField: "Accept")
+        
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(urlReq, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError!) -> Void in
             var err: NSError
-            //            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
+//            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
             var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+            
             var resultSet : NSArray = jsonResult["results"] as! NSArray
             self.chart.setNumberOfRows(resultSet.count, withRowType: "ChartRowController")
             
@@ -90,5 +96,4 @@ class InterfaceController: WKInterfaceController {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-    
 }

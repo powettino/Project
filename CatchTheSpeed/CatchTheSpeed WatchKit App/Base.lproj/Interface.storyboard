@@ -5,34 +5,83 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Blazed.ttf">
+            <string>Blazed</string>
+            <string>Blazed</string>
+            <string>Blazed</string>
+            <string>Blazed</string>
+            <string>Blazed</string>
+        </mutableArray>
         <mutableArray key="Flame.ttf">
             <string>Flame</string>
             <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
+        </mutableArray>
+        <mutableArray key="budmo-jiggler.ttf">
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="CatchTheSpeed_WatchKit_App" customModuleProvider="target">
+                <controller contentMode="right" animationDuration="1" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="CatchTheSpeed_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <label alignment="center" text="Global Chart" textAlignment="center" id="vO3-tG-1w8">
+                        <label alignment="center" textAlignment="center" numberOfLines="2" id="vO3-tG-1w8">
+                            <string key="text">Global
+Chart</string>
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="font" name="Flame" family="Flame" pointSize="17"/>
+                            <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>
-                        <table alignment="left" id="RRF-id-bhZ">
+                        <table alignment="left" backgroundImage="sfondo5.png" id="RRF-id-bhZ">
                             <items>
-                                <tableRow identifier="row_chart" id="nbH-8x-ksp" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" alignment="left" radius="13" id="pav-Yb-gPK">
+                                <tableRow identifier="ChartRowController" selectable="NO" id="nbH-8x-ksp" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
+                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="pav-Yb-gPK">
                                         <items>
-                                            <label width="15" height="1" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="KPl-Mj-JEu">
-                                                <fontDescription key="font" name="Flame" family="Flame" pointSize="20"/>
+                                            <group width="73" height="1" alignment="left" id="BF4-8k-3Df">
+                                                <items>
+                                                    <label width="14" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="KPl-Mj-JEu">
+                                                        <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="font" name="Flame" family="Flame" pointSize="19"/>
+                                                    </label>
+                                                    <group width="67" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="vPa-ZC-3BX">
+                                                        <items>
+                                                            <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="5OV-rD-DgR">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                            </label>
+                                                            <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="1pF-pU-drV">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                            <label width="40" height="1" alignment="right" verticalAlignment="center" text="Score" textAlignment="center" id="Ms6-xb-oXO">
+                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
                                             </label>
-                                            <label width="61" height="19.5" alignment="center" verticalAlignment="center" text="Nome" textAlignment="center" id="5OV-rD-DgR"/>
-                                            <label alignment="right" verticalAlignment="center" text="Punti" textAlignment="center" id="Ms6-xb-oXO"/>
                                         </items>
                                     </group>
                                     <connections>
+                                        <outlet property="mod" destination="1pF-pU-drV" id="I0r-gk-OpN"/>
                                         <outlet property="player" destination="5OV-rD-DgR" id="qNu-Bb-fam"/>
                                         <outlet property="points" destination="Ms6-xb-oXO" id="NU1-Ub-cm9"/>
                                         <outlet property="position" destination="KPl-Mj-JEu" id="siQ-IT-RNz"/>
@@ -40,19 +89,252 @@
                                 </tableRow>
                             </items>
                         </table>
-                        <button width="130" height="15" alignment="center" verticalAlignment="bottom" title="Show more" id="Fwv-La-UgM">
-                            <color key="titleColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="font" type="system" pointSize="13"/>
-                        </button>
                     </items>
                     <connections>
                         <outlet property="chart" destination="RRF-id-bhZ" id="kh1-bL-5Yg"/>
                         <outlet property="titleChart" destination="vO3-tG-1w8" id="Zul-Un-7kF"/>
+                        <segue destination="Cay-HI-jbp" kind="relationship" relationship="nextPage" id="lsw-L3-uQq"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="345"/>
+            <point key="canvasLocation" x="-128" y="334"/>
+        </scene>
+        <!--Interface Controller Soft-->
+        <scene sceneID="lNH-2O-Ovd">
+            <objects>
+                <controller id="Cay-HI-jbp" customClass="InterfaceControllerSoft" customModule="CatchTheSpeed_WatchKit_Extension">
+                    <items>
+                        <label alignment="center" textAlignment="center" numberOfLines="2" id="rKG-Bf-D7V">
+                            <string key="text">Soft
+Chart</string>
+                            <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
+                        </label>
+                        <table alignment="left" backgroundImage="sfondo5.png" id="vD8-Kc-Csd">
+                            <items>
+                                <tableRow identifier="ChartRowController" selectable="NO" id="bl3-Id-vQy" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
+                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="Lr2-0O-ejl">
+                                        <items>
+                                            <group width="73" height="1" alignment="left" id="7ne-5v-eBF">
+                                                <items>
+                                                    <label width="14" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="fOX-26-r8e">
+                                                        <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="font" name="Flame" family="Flame" pointSize="19"/>
+                                                    </label>
+                                                    <group width="67" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="8or-zr-WNr">
+                                                        <items>
+                                                            <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="v9d-RJ-ZFv">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                            </label>
+                                                            <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="SGy-js-A5M">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                            <label width="40" height="1" alignment="right" verticalAlignment="center" text="Score" textAlignment="center" id="lda-lg-a6E">
+                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="mod" destination="SGy-js-A5M" id="0Y2-EI-oiQ"/>
+                                        <outlet property="player" destination="v9d-RJ-ZFv" id="5bd-nh-f46"/>
+                                        <outlet property="points" destination="lda-lg-a6E" id="pp1-V3-SyA"/>
+                                        <outlet property="position" destination="fOX-26-r8e" id="01t-ry-FZd"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="chart" destination="vD8-Kc-Csd" id="EEV-0R-5tQ"/>
+                        <outlet property="titleChart" destination="rKG-Bf-D7V" id="8k1-Lm-Zmy"/>
+                        <segue destination="ZuA-aU-Gkv" kind="relationship" relationship="nextPage" id="s6S-cd-hEA"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="72" y="334"/>
+        </scene>
+        <!--Interface Controller Stressing-->
+        <scene sceneID="Kkx-Mx-rNq">
+            <objects>
+                <controller id="ZuA-aU-Gkv" customClass="InterfaceControllerStressing" customModule="CatchTheSpeed_WatchKit_Extension">
+                    <items>
+                        <label alignment="center" text="Stressing Chart" textAlignment="center" numberOfLines="2" id="XjD-Bm-k2P">
+                            <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
+                        </label>
+                        <table alignment="left" backgroundImage="sfondo5.png" id="s7b-t6-kjB">
+                            <items>
+                                <tableRow identifier="ChartRowController" selectable="NO" id="NRA-6A-IRC" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
+                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="Wbd-q0-f5s">
+                                        <items>
+                                            <group width="73" height="1" alignment="left" id="sWG-Bt-GX4">
+                                                <items>
+                                                    <label width="14" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="3rB-DC-mxi">
+                                                        <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="font" name="Flame" family="Flame" pointSize="19"/>
+                                                    </label>
+                                                    <group width="67" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="uS4-wV-Ln8">
+                                                        <items>
+                                                            <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="0gJ-NP-xUI">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                            </label>
+                                                            <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="UEp-uq-TUO">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                            <label width="40" height="1" alignment="right" verticalAlignment="center" text="Score" textAlignment="center" id="awb-dK-Jva">
+                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="mod" destination="UEp-uq-TUO" id="Qt2-GY-Jvb"/>
+                                        <outlet property="player" destination="0gJ-NP-xUI" id="CkE-UQ-evC"/>
+                                        <outlet property="points" destination="awb-dK-Jva" id="Onr-LU-zaC"/>
+                                        <outlet property="position" destination="3rB-DC-mxi" id="fMo-O2-qUA"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="chart" destination="s7b-t6-kjB" id="QfD-3C-ZWN"/>
+                        <outlet property="titleChart" destination="XjD-Bm-k2P" id="hdh-Kw-Bg2"/>
+                        <segue destination="6xm-I0-YTZ" kind="relationship" relationship="nextPage" id="vly-o2-FBp"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="255" y="334"/>
+        </scene>
+        <!--Interface Controller Survival-->
+        <scene sceneID="Vvd-38-2Ic">
+            <objects>
+                <controller id="6xm-I0-YTZ" customClass="InterfaceControllerSurvival" customModule="CatchTheSpeed_WatchKit_Extension">
+                    <items>
+                        <label alignment="center" text="Survival Chart" textAlignment="center" numberOfLines="2" id="iwv-eR-dMH">
+                            <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
+                        </label>
+                        <table alignment="left" backgroundImage="sfondo5.png" id="vzy-Dc-vKH">
+                            <items>
+                                <tableRow identifier="ChartRowController" selectable="NO" id="Ts3-tX-Wbf" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
+                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="aRs-3B-Lrt">
+                                        <items>
+                                            <group width="73" height="1" alignment="left" id="8zr-uj-7yP">
+                                                <items>
+                                                    <label width="14" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="VhK-gC-Kwm">
+                                                        <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="font" name="Flame" family="Flame" pointSize="19"/>
+                                                    </label>
+                                                    <group width="67" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="WrC-L2-GFg">
+                                                        <items>
+                                                            <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="HsR-8h-vWP">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                            </label>
+                                                            <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="dhd-27-lrb">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                            <label width="40" height="1" alignment="right" verticalAlignment="center" text="Score" textAlignment="center" id="16e-6N-goS">
+                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="mod" destination="dhd-27-lrb" id="25N-Mn-fOB"/>
+                                        <outlet property="player" destination="HsR-8h-vWP" id="1eP-Vm-dQ6"/>
+                                        <outlet property="points" destination="16e-6N-goS" id="zUj-eH-JdL"/>
+                                        <outlet property="position" destination="VhK-gC-Kwm" id="iEV-d7-X7R"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="chart" destination="vzy-Dc-vKH" id="cHp-Qx-Xn9"/>
+                        <outlet property="titleChart" destination="iwv-eR-dMH" id="jNR-KR-ejp"/>
+                        <segue destination="DbU-3s-tDj" kind="relationship" relationship="nextPage" id="d14-Zk-YJv"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="445" y="334"/>
+        </scene>
+        <!--Interface Controller Astonishing-->
+        <scene sceneID="OBI-x9-wlv">
+            <objects>
+                <controller id="DbU-3s-tDj" customClass="InterfaceControllerAstonishing" customModule="CatchTheSpeed_WatchKit_Extension">
+                    <items>
+                        <label alignment="center" text="Astonishing Chart" textAlignment="center" numberOfLines="2" id="8VG-eg-X8J">
+                            <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
+                        </label>
+                        <table alignment="left" backgroundImage="sfondo5.png" id="aDG-jX-hKr">
+                            <items>
+                                <tableRow identifier="ChartRowController" selectable="NO" id="voB-qp-x4B" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
+                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="ACp-3o-Slk">
+                                        <items>
+                                            <group width="73" height="1" alignment="left" id="3io-MU-cbV">
+                                                <items>
+                                                    <label width="14" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="LBo-hh-xls">
+                                                        <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="font" name="Flame" family="Flame" pointSize="19"/>
+                                                    </label>
+                                                    <group width="67" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="HSP-94-wnP">
+                                                        <items>
+                                                            <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="0Lg-fp-Qwy">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                            </label>
+                                                            <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="CIR-vw-mza">
+                                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                            <label width="40" height="1" alignment="right" verticalAlignment="center" text="Score" textAlignment="center" id="QJO-oB-VeA">
+                                                <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="mod" destination="CIR-vw-mza" id="FiG-Ou-hwe"/>
+                                        <outlet property="player" destination="0Lg-fp-Qwy" id="sOu-xl-Bjz"/>
+                                        <outlet property="points" destination="QJO-oB-VeA" id="1RN-GM-gHL"/>
+                                        <outlet property="position" destination="LBo-hh-xls" id="pvD-aF-8h8"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="chart" destination="aDG-jX-hKr" id="dMs-4T-KzB"/>
+                        <outlet property="titleChart" destination="8VG-eg-X8J" id="dlc-Lt-ZfM"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="628" y="334"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
