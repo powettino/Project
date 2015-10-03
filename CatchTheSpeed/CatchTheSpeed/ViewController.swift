@@ -125,6 +125,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     @IBOutlet weak var gameTitle: UILabel!
     @IBOutlet weak var borderInformationView: UIView!
     
+    @IBOutlet weak var currentRecord: UILabel!
+    @IBOutlet weak var recordText: UIView!
+    
     @IBAction func playMod(sender: AnyObject) {
         self.startedGame()
     }
@@ -380,8 +383,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     for punteggio in punteggi{
                         if let gameType = punteggio.objectForKey("game_type") as? Int{
                             self.recordArray[gameType] = punteggio.objectForKey("score") as? Int
-                            println("il punteggio per gioco \(gameType) impostato e' \(self.recordArray[gameType])")
-                        }
+                            println("il punteggio per gioco \(gameType) impostato e' \(self.recordArray[gameType])")                                                    }
                     }
                 }
         }
@@ -470,6 +472,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.currentLevel.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
         self.currentLevel.layer.borderWidth = 3
         self.currentLevel.layer.cornerRadius = 10
+        
+        self.currentRecord.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_mini.png")!).CGColor
+        self.currentRecord.layer.borderWidth = 3
+        self.currentRecord.layer.cornerRadius = 10
+        
         self.menu.setEffectsSwitch(self.effectsStatus)
         self.menu.setAudioSwitch(self.audioStatus)
         
@@ -508,9 +515,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         if(position.rawValue != self.informationView.frame.origin.y){
             var slidingFrame = CGRectMake(self.informationView.frame.origin.x, position.rawValue, self.informationView.frame.size.width, self.informationView.frame.size.height)
             
-            var pointSlide = CGRectMake(position.rawValue != 0 ? -10 : -self.puntiAttuali.frame.size.width-20 , self.puntiAttuali.frame.origin.y, self.puntiAttuali.frame.size.width, self.puntiAttuali.frame.size.height);
+            var pointSlide = CGRectMake(position.rawValue != 0 ? self.view.frame.size.width-self.puntiAttuali.frame.size.width+10 : self.view.frame.size.width+10, self.puntiAttuali.frame.origin.y, self.puntiAttuali.frame.size.width, self.puntiAttuali.frame.size.height);
             
             var levelSlide = CGRectMake(position.rawValue != 0 ? self.view.frame.size.width-self.currentLevel.frame.size.width+10 : self.view.frame.size.width+10, self.currentLevel.frame.origin.y, self.currentLevel.frame.size.width, self.currentLevel.frame.size.height);
+            
+            var recordSlide = CGRectMake(position.rawValue != 0 ? -10 : -self.currentRecord.frame.size.width-20, self.currentRecord.frame.origin.y, self.currentRecord.frame.size.width, self.currentRecord.frame.size.height)
             
             UIView.animateWithDuration(0.5 ,delay: position.rawValue != 0 ? 0 : 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.informationView.frame = slidingFrame;
@@ -520,6 +529,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 }, completion: (nil))
             
             UIView.animateWithDuration(0.5, delay: position.rawValue != 0 ? 0.2 : 0, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {self.puntiAttuali.frame = pointSlide
+                }, completion: (nil))
+            
+            UIView.animateWithDuration(0.5, delay: position.rawValue != 0 ? 0.2 : 0, options: UIViewAnimationOptions.TransitionFlipFromBottom, animations: {self.currentRecord.frame = recordSlide
                 }, completion: (nil))
         }
     }
@@ -564,10 +576,15 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         
         self.levelText.frame.origin.x = (self.view.frame.size.width/2 - 15) + 45
         
+        self.puntiAttuali.frame.origin.x = self.view.frame.size.width + 10
         self.puntiAttuali.frame.size.width = self.view.frame.size.width/2 - 15
-        self.puntiAttuali.frame.origin.x = -self.puntiAttuali.frame.size.width - 10
         
-        self.pointText.frame.origin.x = (self.view.frame.size.width/2 - 15) - self.pointText.frame.size.width - 30
+        self.pointText.frame.origin.x = (self.view.frame.size.width/2 - 15) + 45
+        
+        self.currentRecord.frame.origin.x = -self.currentRecord.frame.size.width - 10
+        self.currentRecord.frame.size.width = self.view.frame.size.width/2 - 15
+        
+        self.recordText.frame.origin.x = (self.view.frame.size.width/2 - 15) - self.recordText.frame.size.width - 30
         
         self.gameTitle.frame.origin.x = ((self.view.frame.size.width - 10) - self.gameTitle.frame.size.width) / 2
         self.playButton.frame.origin.x = (self.view.frame.size.width - self.playButton.frame.size.width) / 2
@@ -581,10 +598,13 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.FBButton.layer.zPosition = 3
     }
     
-    func saveRecordOnline()
-    {var query = PFQuery(className:"Points")
+    func saveRecordOnline(){
+        var query = PFQuery(className:"Points")
+        var tempRecord = self.currentPoint
+        var tempLevel = self.currentLevel.text
+        var tempGame = self.modGame.rawValue
         query.whereKey("user", equalTo: PFUser.currentUser()!)
-            .whereKey("game_type", equalTo: self.modGame.rawValue)
+            .whereKey("game_type", equalTo: tempGame)
             .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
                 if error != nil {
                     self.userLogged = false
@@ -596,11 +616,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     if(punteggi.count==0){
                         println("entrato")
                         var punteggio = PFObject(className:"Points")
-                        punteggio["score"] = self.currentPoint
+                        punteggio["score"] = tempRecord
                         punteggio["user"] = PFUser.currentUser()!
-                        punteggio["level"] = self.currentLevel.text
-                        punteggio["game_type"] = self.modGame.rawValue
-                        punteggio.saveEventually({ (result:Bool, error:NSError?) -> Void in
+                        punteggio["level"] = tempLevel
+                        punteggio["game_type"] = tempGame
+                        punteggio.saveInBackgroundWithBlock({ (result:Bool, error:NSError?) -> Void in
                             if(result){
                                 println("Record salvato \(result)")
                             }else{
@@ -612,9 +632,17 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     }else{
                         for punteggio in punteggi{
                             //dovrebbe essere solo 1 per modalita' di gioco
-                            punteggio["score"] = self.currentPoint
-                            punteggio["level"] = self.currentLevel.text
-                            punteggio.saveEventually()
+                            punteggio["score"] = tempRecord
+                            punteggio["level"] = tempLevel
+                            punteggio.saveInBackgroundWithBlock({ (result:Bool, error:NSError?) -> Void in
+                                if(result){
+                                    println("Record salvato \(result)")
+                                }else{
+                                    println("Error: \(error!.localizedDescription)")
+                                    
+                                    UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
+                                }
+                            })
                         }
                     }
                 }
@@ -632,6 +660,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         switch(self.recordArray[self.modGame.rawValue]<self.currentPoint, self.modGame){
         case (true, _) :
             self.recordArray[self.modGame.rawValue] = self.currentPoint
+            self.currentRecord.text = String(self.currentPoint)
             //            if self.userLogged{
             //                self.saveRecordOnline()
             //            }
@@ -693,9 +722,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 var postImage = UtilityFunction.Imaging.takeScreenShot(self.view, cropRect: CGRect(origin: self.windowInformations.frame.origin, size: self.windowInformations.frame.size))
                 
                 if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
-                    if self.userLogged{
+//                    if self.userLogged{
                         self.saveRecordOnline()
-                    }
+//                    }
                     var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
                     facebookSheet.setInitialText(message)
                     facebookSheet.addImage(postImage)
@@ -758,6 +787,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }
         var actionNoShare = UIAlertAction(title: action, style: UIAlertActionStyle.Default, handler:{
             finished in
+            if(self.checkUserStatus()){
+                self.saveRecordOnline()
+            }
             self.restartGame()
         })
         actions.append(actionNoShare)
@@ -821,6 +853,8 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func startedGame() {
+        self.currentRecord.text = String(self.recordArray[self.modGame.rawValue]!)
+        println("aggiorno anche il record con il dato corretto")
         self.slideInformationView(SlideScoreEnum.top);
         if(self.effectsStatus){
             self.startEngineAudio.play()
