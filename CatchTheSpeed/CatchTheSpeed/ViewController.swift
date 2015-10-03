@@ -64,7 +64,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var optionOpened :Bool = false
     var speedoScene : Speedo?;
     var menu : MenuTable!
-    var userLogged : Bool = false;
+    static var userLogged : Bool = false;
     let read_permissions = [ "public_profile", "email"]
     let write_permissions = ["publish_actions"]
     let loadingBox: UIView = UIView()
@@ -134,14 +134,14 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     @IBAction func FBButtonClick(sender: AnyObject) {
         UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 1)
-        if(self.userLogged){
+        if(ViewController.userLogged){
             PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
                 if(error==nil){
                     println("User logged out")
                     
                     UtilityFunction.UIUtility.showAlertWithContent(self, title: "Logout", message: "User has successfully logged out", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {finished in
                         self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
-                        self.userLogged = false
+                        ViewController.userLogged = false
                     })
                 }else{
                     
@@ -155,7 +155,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         UtilityFunction.UIUtility.showAlertWithContent(self, title: "Login", message: "User has successfully logged in", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {
                             finished in
                             self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
-                            self.userLogged = true
+                            ViewController.userLogged = true
                             self.retrieveFBInformation()
                             self.updateRecordArray()
                         })
@@ -192,7 +192,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             (connection:FBSDKGraphRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
             if(error != nil){
                 println("Error: \(error.localizedDescription)")
-                self.userLogged=false
+                ViewController.userLogged=false
                 self.FBButton?.setTitle("Connect", forState: UIControlState.Normal)
                 PFUser.logOutInBackground()
                 println("Utente sloggato forzatamente")
@@ -234,7 +234,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         user["email"] = emailValue
                     }
                     user.saveInBackground()
-                    self.userLogged = true;
+                    ViewController.userLogged = true;
                     self.FBButton?.setTitle("Disconnect", forState: UIControlState.Normal)
                     self.updateRecordArray()
                 }
@@ -374,7 +374,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             .findObjectsInBackgroundWithBlock { (punteggi:[AnyObject]?, error:NSError?) -> Void in
                 if(error != nil){
                     println("Error: \(error?.localizedDescription)")
-                    self.userLogged = false
+                    ViewController.userLogged = false
                     
                     UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
@@ -450,12 +450,13 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.windowInformations.layer.cornerRadius = 15
         self.windowInformations.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture_gialla.png")!).CGColor
         self.windowInformations.layer.borderWidth = 10
+        self.windowInformations.backgroundColor = UIColor(white: 100, alpha: 0.2)
+        self.windowInformations.layer.zPosition = 1
         //        self.windowInformations.layer.shadowColor = UIColor.redColor().CGColor
         //        self.windowInformations.layer.shadowOffset = CGSize()
         //        self.windowInformations.layer.shadowRadius = 5
         //        self.windowInformations.layer.shadowOpacity = 1
-        self.windowInformations.backgroundColor = UIColor(white: 100, alpha: 0.2)
-        self.windowInformations.layer.zPosition = 1
+
         
         self.borderInformationView.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture1.png")!).CGColor
         self.borderInformationView.layer.cornerRadius = 15
@@ -489,7 +490,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func audioPlayerDidFinishPlaying(AVAudioPlayer!, successfully: Bool) {
-        println("finito");
+//        println("finito");
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
@@ -539,15 +540,20 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     private func setElementPositionFromDimension(){
         
         var offset : CGFloat;
+        var borderOffset : CGFloat;
         switch (UtilityFunction.IOSDeviceUtility.checkDevice(self.view)){
         case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone5:
             offset=45
+            borderOffset=5
         case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6:
             offset=55
+            borderOffset=7
         case UtilityFunction.IOSDeviceUtility.IOSDeviceType.iPhone6Plus:
             offset=75
+            borderOffset=7
         default:
             offset=0
+            borderOffset=5
         }
         
         self.acceleratorView.frame.size.width = self.view.frame.width
@@ -565,9 +571,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.slidingMenu.frame = CGRectMake((self.view.frame.size.width-self.container.frame.size.width)/2, -self.slidingMenu.frame.size.height, self.slidingMenu.frame.size.width, self.slidingMenu.frame.size.height)
         self.slidingMenu.layer.zPosition = 10
         
-        self.windowInformations.frame = CGRectMake(5, self.windowInformations.frame.origin.y+5, self.view.frame.size.width-10, self.windowInformations.frame.size.height)
+        self.windowInformations.frame = CGRectMake(borderOffset, self.windowInformations.frame.origin.y+5, self.view.frame.size.width-(borderOffset*2), self.windowInformations.frame.size.height)
         
-        self.borderInformationView.frame = CGRectMake(5, self.borderInformationView.frame.origin.y+5, self.view.frame.size.width-10, self.borderInformationView.frame.size.height)
+        self.borderInformationView.frame = CGRectMake(borderOffset, self.borderInformationView.frame.origin.y+5, self.view.frame.size.width-(borderOffset*2), self.borderInformationView.frame.size.height)
         
         self.informationView.frame.size.width = self.view.frame.size.width-10
         
@@ -607,7 +613,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             .whereKey("game_type", equalTo: tempGame)
             .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
                 if error != nil {
-                    self.userLogged = false
+                    ViewController.userLogged = false
                     println("Error: \(error!.localizedDescription)")
                     UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot save data: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
@@ -622,7 +628,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                         punteggio["game_type"] = tempGame
                         punteggio.saveInBackgroundWithBlock({ (result:Bool, error:NSError?) -> Void in
                             if(result){
-                                println("Record salvato \(result)")
+                                println("Record salvato nuovo \(tempRecord)")
                             }else{
                                 println("Error: \(error!.localizedDescription)")
                                 
@@ -636,7 +642,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                             punteggio["level"] = tempLevel
                             punteggio.saveInBackgroundWithBlock({ (result:Bool, error:NSError?) -> Void in
                                 if(result){
-                                    println("Record salvato \(result)")
+                                    println("Record aggiornato \(tempRecord)")
                                 }else{
                                     println("Error: \(error!.localizedDescription)")
                                     
@@ -661,9 +667,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         case (true, _) :
             self.recordArray[self.modGame.rawValue] = self.currentPoint
             self.currentRecord.text = String(self.currentPoint)
-            //            if self.userLogged{
-            //                self.saveRecordOnline()
-            //            }
+            if(self.checkUserStatus()){
+                self.saveRecordOnline()
+            }
             self.showEndAlert("Congrats", message: "You have done a new record!", action: "Improve it!", enableShare: true)
         case (_, ModeGame.stressing):
             self.showEndAlert("Ouch!", message: "Your time is up!", action: "Try again", enableShare: false)
@@ -722,9 +728,9 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 var postImage = UtilityFunction.Imaging.takeScreenShot(self.view, cropRect: CGRect(origin: self.windowInformations.frame.origin, size: self.windowInformations.frame.size))
                 
                 if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
-//                    if self.userLogged{
-                        self.saveRecordOnline()
-//                    }
+                    //                    if ViewController.userLogged{
+                    //                        self.saveRecordOnline()
+                    //                    }
                     var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
                     facebookSheet.setInitialText(message)
                     facebookSheet.addImage(postImage)
@@ -734,7 +740,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     })
                 } else {
                     if(self.checkUserStatus()){
-                        self.saveRecordOnline()
+                        //                        self.saveRecordOnline()
                         self.postOnFacebook(message, image: postImage)
                     }else{
                         
@@ -744,7 +750,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                 if(error == nil){
                                     if let user = user {
                                         self.FBButton.setTitle("Disconnect", forState: UIControlState.Normal)
-                                        self.userLogged = true
+                                        ViewController.userLogged = true
                                         self.updateRecordArray()
                                         //Si ripete l'operazione perche' non si era loggati
                                         if(self.recordArray[self.modGame.rawValue]<self.currentPoint){
@@ -787,9 +793,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }
         var actionNoShare = UIAlertAction(title: action, style: UIAlertActionStyle.Default, handler:{
             finished in
-            if(self.checkUserStatus()){
-                self.saveRecordOnline()
-            }
             self.restartGame()
         })
         actions.append(actionNoShare)
@@ -807,10 +810,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 self.labelCount.alpha=0
                 self.copyLabelCount.alpha=0
                 self.acceleratorView.alpha=1
-                }, completion: {finished in
-                    self.labelCount.frame = CGRectMake(self.view.frame.width/2 - self.labelCount.frame.width/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
-                    self.copyLabelCount.frame = CGRectMake(self.view.frame.width/2 - self.labelCount.frame.width/2, self.copyLabelCount.frame.origin.y, self.copyLabelCount.frame.width, self.copyLabelCount.frame.height);
-                    
+                }, completion: {
+                    finished in
+                    self.labelCount.frame = CGRectMake((self.fadingView.frame.size.width - self.labelCount.frame.size.width)/2, self.labelCount.frame.origin.y, self.labelCount.frame.size.width, self.labelCount.frame.size.height);
+                    self.copyLabelCount.frame = CGRectMake((self.fadingView.frame.size.width - self.labelCount.frame.size.width)/2, self.copyLabelCount.frame.origin.y, self.copyLabelCount.frame.size.width, self.copyLabelCount.frame.size.height);
+                                        
                     self.counterMessageGame=3
                     self.labelCount.text = String(self.counterMessageGame)
                     self.copyLabelCount.text = String(self.counterMessageGame)
@@ -823,7 +827,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             )
         }else{
             self.counterMessageGame -= 1
-            //            println("valore> \((self.fadingView.frame.width - self.labelCount.frame.width)/2)")
             var middleFrame = CGRectMake((self.fadingView.frame.width - self.labelCount.frame.width)/2, self.labelCount.frame.origin.y, self.labelCount.frame.width, self.labelCount.frame.height);
             
             UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: middleFrame, completeDuration: self.timerMessageGame.timeInterval, complex: ((self.counterMessageGame==2) ? "left" : "right"), finalComplention: nil);
@@ -854,7 +857,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     func startedGame() {
         self.currentRecord.text = String(self.recordArray[self.modGame.rawValue]!)
-        println("aggiorno anche il record con il dato corretto")
+//        println("aggiorno anche il record con il dato corretto")
         self.slideInformationView(SlideScoreEnum.top);
         if(self.effectsStatus){
             self.startEngineAudio.play()
@@ -904,8 +907,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 }, completion: { finished in
                     self.labelCount.alpha=1;
                     self.copyLabelCount.alpha=1;
+                    println("dimensioni originali: \(self.labelCount.frame.origin.x) - \(self.labelCount.frame.size.width)")
                     var duration : NSTimeInterval = 0.8;
-                    UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: self.labelCount.frame, completeDuration: duration,complex: "right", finalComplention: nil);
+                    
+                    UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: self.labelCount.frame, completeDuration: duration, complex: "right", finalComplention: nil);
                     
                     UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.copyLabelCount, middlePosition: self.copyLabelCount.frame, completeDuration: duration, complex: "left", finalComplention: nil);
                     

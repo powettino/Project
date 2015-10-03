@@ -120,6 +120,8 @@ class UtilityFunction{
             
             loadingBox.frame.origin.x = (view.frame.size.width - loadingBox.frame.size.width)/2
             loadingBox.frame.origin.y = (view.frame.size.height - loadingBox.frame.size.height)/2
+            
+//            println("view: \(view.frame.size.width) loa: \(loadingBox.frame.size.width) ori: \(loadingBox.frame.origin.x)")
             loadingBox.backgroundColor = UIColor(red: 0.26, green: 0.26 , blue: 0.26, alpha: 0.7)
             loadingBox.clipsToBounds = true
             loadingBox.layer.cornerRadius = 10
@@ -132,7 +134,7 @@ class UtilityFunction{
             
             loadingBox.addSubview(loading)
             
-            println("aggiunto spinner con id \(tag)")
+//            println("aggiunto spinner con id \(tag)")
             loadingArray.updateValue(loadingBox, forKey: tag)
             view.addSubview(loadingBox)
             
@@ -140,7 +142,7 @@ class UtilityFunction{
         }
         
         static func hideActivityIndicator(view: UIView, tag: Int) {
-            println("rimossso spinner con id \(tag)")
+//            println("rimossso spinner con id \(tag)")
             var loadingBox = loadingArray.removeValueForKey(tag)
             loadingBox?.removeFromSuperview()
         }
@@ -177,12 +179,13 @@ class UtilityFunction{
                 if(complex == "left"){
                     starting = CGRectMake(containerView.frame.width+middlePosition.width+10, middlePosition.origin.y, middlePosition.width, middlePosition.height)
                 }else{
-                    starting = CGRectMake(-middlePosition.width, middlePosition.origin.y, middlePosition.width, middlePosition.height)
+                    starting = CGRectMake(-middlePosition.width-10, middlePosition.origin.y, middlePosition.width, middlePosition.height)
                 }
                 toAnimate.frame = starting;
                 UIView.animateWithDuration(completeDuration/5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                     toAnimate.frame = middlePosition;
-                    }, completion: {finished in
+                    }, completion: {
+                        finished in
                         UIView.animateWithDuration(completeDuration/5, delay: completeDuration*(3/5), options: UIViewAnimationOptions.CurveEaseIn, animations: {
                             toAnimate.frame = starting
                             }, completion :

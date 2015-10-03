@@ -17,4 +17,5 @@ class ChartCustomCell : UITableViewCell {
     @IBOutlet weak var level: UILabel!
     @IBOutlet weak var mod: UILabel!
     @IBOutlet weak var chartPosition: UILabel!
+            
 }
