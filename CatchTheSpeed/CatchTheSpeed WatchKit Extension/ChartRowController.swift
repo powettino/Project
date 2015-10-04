@@ -11,7 +11,6 @@ import Foundation
 
 class ChartRowController : NSObject {
     
-    
     @IBOutlet weak var position: WKInterfaceLabel!
     @IBOutlet weak var player: WKInterfaceLabel!
     @IBOutlet weak var points: WKInterfaceLabel!

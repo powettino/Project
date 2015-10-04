@@ -45,7 +45,7 @@
 		4D30E81E1B34F5CD00C0EE33 /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E8121B34F5CD00C0EE33 /* SKTTimingFunctions.swift */; };
 		4D30E81F1B34F5CD00C0EE33 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E8131B34F5CD00C0EE33 /* Vector3.swift */; };
 		4D30E8221B355D7B00C0EE33 /* SmokeBrake.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D30E8201B355D7B00C0EE33 /* SmokeBrake.sks */; };
-		4D405CA21BBB648B007F802B /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D405CA11BBB648B007F802B /* InterfaceController.swift */; };
+		4D405CA21BBB648B007F802B /* InterfaceControllerGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D405CA11BBB648B007F802B /* InterfaceControllerGlobal.swift */; };
 		4D405CA41BBB648B007F802B /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D405CA31BBB648B007F802B /* NotificationController.swift */; };
 		4D405CA61BBB648B007F802B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CA51BBB648B007F802B /* Images.xcassets */; };
 		4D405CAA1BBB648B007F802B /* CatchTheSpeed WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CA91BBB648B007F802B /* CatchTheSpeed WatchKit App.app */; };
@@ -170,7 +170,7 @@
 		4D405C9C1BBB648A007F802B /* CatchTheSpeed WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CatchTheSpeed WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D405C9F1BBB648B007F802B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D405CA01BBB648B007F802B /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		4D405CA11BBB648B007F802B /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		4D405CA11BBB648B007F802B /* InterfaceControllerGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceControllerGlobal.swift; sourceTree = "<group>"; };
 		4D405CA31BBB648B007F802B /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		4D405CA51BBB648B007F802B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4D405CA91BBB648B007F802B /* CatchTheSpeed WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CatchTheSpeed WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -448,7 +448,7 @@
 		4D6A22621BBCDA6C003E11EF /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				4D405CA11BBB648B007F802B /* InterfaceController.swift */,
+				4D405CA11BBB648B007F802B /* InterfaceControllerGlobal.swift */,
 				4D48B64A1BBCCD1500FE639F /* InterfaceControllerSoft.swift */,
 				4D6A225B1BBCD817003E11EF /* InterfaceControllerStressing.swift */,
 				4D6A225D1BBCD864003E11EF /* InterfaceControllerSurvival.swift */,
@@ -737,7 +737,7 @@
 				4D48B64B1BBCCD1500FE639F /* InterfaceControllerSoft.swift in Sources */,
 				4D6A225E1BBCD864003E11EF /* InterfaceControllerSurvival.swift in Sources */,
 				4D405CC01BBB6D77007F802B /* ChartRowController.swift in Sources */,
-				4D405CA21BBB648B007F802B /* InterfaceController.swift in Sources */,
+				4D405CA21BBB648B007F802B /* InterfaceControllerGlobal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

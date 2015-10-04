@@ -16,6 +16,8 @@ class InterfaceControllerStressing: WKInterfaceController {
     @IBOutlet weak var titleChart: WKInterfaceLabel!
     @IBOutlet weak var chart: WKInterfaceTable!
     
+    var infoArray : NSArray = []
+    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         //
@@ -24,7 +26,7 @@ class InterfaceControllerStressing: WKInterfaceController {
         //                NSLog("\(fontname)")
         //            }
         //        }
-        //                self.getChart()
+        self.getChart()
     }
     
     internal func getChart(){
@@ -48,19 +50,20 @@ class InterfaceControllerStressing: WKInterfaceController {
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(urlReq, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError!) -> Void in
             var err: NSError
-//            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
+            //            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
             var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
             
             var resultSet : NSArray = jsonResult["results"] as! NSArray
-            self.chart.setNumberOfRows(resultSet.count, withRowType: "ChartRowController")
-            
-            for (index, singleRes) in enumerate(resultSet){
-                if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
-                    var chartInfo : NSDictionary = singleRes as! NSDictionary
-                    var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
-                    row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
-                }
-            }
+            self.infoArray = resultSet
+            //            self.chart.setNumberOfRows(resultSet.count, withRowType: "ChartRowController")
+            //
+            //            for (index, singleRes) in enumerate(resultSet){
+            //                if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
+            //                    var chartInfo : NSDictionary = singleRes as! NSDictionary
+            //                    var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
+            //                    row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+            //                }
+            //            }
         })
     }
     
@@ -88,7 +91,15 @@ class InterfaceControllerStressing: WKInterfaceController {
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
-        self.getChart()
+        self.chart.setNumberOfRows(self.infoArray.count, withRowType: "ChartRowController")
+        
+        for (index, singleRes) in enumerate(self.infoArray){
+            if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
+                var chartInfo : NSDictionary = singleRes as! NSDictionary
+                var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
+                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+            }
+        }
         super.willActivate()
     }
     

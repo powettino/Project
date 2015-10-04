@@ -10,7 +10,7 @@ import WatchKit
 import Foundation
 
 
-class InterfaceController: WKInterfaceController {
+class InterfaceControllerGlobal: WKInterfaceController {
     
     
     @IBOutlet weak var titleChart: WKInterfaceLabel!
@@ -30,6 +30,7 @@ class InterfaceController: WKInterfaceController {
         //                // TODO: process reply data
         //                NSLog("Reply: \(replyInfo)")
         //        })        // Configure interface objects here.
+        getChart()
     }
     
     internal func getChart(){
@@ -82,7 +83,7 @@ class InterfaceController: WKInterfaceController {
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
-        self.getChart()
+//        self.getChart()
         super.willActivate()
     }
     

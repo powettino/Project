@@ -38,10 +38,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--Interface Controller-->
+        <!--Interface Controller Global-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller contentMode="right" animationDuration="1" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="CatchTheSpeed_WatchKit_App" customModuleProvider="target">
+                <controller contentMode="right" animationDuration="1" id="AgC-eL-Hgc" customClass="InterfaceControllerGlobal" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
                         <label alignment="center" textAlignment="center" numberOfLines="2" id="vO3-tG-1w8">
                             <string key="text">Global
@@ -152,7 +152,7 @@ Chart</string>
                         </table>
                     </items>
                     <connections>
-                        <outlet property="chart" destination="vD8-Kc-Csd" id="EEV-0R-5tQ"/>
+                        <outlet property="chart" destination="vD8-Kc-Csd" id="ucq-D9-2eZ"/>
                         <outlet property="titleChart" destination="rKG-Bf-D7V" id="8k1-Lm-Zmy"/>
                         <segue destination="ZuA-aU-Gkv" kind="relationship" relationship="nextPage" id="s6S-cd-hEA"/>
                     </connections>
