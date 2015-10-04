@@ -74,7 +74,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var startEngineAudio = AVAudioPlayer()
     var pointSetAudio = AVAudioPlayer()
     var failSetAudio = AVAudioPlayer()
-            
+    
     var audioStatus : Bool {
         get{
             let ud = NSUserDefaults.standardUserDefaults().boolForKey("audioStatus")
@@ -212,7 +212,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                     println(errorSave)
                                 }
                             })
-                            println("recuperata la foto")
+//                            println("recuperata la foto")
                         }
                         else {
                             println("Error: \(error.localizedDescription)")
@@ -249,7 +249,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func changedTimer() {
-        NSLog("cambiato timer");
+//        NSLog("cambiato timer");
         switch (self.modGame){
         case ModeGame.soft:
             self.modGame=ModeGame.stressing
@@ -375,6 +375,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                             self.recordArray[gameType] = punteggio.objectForKey("score") as? Int
                             println("il punteggio per gioco \(gameType) impostato e' \(self.recordArray[gameType])")                                                    }
                     }
+                    self.currentRecord.text = String(self.recordArray[self.modGame.rawValue]!)
                 }
         }
     }
@@ -444,7 +445,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         //        self.windowInformations.layer.shadowOffset = CGSize()
         //        self.windowInformations.layer.shadowRadius = 5
         //        self.windowInformations.layer.shadowOpacity = 1
-
+        
         
         self.borderInformationView.layer.borderColor = UIColor(patternImage: UIImage(named: "risorse/borders/texture1.png")!).CGColor
         self.borderInformationView.layer.cornerRadius = 15
@@ -478,7 +479,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func audioPlayerDidFinishPlaying(AVAudioPlayer!, successfully: Bool) {
-//        println("finito");
+        //        println("finito");
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
@@ -802,7 +803,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     finished in
                     self.labelCount.frame = CGRectMake((self.fadingView.frame.size.width - self.labelCount.frame.size.width)/2, self.labelCount.frame.origin.y, self.labelCount.frame.size.width, self.labelCount.frame.size.height);
                     self.copyLabelCount.frame = CGRectMake((self.fadingView.frame.size.width - self.labelCount.frame.size.width)/2, self.copyLabelCount.frame.origin.y, self.copyLabelCount.frame.size.width, self.copyLabelCount.frame.size.height);
-                                        
+                    
                     self.counterMessageGame=3
                     self.labelCount.text = String(self.counterMessageGame)
                     self.copyLabelCount.text = String(self.counterMessageGame)
@@ -827,6 +828,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func checkTimeToSpeedUp(){
+        //TODO: per disattivare opzione di accelerazione dopo la sezione minima
         if(self.speedoScene?.isMinimunSectionDimension() == true){
             if(self.level >= 5){
                 var increasing : CGFloat = CGFloat(self.level) / 25.0
@@ -845,7 +847,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     
     func startedGame() {
         self.currentRecord.text = String(self.recordArray[self.modGame.rawValue]!)
-//        println("aggiorno anche il record con il dato corretto")
         self.slideInformationView(SlideScoreEnum.top);
         if(self.effectsStatus){
             self.startEngineAudio.play()

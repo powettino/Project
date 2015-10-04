@@ -72,6 +72,11 @@
 		4D6A225C1BBCD817003E11EF /* InterfaceControllerStressing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A225B1BBCD817003E11EF /* InterfaceControllerStressing.swift */; };
 		4D6A225E1BBCD864003E11EF /* InterfaceControllerSurvival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A225D1BBCD864003E11EF /* InterfaceControllerSurvival.swift */; };
 		4D6A22601BBCD87F003E11EF /* InterfaceControllerAstonishing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A225F1BBCD87F003E11EF /* InterfaceControllerAstonishing.swift */; };
+		4D6A22691BC0ADA0003E11EF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A22641BC0ADA0003E11EF /* Default-568h@2x.png */; };
+		4D6A226A1BC0ADA0003E11EF /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A22651BC0ADA0003E11EF /* Default-667h@2x.png */; };
+		4D6A226B1BC0ADA0003E11EF /* Default-Landscape-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A22661BC0ADA0003E11EF /* Default-Landscape-736h@3x.png */; };
+		4D6A226C1BC0ADA0003E11EF /* Default-Portrait-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A22671BC0ADA0003E11EF /* Default-Portrait-736h@3x.png */; };
+		4D6A226D1BC0ADA0003E11EF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A22681BC0ADA0003E11EF /* Default@2x.png */; };
 		4D7C28071B8F87DF00BBC8DA /* ChartCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */; };
 		4DA9C5B61B445E6C001BDD9D /* MenuTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
@@ -79,7 +84,6 @@
 		EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */; };
 		EB22B0AC1A6BD2E000FED987 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0AB1A6BD2E000FED987 /* ViewController.swift */; };
 		EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB22B0AD1A6BD2E000FED987 /* Main.storyboard */; };
-		EB22B0B11A6BD2E000FED987 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB22B0B01A6BD2E000FED987 /* Images.xcassets */; };
 		EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB22B0B21A6BD2E000FED987 /* LaunchScreen.xib */; };
 		EB22B0C01A6BD2E000FED987 /* CatchTheSpeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0BF1A6BD2E000FED987 /* CatchTheSpeedTests.swift */; };
 		EB22B0CE1A6C1D5500FED987 /* AcceleratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0CD1A6C1D5500FED987 /* AcceleratorView.swift */; };
@@ -189,6 +193,11 @@
 		4D6A225B1BBCD817003E11EF /* InterfaceControllerStressing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerStressing.swift; sourceTree = "<group>"; };
 		4D6A225D1BBCD864003E11EF /* InterfaceControllerSurvival.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerSurvival.swift; sourceTree = "<group>"; };
 		4D6A225F1BBCD87F003E11EF /* InterfaceControllerAstonishing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerAstonishing.swift; sourceTree = "<group>"; };
+		4D6A22641BC0ADA0003E11EF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4D6A22651BC0ADA0003E11EF /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
+		4D6A22661BC0ADA0003E11EF /* Default-Landscape-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape-736h@3x.png"; sourceTree = "<group>"; };
+		4D6A22671BC0ADA0003E11EF /* Default-Portrait-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait-736h@3x.png"; sourceTree = "<group>"; };
+		4D6A22681BC0ADA0003E11EF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCustomCell.swift; sourceTree = "<group>"; };
 		4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTable.swift; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
@@ -198,7 +207,6 @@
 		EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB22B0AB1A6BD2E000FED987 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EB22B0AE1A6BD2E000FED987 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		EB22B0B01A6BD2E000FED987 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EB22B0B31A6BD2E000FED987 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		EB22B0B91A6BD2E000FED987 /* CatchTheSpeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatchTheSpeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22B0BE1A6BD2E000FED987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -509,7 +517,6 @@
 				4D8456041B13D109007269B8 /* classes */,
 				EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */,
 				EB22B0AD1A6BD2E000FED987 /* Main.storyboard */,
-				EB22B0B01A6BD2E000FED987 /* Images.xcassets */,
 				EB22B0B21A6BD2E000FED987 /* LaunchScreen.xib */,
 				EB22B0A71A6BD2E000FED987 /* Supporting Files */,
 			);
@@ -519,6 +526,11 @@
 		EB22B0A71A6BD2E000FED987 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4D6A22641BC0ADA0003E11EF /* Default-568h@2x.png */,
+				4D6A22651BC0ADA0003E11EF /* Default-667h@2x.png */,
+				4D6A22661BC0ADA0003E11EF /* Default-Landscape-736h@3x.png */,
+				4D6A22671BC0ADA0003E11EF /* Default-Portrait-736h@3x.png */,
+				4D6A22681BC0ADA0003E11EF /* Default@2x.png */,
 				EB22B0A81A6BD2E000FED987 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -694,10 +706,14 @@
 			files = (
 				EB22B0AF1A6BD2E000FED987 /* Main.storyboard in Resources */,
 				4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */,
+				4D6A226D1BC0ADA0003E11EF /* Default@2x.png in Resources */,
+				4D6A226C1BC0ADA0003E11EF /* Default-Portrait-736h@3x.png in Resources */,
+				4D6A226A1BC0ADA0003E11EF /* Default-667h@2x.png in Resources */,
 				EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */,
 				4D57E6DB1B6E2BED00D74A84 /* risorse in Resources */,
-				EB22B0B11A6BD2E000FED987 /* Images.xcassets in Resources */,
+				4D6A226B1BC0ADA0003E11EF /* Default-Landscape-736h@3x.png in Resources */,
 				4D30E8221B355D7B00C0EE33 /* SmokeBrake.sks in Resources */,
+				4D6A22691BC0ADA0003E11EF /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -961,6 +977,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -980,6 +997,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

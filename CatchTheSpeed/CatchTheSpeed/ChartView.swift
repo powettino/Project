@@ -150,7 +150,6 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
         UtilityFunction.UIUtility.showActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
         var query = PFUser.query()
         query?.getObjectInBackgroundWithId(element.id, block: { (result: PFObject?, error: NSError?) -> Void in
-            println("ok query")
             if error == nil{
                 let profilePic = result!["profilePicture"] as? PFFile
                 if let picture = profilePic {
