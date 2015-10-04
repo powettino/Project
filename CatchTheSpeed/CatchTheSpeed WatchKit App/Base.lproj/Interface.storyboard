@@ -23,8 +23,12 @@
             <string>Flame</string>
             <string>Flame</string>
             <string>Flame</string>
+            <string>Flame</string>
+            <string>Flame</string>
         </mutableArray>
         <mutableArray key="budmo-jiggler.ttf">
+            <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
             <string>BudmoJiggler-Regular</string>
             <string>BudmoJiggler-Regular</string>
             <string>BudmoJiggler-Regular</string>
@@ -43,12 +47,38 @@
             <objects>
                 <controller contentMode="right" animationDuration="1" id="AgC-eL-Hgc" customClass="InterfaceControllerGlobal" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
-                        <label alignment="center" textAlignment="center" numberOfLines="2" id="vO3-tG-1w8">
-                            <string key="text">Global
-Chart</string>
+                        <label alignment="center" text="Global" textAlignment="center" numberOfLines="2" id="vO3-tG-1w8">
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>
+                        <group width="1" height="41" alignment="left" animationDuration="1" radius="15" id="PHh-HB-zLV">
+                            <items>
+                                <group width="73" height="1" alignment="left" id="KAf-IS-E1W">
+                                    <items>
+                                        <label width="14" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="XMQ-LU-qOC">
+                                            <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="font" name="Flame" family="Flame" pointSize="19"/>
+                                        </label>
+                                        <group width="67" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="GXv-NF-VLs">
+                                            <items>
+                                                <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="ogu-9E-9Gb">
+                                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                </label>
+                                                <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="fsc-6n-f3U">
+                                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                    </items>
+                                </group>
+                                <label width="40" height="1" alignment="right" verticalAlignment="center" text="Score" textAlignment="center" id="Txd-Ti-ow9">
+                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
+                                </label>
+                            </items>
+                        </group>
                         <table alignment="left" backgroundImage="sfondo5.png" id="RRF-id-bhZ">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="nbH-8x-ksp" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
@@ -97,16 +127,14 @@ Chart</string>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-128" y="334"/>
+            <point key="canvasLocation" x="-128" y="328"/>
         </scene>
         <!--Interface Controller Soft-->
         <scene sceneID="lNH-2O-Ovd">
             <objects>
                 <controller id="Cay-HI-jbp" customClass="InterfaceControllerSoft" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
-                        <label alignment="center" textAlignment="center" numberOfLines="2" id="rKG-Bf-D7V">
-                            <string key="text">Soft
-Chart</string>
+                        <label alignment="center" text="Soft" textAlignment="center" numberOfLines="2" id="rKG-Bf-D7V">
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>
@@ -165,7 +193,7 @@ Chart</string>
             <objects>
                 <controller id="ZuA-aU-Gkv" customClass="InterfaceControllerStressing" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
-                        <label alignment="center" text="Stressing Chart" textAlignment="center" numberOfLines="2" id="XjD-Bm-k2P">
+                        <label alignment="center" text="Stressing" textAlignment="center" numberOfLines="2" id="XjD-Bm-k2P">
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>
@@ -224,7 +252,7 @@ Chart</string>
             <objects>
                 <controller id="6xm-I0-YTZ" customClass="InterfaceControllerSurvival" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
-                        <label alignment="center" text="Survival Chart" textAlignment="center" numberOfLines="2" id="iwv-eR-dMH">
+                        <label alignment="center" text="Survival" textAlignment="center" numberOfLines="2" id="iwv-eR-dMH">
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>
@@ -283,7 +311,7 @@ Chart</string>
             <objects>
                 <controller id="DbU-3s-tDj" customClass="InterfaceControllerAstonishing" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
-                        <label alignment="center" text="Astonishing Chart" textAlignment="center" numberOfLines="2" id="8VG-eg-X8J">
+                        <label alignment="center" text="Astonishing" textAlignment="center" numberOfLines="2" id="8VG-eg-X8J">
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>

@@ -32,6 +32,7 @@
 		4D00ABB41B796CA800DDD8CE /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D00ABAE1B796CA800DDD8CE /* FBSDKShareKit.framework */; };
 		4D0377811B8FD6C300EA1309 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0377801B8FD6C300EA1309 /* ChartView.swift */; };
 		4D0377841B8FE59B00EA1309 /* ChartElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0377831B8FE59B00EA1309 /* ChartElement.swift */; };
+		4D2F61CE1BC0BCB800C7790D /* InterfacePersonalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2F61CD1BC0BCB800C7790D /* InterfacePersonalDetail.swift */; };
 		4D30E8141B34F5CD00C0EE33 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E8081B34F5CD00C0EE33 /* CGFloat+Extensions.swift */; };
 		4D30E8151B34F5CD00C0EE33 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E8091B34F5CD00C0EE33 /* CGPoint+Extensions.swift */; };
 		4D30E8161B34F5CD00C0EE33 /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30E80A1B34F5CD00C0EE33 /* CGVector+Extensions.swift */; };
@@ -154,6 +155,7 @@
 		4D00ABB61B796DF300DDD8CE /* CatchTheSpeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CatchTheSpeed-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D0377801B8FD6C300EA1309 /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		4D0377831B8FE59B00EA1309 /* ChartElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartElement.swift; sourceTree = "<group>"; };
+		4D2F61CD1BC0BCB800C7790D /* InterfacePersonalDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfacePersonalDetail.swift; sourceTree = "<group>"; };
 		4D30E8081B34F5CD00C0EE33 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		4D30E8091B34F5CD00C0EE33 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		4D30E80A1B34F5CD00C0EE33 /* CGVector+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				4D6A225B1BBCD817003E11EF /* InterfaceControllerStressing.swift */,
 				4D6A225D1BBCD864003E11EF /* InterfaceControllerSurvival.swift */,
 				4D6A225F1BBCD87F003E11EF /* InterfaceControllerAstonishing.swift */,
+				4D2F61CD1BC0BCB800C7790D /* InterfacePersonalDetail.swift */,
 				4D405CBF1BBB6D77007F802B /* ChartRowController.swift */,
 			);
 			name = controller;
@@ -731,6 +734,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2F61CE1BC0BCB800C7790D /* InterfacePersonalDetail.swift in Sources */,
 				4D6A225C1BBCD817003E11EF /* InterfaceControllerStressing.swift in Sources */,
 				4D6A22601BBCD87F003E11EF /* InterfaceControllerAstonishing.swift in Sources */,
 				4D405CA41BBB648B007F802B /* NotificationController.swift in Sources */,

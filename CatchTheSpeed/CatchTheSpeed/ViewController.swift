@@ -74,6 +74,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var startEngineAudio = AVAudioPlayer()
     var pointSetAudio = AVAudioPlayer()
     var failSetAudio = AVAudioPlayer()
+    var soundTrackAudio = AVAudioPlayer()
     
     var audioStatus : Bool {
         get{
@@ -212,7 +213,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                                     println(errorSave)
                                 }
                             })
-//                            println("recuperata la foto")
+                            //                            println("recuperata la foto")
                         }
                         else {
                             println("Error: \(error.localizedDescription)")
@@ -249,7 +250,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func changedTimer() {
-//        NSLog("cambiato timer");
+        //        NSLog("cambiato timer");
         switch (self.modGame){
         case ModeGame.soft:
             self.modGame=ModeGame.stressing
@@ -265,7 +266,15 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func changedSounds() {
+        if(self.soundTrackAudio.playing){
+            self.soundTrackAudio.stop()
+            self.soundTrackAudio.currentTime = 0
+        }else{
+            self.soundTrackAudio.prepareToPlay()
+            self.soundTrackAudio.play()
+        }
         self.audioStatus = !self.audioStatus
+        
     }
     
     func changedEffects() {
@@ -369,11 +378,12 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
                 }else if let punteggi = punteggi as? [PFObject]{
-                    println("trovati \(punteggi.count) record per questo user")
+                    //                    println("trovati \(punteggi.count) record per questo user")
                     for punteggio in punteggi{
                         if let gameType = punteggio.objectForKey("game_type") as? Int{
                             self.recordArray[gameType] = punteggio.objectForKey("score") as? Int
-                            println("il punteggio per gioco \(gameType) impostato e' \(self.recordArray[gameType])")                                                    }
+                            //                            println("il punteggio per gioco \(gameType) impostato e' \(self.recordArray[gameType])")
+                        }
                     }
                     self.currentRecord.text = String(self.recordArray[self.modGame.rawValue]!)
                 }
@@ -387,6 +397,10 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
             self.retrieveFBInformation()
         }
         UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 3)
+        if(self.audioStatus){
+            self.soundTrackAudio.prepareToPlay()
+            self.soundTrackAudio.play()
+        }
     }
     
     override func viewDidLoad() {
@@ -476,10 +490,15 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.pointSetAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/check", type: "mp3")
         
         self.failSetAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/wrong", type: "mp3")
+        
+        self.soundTrackAudio = UtilityFunction.Audio.setupAudioPlayerWithFile("risorse/audio/soundtrack", type: "mp3")
+        self.soundTrackAudio.numberOfLoops = -1
+        self.soundTrackAudio.volume = 0.7
+        
     }
     
     func audioPlayerDidFinishPlaying(AVAudioPlayer!, successfully: Bool) {
-        //        println("finito");
+        println("chiamo handler audio");
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
@@ -645,7 +664,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func endGame(){
-        NSLog("record: \(self.recordArray[self.modGame.rawValue]) - current: \(self.currentPoint)")
+        //        NSLog("record: \(self.recordArray[self.modGame.rawValue]) - current: \(self.currentPoint)")
         if(self.effectsStatus){
             if(self.failSetAudio.playing){
                 self.failSetAudio.stop()
