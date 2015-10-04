@@ -74,17 +74,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     var startEngineAudio = AVAudioPlayer()
     var pointSetAudio = AVAudioPlayer()
     var failSetAudio = AVAudioPlayer()
-    
-    //    var recordPoint : Int {
-    //        get{
-    //            let ud = NSUserDefaults.standardUserDefaults().integerForKey("recordCatch")
-    //            return ud
-    //        }
-    //        set(value){
-    //            NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "recordCatch")
-    //        }
-    //    }
-    
+            
     var audioStatus : Bool {
         get{
             let ud = NSUserDefaults.standardUserDefaults().boolForKey("audioStatus")
@@ -435,8 +425,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.slidingMenu.layer.shadowRadius=5.0
         
         self.container.layer.cornerRadius=30
-        
-        //        self.record.text = String(self.recordPoint)
         
         self.menu = self.container.subviews[0] as! MenuTable
         self.menu.layer.cornerRadius=30

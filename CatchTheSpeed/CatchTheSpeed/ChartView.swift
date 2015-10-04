@@ -60,8 +60,7 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
                 .includeKey("user")
                 .findObjectsInBackgroundWithBlock({ (gameScore : [AnyObject]?, error: NSError?) -> Void in
                     if error != nil {
-                        UtilityFunction.UIUtility.removeAllSubviews(self.personalChartElement.picture)
-                        
+                        println(error?.localizedDescription)
                     }else if let infos = gameScore as? [PFObject]{
                         UtilityFunction.UIUtility.hideActivityIndicator(self.personalChartElement, tag: 30)
                         var infoQuery = infos[0]
@@ -69,17 +68,20 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
                         let mod = ViewController.ModeGame(rawValue: infoQuery["game_type"] as! Int)
                         
                         var user = infoQuery["user"] as! PFUser
-                        UtilityFunction.UIUtility.showActivityIndicator(self.personalChartElement.picture, tag: 2000)
+                        
+                        UtilityFunction.UIUtility.showActivityIndicator(self.personalChartElement, tag: 2000)
                         
                         let profilePic = user["profilePicture"] as? PFFile
                         if let picture = profilePic {
                             picture.getDataInBackgroundWithBlock { (imageData:NSData?, error: NSError?) -> Void in
-                                if error == nil {                                    UtilityFunction.UIUtility.hideActivityIndicator(self.personalChartElement.picture, tag: 2000)
+                                UtilityFunction.UIUtility.hideActivityIndicator(self.personalChartElement.picture, tag: 2000)
+                                if error == nil {
                                     self.personalChartElement.picture.clipsToBounds = true
                                     self.personalChartElement.picture.layer.cornerRadius = 10
                                     self.personalChartElement.picture.image = UIImage(data: imageData!)
                                 }else{
                                     println("Cannot load image from web personale")
+                                    self.personalChartElement.picture.image = UIImage(named: "risorse/general/face.jpeg")
                                 }
                             }
                         }
@@ -88,13 +90,11 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
                         self.personalChartElement.level.text = "Level: \(level)"
                         self.personalChartElement.player.text = user["name"] as? String
                         self.personalChartElement.mod.text = mod?.toString()
-                        println("boh")
-                        //                        self.personalChartElement.chartPosition.text = "\(String(element.chartPosition))˚"
                     }
                 })
         }else{
             self.personalChartElement.hidden=true
- self.chartTable.frame.size.height = self.view.frame.size.height - self.chartTable.frame.origin.y - 5
+            self.chartTable.frame.size.height = self.view.frame.size.height - self.chartTable.frame.origin.y - 5
         }
         
         var query = PFQuery(className:"Points")
@@ -139,9 +139,6 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
             reusableCell = ChartCustomCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "chartCell")
         }
         
-//        setupCell(reusableCell!)
-//        UtilityFunction.UIUtility.removeAllSubviews(reusableCell!.picture)
-//        reusableCell?.picture.image = nil
         resetCell(reusableCell!)
         var element : ChartElement = self.chartElementArray[indexPath.row]
         reusableCell!.score.text = String(element.score)
@@ -153,22 +150,29 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
         UtilityFunction.UIUtility.showActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
         var query = PFUser.query()
         query?.getObjectInBackgroundWithId(element.id, block: { (result: PFObject?, error: NSError?) -> Void in
+            println("ok query")
             if error == nil{
                 let profilePic = result!["profilePicture"] as? PFFile
                 if let picture = profilePic {
                     picture.getDataInBackgroundWithBlock { (imageData:NSData?, error: NSError?) -> Void in
+                        UtilityFunction.UIUtility.hideActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
+                        
                         if error == nil {
-                            UtilityFunction.UIUtility.hideActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
                             reusableCell!.picture.clipsToBounds = true
                             reusableCell!.picture.layer.cornerRadius = 10
                             reusableCell!.picture.image = UIImage(data: imageData!)
                         }else{
                             println("Cannot load image from web")
+                            reusableCell!.picture.image = UIImage(named: "risorse/general/face.jpeg")
                         }
                     }
+                }else{
+                    UtilityFunction.UIUtility.hideActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
+                    reusableCell!.picture.image = UIImage(named: "risorse/general/face.jpeg")
                 }
             }else{
-                println("Cannot load image from web")
+                UtilityFunction.UIUtility.hideActivityIndicator(reusableCell!.picture, tag: element.chartPosition+1000)
+                reusableCell!.picture.image = UIImage(named: "risorse/general/face.jpeg")
             }
         })
         return reusableCell!;
