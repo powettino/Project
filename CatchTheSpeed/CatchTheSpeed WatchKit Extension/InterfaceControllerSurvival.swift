@@ -26,12 +26,12 @@ class InterfaceControllerSurvival: WKInterfaceController {
         //                NSLog("\(fontname)")
         //            }
         //        }
-        //                self.getChart()
+        self.getChart()
     }
     
     internal func getChart(){
         
-        var params = ["game_type":ModeGame.survival.rawValue]
+        var params = ["game_type":InterfaceControllerGlobal.ModeGame.survival.rawValue]
         var error : NSError?
         var whereClause = (NSString(data: NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &error)!, encoding: NSUTF8StringEncoding))?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         //
@@ -55,7 +55,6 @@ class InterfaceControllerSurvival: WKInterfaceController {
             
             var resultSet : NSArray = jsonResult["results"] as! NSArray
             self.infoChart = resultSet
-            println("trovati \(resultSet.count)")
             //            self.chart.setNumberOfRows(resultSet.count, withRowType: "ChartRowController")
             //
             //            for (index, singleRes) in enumerate(resultSet){
@@ -67,28 +66,28 @@ class InterfaceControllerSurvival: WKInterfaceController {
             //            }
         })
     }
-    
-    internal enum ModeGame : Int {
-        case soft = 100
-        case stressing = 50
-        case survival = 200
-        case astonishing = 500
-        func toString() -> String{
-            switch(self){
-            case soft:
-                return "Soft"
-            case stressing:
-                return "Stressing"
-            case survival:
-                return "Survival"
-            case astonishing:
-                return "Astonishing"
-            default:
-                break
-            }
-        }
-    }
-    
+    //
+    //    internal enum ModeGame : Int {
+    //        case soft = 100
+    //        case stressing = 50
+    //        case survival = 200
+    //        case astonishing = 500
+    //        func toString() -> String{
+    //            switch(self){
+    //            case soft:
+    //                return "Soft"
+    //            case stressing:
+    //                return "Stressing"
+    //            case survival:
+    //                return "Survival"
+    //            case astonishing:
+    //                return "Astonishing"
+    //            default:
+    //                break
+    //            }
+    //        }
+    //    }
+    //
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
@@ -98,7 +97,7 @@ class InterfaceControllerSurvival: WKInterfaceController {
             if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
                 var chartInfo : NSDictionary = singleRes as! NSDictionary
                 var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
-                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: InterfaceControllerGlobal.ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
             }
         }
         super.willActivate()

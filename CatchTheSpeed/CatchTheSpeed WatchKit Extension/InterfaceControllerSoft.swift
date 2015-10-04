@@ -32,7 +32,7 @@ class InterfaceControllerSoft: WKInterfaceController {
     
     internal func getChart(){
         
-        var params = ["game_type":ModeGame.soft.rawValue]
+        var params = ["game_type":InterfaceControllerGlobal.ModeGame.soft.rawValue]
         var error : NSError?
         var whereClause = (NSString(data: NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &error)!, encoding: NSUTF8StringEncoding))?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         //
@@ -68,26 +68,26 @@ class InterfaceControllerSoft: WKInterfaceController {
         })
     }
     
-    internal enum ModeGame : Int {
-        case soft = 100
-        case stressing = 50
-        case survival = 200
-        case astonishing = 500
-        func toString() -> String{
-            switch(self){
-            case soft:
-                return "Soft"
-            case stressing:
-                return "Stressing"
-            case survival:
-                return "Survival"
-            case astonishing:
-                return "Astonishing"
-            default:
-                break
-            }
-        }
-    }
+//    internal enum ModeGame : Int {
+//        case soft = 100
+//        case stressing = 50
+//        case survival = 200
+//        case astonishing = 500
+//        func toString() -> String{
+//            switch(self){
+//            case soft:
+//                return "Soft"
+//            case stressing:
+//                return "Stressing"
+//            case survival:
+//                return "Survival"
+//            case astonishing:
+//                return "Astonishing"
+//            default:
+//                break
+//            }
+//        }
+//    }
     
     
     override func willActivate() {
@@ -99,7 +99,7 @@ class InterfaceControllerSoft: WKInterfaceController {
             if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
                 var chartInfo : NSDictionary = singleRes as! NSDictionary
                 var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
-                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: InterfaceControllerGlobal.ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
             }
         }
         super.willActivate()

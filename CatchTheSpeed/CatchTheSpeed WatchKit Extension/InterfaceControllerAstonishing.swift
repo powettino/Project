@@ -26,12 +26,12 @@ class InterfaceControllerAstonishing: WKInterfaceController {
         //                NSLog("\(fontname)")
         //            }
         //        }
-        //                self.getChart()
+        self.getChart()
     }
     
     internal func getChart(){
         
-        var params = ["game_type":ModeGame.astonishing.rawValue]
+        var params = ["game_type":InterfaceControllerGlobal.ModeGame.astonishing.rawValue]
         var error : NSError?
         var whereClause = (NSString(data: NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &error)!, encoding: NSUTF8StringEncoding))?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         //
@@ -50,43 +50,43 @@ class InterfaceControllerAstonishing: WKInterfaceController {
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(urlReq, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError!) -> Void in
             var err: NSError
-//            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
+            //            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
             var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
             
             var resultSet : NSArray = jsonResult["results"] as! NSArray
             self.infoChart = resultSet
-//            self.chart.setNumberOfRows(resultSet.count, withRowType: "ChartRowController")
-//            
-//            for (index, singleRes) in enumerate(resultSet){
-//                if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
-//                    var chartInfo : NSDictionary = singleRes as! NSDictionary
-//                    var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
-//                    row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
-//                }
-//            }
+            //            self.chart.setNumberOfRows(resultSet.count, withRowType: "ChartRowController")
+            //
+            //            for (index, singleRes) in enumerate(resultSet){
+            //                if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
+            //                    var chartInfo : NSDictionary = singleRes as! NSDictionary
+            //                    var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
+            //                    row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+            //                }
+            //            }
         })
     }
     
-    internal enum ModeGame : Int {
-        case soft = 100
-        case stressing = 50
-        case survival = 200
-        case astonishing = 500
-        func toString() -> String{
-            switch(self){
-            case soft:
-                return "Soft"
-            case stressing:
-                return "Stressing"
-            case survival:
-                return "Survival"
-            case astonishing:
-                return "Astonishing"
-            default:
-                break
-            }
-        }
-    }
+    //    internal enum ModeGame : Int {
+    //        case soft = 100
+    //        case stressing = 50
+    //        case survival = 200
+    //        case astonishing = 500
+    //        func toString() -> String{
+    //            switch(self){
+    //            case soft:
+    //                return "Soft"
+    //            case stressing:
+    //                return "Stressing"
+    //            case survival:
+    //                return "Survival"
+    //            case astonishing:
+    //                return "Astonishing"
+    //            default:
+    //                break
+    //            }
+    //        }
+    //    }
     
     
     override func willActivate() {
@@ -97,10 +97,10 @@ class InterfaceControllerAstonishing: WKInterfaceController {
             if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
                 var chartInfo : NSDictionary = singleRes as! NSDictionary
                 var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
-                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: InterfaceControllerGlobal.ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
             }
         }
-
+        
         super.willActivate()
     }
     
