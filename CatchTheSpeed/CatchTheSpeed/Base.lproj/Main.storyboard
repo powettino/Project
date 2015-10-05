@@ -29,6 +29,9 @@
             <string>BudmoJiggler-Regular</string>
             <string>BudmoJiggler-Regular</string>
         </mutableArray>
+        <mutableArray key="budmo-jigglish.ttf">
+            <string>BudmoJigglish-Regular</string>
+        </mutableArray>
     </customFonts>
     <scenes>
         <!--Navigation Controller-->
@@ -404,7 +407,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5Tr-fu-U7b">
                         <barButtonItem key="backBarButtonItem" title="Back" id="enE-Gg-J6l"/>
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="EzE-tu-iXC">
+                        <barButtonItem key="leftBarButtonItem" id="EzE-tu-iXC">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KnK-1g-we8">
                                 <rect key="frame" x="-23" y="-15" width="71" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -419,7 +422,7 @@
                                 <action selector="openMenu:" destination="vXZ-lx-hvc" id="oNp-AT-CDm"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Chart" style="plain" id="g5N-vQ-L5s">
+                        <barButtonItem key="rightBarButtonItem" title="Chart" id="g5N-vQ-L5s">
                             <connections>
                                 <segue destination="8A5-Oc-GUd" kind="push" id="Ek0-Rg-9PW"/>
                             </connections>
@@ -488,7 +491,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L7q-YE-FpW">
-                                                    <rect key="frame" x="124.00000023716373" y="3" width="190" height="25"/>
+                                                    <rect key="frame" x="124" y="3" width="190" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="24"/>
                                                     <color key="textColor" red="0.91764705882352937" green="0.98431372549019602" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -497,7 +500,7 @@
                                                     <size key="shadowOffset" width="-2" height="2"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oyy-n7-XWG">
-                                                    <rect key="frame" x="123.99999768000377" y="50" width="104" height="21"/>
+                                                    <rect key="frame" x="124.00000043476794" y="50" width="104" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
                                                     <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -524,7 +527,7 @@
                                                     <size key="shadowOffset" width="-2" height="2"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mod" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Flh-dp-8ig">
-                                                    <rect key="frame" x="123.99999768000377" y="28" width="104" height="21"/>
+                                                    <rect key="frame" x="124.00000043476794" y="28" width="104" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
                                                     <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -559,6 +562,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="310" height="74.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no score found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RxG-p3-9bX" userLabel="noResult">
+                                            <rect key="frame" x="0.0" y="0.0" width="310" height="74"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="BudmoJigglish-Regular" family="Budmo" pointSize="24"/>
+                                            <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="I2i-7Z-Mux">
                                             <rect key="frame" x="47" y="7" width="60" height="60.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -627,6 +637,7 @@
                     <navigationItem key="navigationItem" id="o16-ol-cZT"/>
                     <connections>
                         <outlet property="chartTable" destination="vSX-Hs-gg1" id="baq-Tk-Vft"/>
+                        <outlet property="noResult" destination="RxG-p3-9bX" id="hcV-I1-EwG"/>
                         <outlet property="personalChartElement" destination="2fi-HB-frX" id="hYL-fA-nXW"/>
                     </connections>
                 </viewController>

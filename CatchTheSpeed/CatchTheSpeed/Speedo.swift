@@ -87,8 +87,6 @@ class Speedo : SKScene{
         self.grid.physicsBody = nil;
         self.addChild(self.grid)
         
-        //        ((self.size.height - self.offset.h)/2) - 17
-        
         self.needle = Needle(spriteName: "risorse/speedo/needle.png", w: ((self.size.width - self.offset.w)/2 - 30)/3, maxH: ((self.size.width - self.offset.w)/2 - 30), posX: self.centerX, posY: self.centerY, posZ: CGFloat(1), name: self.needleNodeName, startingAngle: maxDegreeNeedleAngle, minAngle:minDegreeNeedleAngle, maxAngle: maxDegreeNeedleAngle, anchorPoint: CGPoint(x: 0.5,y: 0.15));
         
         self.collisionSection = CollisionSection(startingLevel: self.currentLevel, minDegree: self.minDegreeNeedleAngle, maxDegree: self.maxDegreeNeedleAngle, minDimension: minSectionDimension, centerX: self.centerX, centerY: self.centerY, rad: ((self.size.width - self.offset.w)/2 - 17), collisionSectionName: self.collisionSectionShapeName);
@@ -103,7 +101,6 @@ class Speedo : SKScene{
             self.addChild(yellowNode);
         }
         
-        //        self.vetro = SKSpriteNode(imageNamed: "glass.png");
         self.vetro = SKSpriteNode(imageNamed: "risorse/speedo/vetro3.png");
         self.vetro.name = self.vetroNodeName;
         self.vetro.position = CGPoint(x: self.centerX, y: self.centerY)
@@ -265,7 +262,7 @@ class Speedo : SKScene{
         }
         self.needle.startRotation();
         self.running=true;
-        NSLog("velocita: \(self.needle.speed.rawValue)");
+//        NSLog("velocita: \(self.needle.speed.rawValue)");
     }
     
     func stopSpeedo(){
@@ -300,11 +297,6 @@ class Speedo : SKScene{
         if let tempLevel = level{
             self.setLevel(tempLevel);
         }
-        //        for (obj) in self.children{
-        //            if(self.yellowSectionShapeName == obj.name){
-        //                obj.removeFromParent();
-        //            }
-        //        }
         self.enumerateChildNodesWithName(self.collisionSectionShapeName) {
             node, stop in
             node.removeFromParent();

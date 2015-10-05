@@ -49,7 +49,12 @@ struct CollisionSection {
         var punto = UtilityFunction.Math.findXY(referenceAngles.radius-offset, centerX: centerPoint.x, centerY: centerPoint.y, angle: referenceAngles.angles.max);
         var corda = (2  * (referenceAngles.radius-offset)) * (sin(referenceAngles.angles.dim/2));
         
-        colliderNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: corda, height: 10));
+        /*
+        TODO: Per evidenziare la zone di collisione commentare la riga sotto e decommentare quella con
+        il colore nero del blocco
+        */
+        colliderNode = SKSpriteNode(color: UIColor.clearColor(), size: CGSize(width: corda, height: 10));
+        //colliderNode = SKSpriteNode(color: UIColor.blackColor(), size: CGSize(width: corda, height: 10));
         colliderNode!.name = collisionName+"Collider";
         colliderNode!.position = CGPoint(x: punto.x, y: punto.y);
         colliderNode!.anchorPoint = CGPoint(x: 0, y: 1);

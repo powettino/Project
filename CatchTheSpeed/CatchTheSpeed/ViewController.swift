@@ -223,7 +223,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                             
                             user.saveInBackgroundWithBlock({(success: Bool, errorSave: NSError?) -> Void in
                                 if success {
-                                    println("Nuova immagine recuperata da FB salvata \(success)")
+                                    println("Immagine recuperata da FB salvata")
                                 }else{
                                     println(errorSave)
                                 }
@@ -373,7 +373,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         self.userMinimalInformation = ""
         if let user = PFUser.currentUser(){
             if(PFFacebookUtils.isLinkedWithUser(user)){
-                NSLog("FAcebook logged")
+                NSLog("Facebook logged")
                 result = true;
             }
             NSLog("Parse logged")
@@ -409,7 +409,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     override func viewDidAppear(animated: Bool) {
         UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 3)
         if(checkUserStatus()){
-            println("User linked from start")
+            println("User is linked as view appear")
             self.retrieveFBInformation()
         }
         UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 3)
@@ -514,7 +514,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func audioPlayerDidFinishPlaying(AVAudioPlayer!, successfully: Bool) {
-        println("chiamo handler audio");
+//        println("chiamo handler audio");
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
@@ -931,7 +931,6 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 }, completion: { finished in
                     self.labelCount.alpha=1;
                     self.copyLabelCount.alpha=1;
-                    println("dimensioni originali: \(self.labelCount.frame.origin.x) - \(self.labelCount.frame.size.width)")
                     var duration : NSTimeInterval = 0.8;
                     
                     UtilityFunction.Animation.animateHorizontalElementOnMiddleBreak(self.view, toAnimate: self.labelCount, middlePosition: self.labelCount.frame, completeDuration: duration, complex: "right", finalComplention: nil);

@@ -13,6 +13,7 @@ import Foundation
 class InterfaceControllerGlobal: WKInterfaceController {
     
     
+    @IBOutlet weak var noUser: WKInterfaceLabel!
     @IBOutlet weak var titleChart: WKInterfaceLabel!
     @IBOutlet weak var chart: WKInterfaceTable!
     
@@ -20,33 +21,26 @@ class InterfaceControllerGlobal: WKInterfaceController {
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        //
-        //        for family in UIFont.familyNames(){
-        //            for fontname in UIFont.fontNamesForFamilyName(family as! String){
-        //                NSLog("\(fontname)")
-        //            }
-        //        }
-        
         getChart()
     }
     
     internal func getChart(){
         
-//        var urlReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user")!)
-//        
-//        urlReq.HTTPMethod = "GET"
-//        urlReq.setValue("7Zn8mV9WPMzBprhPiZDcqOVxlGc6UYNpmTN4qQLs", forHTTPHeaderField: "X-Parse-Application-Id")
-//        urlReq.setValue("Rv9xdCM7GzTvTz13VeCzE8UEB0UPpmWMC29lAg0k", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        
         var urlReq = Utility.prepareRestRequest("https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user")
         
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(urlReq, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError!) -> Void in
-            var err: NSError
-            //            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
-            self.infoArray = jsonResult["results"] as! NSArray
-            
+            //            var err: NSError
+            if (error == nil){
+                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+                self.infoArray = jsonResult["results"] as! NSArray
+                self.noUser.setHidden(true)
+                self.chart.setHidden(false)
+            }else{
+                self.noUser.setHidden(false)
+                self.chart.setHidden(true)
+                println("\(error.localizedDescription)")
+            }
         })
     }
     

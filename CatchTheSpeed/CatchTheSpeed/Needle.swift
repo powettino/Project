@@ -22,9 +22,9 @@ struct Needle{
     
     var speed : NeedleSpeed!
     var movementAngles : (min: CGFloat, max: CGFloat)
-//    var collisionCategory : UInt32 = PhysicsCategory.NeedleP;
-//    var contactCollisionCategory  : UInt32 = PhysicsCategory.CollisionBlockP
-//    var collisionBitMask : UInt32 = PhysicsCategory.Empty
+    //    var collisionCategory : UInt32 = PhysicsCategory.NeedleP;
+    //    var contactCollisionCategory  : UInt32 = PhysicsCategory.CollisionBlockP
+    //    var collisionBitMask : UInt32 = PhysicsCategory.Empty
     var spriteNode : SKSpriteNode?
     var colliderNode : SKSpriteNode?
     var rotationLabel : String = "rotationAction"
@@ -46,7 +46,11 @@ struct Needle{
         var colliderWidth : CGFloat = 10;
         var colliderHeight : CGFloat = 10;
         
-        colliderNode = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
+        /*TODO: Per evidenziare il nodo di collisione commentare la riga sotto e decommentare la riga con
+        il colore rosso nel nodo di collisione
+        */
+        colliderNode = SKSpriteNode(color: UIColor.clearColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
+        //colliderNode = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: colliderWidth, height: colliderHeight))
         colliderNode!.name = name+"Collider";
         var punto = UtilityFunction.Math.findXY(maxH , centerX: posX, centerY: posY, angle: UtilityFunction.Math.degreesToRadiant(90));
         colliderNode!.position = CGPoint(x: punto.x-spriteNode!.position.x, y: punto.y - spriteNode!.position.y)

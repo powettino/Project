@@ -13,6 +13,7 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     var chartElementArray : [ChartElement] = [ChartElement]()
     
+    @IBOutlet weak var noResult: UILabel!
     @IBOutlet weak var chartTable: UITableView!
     
     @IBOutlet weak var personalChartElement: ChartCustomCell!
@@ -51,6 +52,8 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
         self.personalChartElement.layer.shadowRadius = 10
         self.personalChartElement.layer.shadowOpacity = 1
         
+        self.noResult.hidden=true
+        
         resetCell(self.personalChartElement)
         
         if( ViewController.userLogged){
@@ -63,33 +66,38 @@ class ChartView : UIViewController, UITableViewDelegate, UITableViewDataSource
                         println(error?.localizedDescription)
                     }else if let infos = gameScore as? [PFObject]{
                         UtilityFunction.UIUtility.hideActivityIndicator(self.personalChartElement, tag: 30)
-                        var infoQuery = infos[0]
-                        let level = infoQuery["level"] as! String
-                        let mod = ViewController.ModeGame(rawValue: infoQuery["game_type"] as! Int)
-                        
-                        var user = infoQuery["user"] as! PFUser
-                        
-                        UtilityFunction.UIUtility.showActivityIndicator(self.personalChartElement, tag: 2000)
-                        
-                        let profilePic = user["profilePicture"] as? PFFile
-                        if let picture = profilePic {
-                            picture.getDataInBackgroundWithBlock { (imageData:NSData?, error: NSError?) -> Void in
-                                UtilityFunction.UIUtility.hideActivityIndicator(self.personalChartElement.picture, tag: 2000)
-                                if error == nil {
-                                    self.personalChartElement.picture.clipsToBounds = true
-                                    self.personalChartElement.picture.layer.cornerRadius = 10
-                                    self.personalChartElement.picture.image = UIImage(data: imageData!)
-                                }else{
-                                    println("Cannot load image from web personale")
-                                    self.personalChartElement.picture.image = UIImage(named: "risorse/general/face.jpeg")
+                        if(infos.count==0){
+                            self.noResult.hidden=false
+                        }else{
+                            self.noResult.hidden=true
+                            var infoQuery = infos[0]
+                            let level = infoQuery["level"] as! String
+                            let mod = ViewController.ModeGame(rawValue: infoQuery["game_type"] as! Int)
+                            
+                            var user = infoQuery["user"] as! PFUser
+                            
+                            UtilityFunction.UIUtility.showActivityIndicator(self.personalChartElement, tag: 2000)
+                            
+                            let profilePic = user["profilePicture"] as? PFFile
+                            if let picture = profilePic {
+                                picture.getDataInBackgroundWithBlock { (imageData:NSData?, error: NSError?) -> Void in
+                                    UtilityFunction.UIUtility.hideActivityIndicator(self.personalChartElement.picture, tag: 2000)
+                                    if error == nil {
+                                        self.personalChartElement.picture.clipsToBounds = true
+                                        self.personalChartElement.picture.layer.cornerRadius = 10
+                                        self.personalChartElement.picture.image = UIImage(data: imageData!)
+                                    }else{
+                                        println("Cannot load image from web personale")
+                                        self.personalChartElement.picture.image = UIImage(named: "risorse/general/face.jpeg")
+                                    }
                                 }
                             }
+                            
+                            self.personalChartElement.score.text = String(infoQuery["score"] as! Int)
+                            self.personalChartElement.level.text = "Level: \(level)"
+                            self.personalChartElement.player.text = user["name"] as? String
+                            self.personalChartElement.mod.text = mod?.toString()
                         }
-                        
-                        self.personalChartElement.score.text = String(infoQuery["score"] as! Int)
-                        self.personalChartElement.level.text = "Level: \(level)"
-                        self.personalChartElement.player.text = user["name"] as? String
-                        self.personalChartElement.mod.text = mod?.toString()
                     }
                 })
         }else{

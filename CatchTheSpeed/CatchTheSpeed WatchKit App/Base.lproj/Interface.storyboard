@@ -55,7 +55,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="RRF-id-bhZ">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="nbH-8x-ksp" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="24" alignment="left" animationDuration="1" radius="15" id="pav-Yb-gPK">
+                                    <group key="rootItem" width="1" height="26" alignment="left" animationDuration="1" radius="15" id="pav-Yb-gPK">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="BF4-8k-3Df">
                                                 <items>
@@ -94,9 +94,11 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <label width="1" alignment="center" verticalAlignment="center" text="No connection available" textAlignment="center" numberOfLines="2" id="G6k-3z-oGf"/>
                     </items>
                     <connections>
                         <outlet property="chart" destination="RRF-id-bhZ" id="kh1-bL-5Yg"/>
+                        <outlet property="noUser" destination="G6k-3z-oGf" id="GfY-j7-unD"/>
                         <outlet property="titleChart" destination="vO3-tG-1w8" id="Zul-Un-7kF"/>
                         <segue destination="Cay-HI-jbp" kind="relationship" relationship="nextPage" id="lsw-L3-uQq"/>
                     </connections>
@@ -152,7 +154,7 @@
                                 </tableRow>
                             </items>
                         </table>
-                        <label width="1" alignment="center" verticalAlignment="center" text="No user logged" textAlignment="center" id="FKe-rQ-Opj"/>
+                        <label width="1" alignment="center" verticalAlignment="center" text="No user logged" textAlignment="center" numberOfLines="2" id="FKe-rQ-Opj"/>
                     </items>
                     <connections>
                         <outlet property="group1" destination="SG2-1M-27W" id="Udv-et-sru"/>
@@ -178,7 +180,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="vD8-Kc-Csd">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="bl3-Id-vQy" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="24" alignment="left" animationDuration="1" radius="15" id="Lr2-0O-ejl">
+                                    <group key="rootItem" width="1" height="26" alignment="left" animationDuration="1" radius="15" id="Lr2-0O-ejl">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="7ne-5v-eBF">
                                                 <items>
@@ -215,9 +217,11 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <label width="1" alignment="center" verticalAlignment="center" text="No connection available" textAlignment="center" numberOfLines="2" id="uth-6J-Hsu"/>
                     </items>
                     <connections>
                         <outlet property="chart" destination="vD8-Kc-Csd" id="ucq-D9-2eZ"/>
+                        <outlet property="noUser" destination="uth-6J-Hsu" id="fwa-9G-sfz"/>
                         <outlet property="titleChart" destination="rKG-Bf-D7V" id="8k1-Lm-Zmy"/>
                         <segue destination="ZuA-aU-Gkv" kind="relationship" relationship="nextPage" id="s6S-cd-hEA"/>
                     </connections>
@@ -237,7 +241,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="s7b-t6-kjB">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="NRA-6A-IRC" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="24" alignment="left" animationDuration="1" radius="15" id="Wbd-q0-f5s">
+                                    <group key="rootItem" width="1" height="26" alignment="left" animationDuration="1" radius="15" id="Wbd-q0-f5s">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="sWG-Bt-GX4">
                                                 <items>
@@ -274,9 +278,11 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <label width="1" alignment="center" verticalAlignment="center" text="No connection available" textAlignment="center" numberOfLines="2" id="92V-jI-TEu"/>
                     </items>
                     <connections>
                         <outlet property="chart" destination="s7b-t6-kjB" id="QfD-3C-ZWN"/>
+                        <outlet property="noUser" destination="92V-jI-TEu" id="vdw-L3-v1t"/>
                         <outlet property="titleChart" destination="XjD-Bm-k2P" id="hdh-Kw-Bg2"/>
                         <segue destination="6xm-I0-YTZ" kind="relationship" relationship="nextPage" id="vly-o2-FBp"/>
                     </connections>
@@ -296,7 +302,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="vzy-Dc-vKH">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="Ts3-tX-Wbf" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="24" alignment="left" animationDuration="1" radius="15" id="aRs-3B-Lrt">
+                                    <group key="rootItem" width="1" height="26" alignment="left" animationDuration="1" radius="15" id="aRs-3B-Lrt">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="8zr-uj-7yP">
                                                 <items>
@@ -333,9 +339,11 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <label width="1" alignment="center" verticalAlignment="center" text="No connection available" textAlignment="center" numberOfLines="2" id="IcD-ds-Ex5"/>
                     </items>
                     <connections>
                         <outlet property="chart" destination="vzy-Dc-vKH" id="cHp-Qx-Xn9"/>
+                        <outlet property="noUser" destination="IcD-ds-Ex5" id="ela-Ew-yym"/>
                         <outlet property="titleChart" destination="iwv-eR-dMH" id="jNR-KR-ejp"/>
                         <segue destination="DbU-3s-tDj" kind="relationship" relationship="nextPage" id="d14-Zk-YJv"/>
                     </connections>
@@ -355,7 +363,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="aDG-jX-hKr">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="voB-qp-x4B" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="24" alignment="left" animationDuration="1" radius="15" id="ACp-3o-Slk">
+                                    <group key="rootItem" width="1" height="26" alignment="left" animationDuration="1" radius="15" id="ACp-3o-Slk">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="3io-MU-cbV">
                                                 <items>
@@ -392,9 +400,11 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <label width="1" alignment="center" verticalAlignment="center" text="No connection available" textAlignment="center" numberOfLines="2" id="WGg-nI-yea"/>
                     </items>
                     <connections>
                         <outlet property="chart" destination="aDG-jX-hKr" id="dMs-4T-KzB"/>
+                        <outlet property="noUser" destination="WGg-nI-yea" id="xdl-eQ-wnY"/>
                         <outlet property="titleChart" destination="8VG-eg-X8J" id="dlc-Lt-ZfM"/>
                     </connections>
                 </controller>

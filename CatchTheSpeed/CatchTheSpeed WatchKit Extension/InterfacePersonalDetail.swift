@@ -22,15 +22,16 @@ class InterfacePersonalDetail: WKInterfaceController {
     
     override func awakeWithContext(context: AnyObject?) {
         self.noUser.setText("No user logged")
-        self.group1.setCornerRadius(10)        
+        self.group1.setCornerRadius(10)
         WKInterfaceController.openParentApplication(["request": "refreshData"],
             reply: { (replyInfo, error) -> Void in
                 var result = replyInfo["userId"] as? String
-                if let userId = result {
-                    self.getUserChart(userId)
-                    self.switchView(false)
-                }else{
-                    self.switchView(true)
+                self.switchView(true)
+                if let userId : String = result {
+                    if (!userId.isEmpty){
+                        self.switchView(false)
+                        self.getUserChart(userId)
+                    }
                 }
         })
     }
@@ -43,28 +44,32 @@ class InterfacePersonalDetail: WKInterfaceController {
     
     internal func getUserChart(userId : String){
         
+        println("userid: \(userId)")
         var urlReq = Utility.prepareRestRequest("https://api.parse.com/1/users/\(userId)")
         
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(urlReq, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError!) -> Void in
-            var err: NSError
-            
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
-            self.name.setText((jsonResult["name"] as! String))
-            var infoPicture = jsonResult["profilePicture"] as? NSDictionary
-            if let info = infoPicture{
-                var picReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: (info["url"] as! String))!)
-                let queuePic:NSOperationQueue = NSOperationQueue()
-                NSURLConnection.sendAsynchronousRequest(picReq, queue: queuePic, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-                    if data != nil {
-                        let image = UIImage(data: data)
-                        self.personalImage.setImage(image)
-                    }
-                })
+            if(error==nil){
+                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+                self.name.setText((jsonResult["name"] as! String))
+                var infoPicture = jsonResult["profilePicture"] as? NSDictionary
+                if let info = infoPicture{
+                    var picReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: (info["url"] as! String))!)
+                    let queuePic:NSOperationQueue = NSOperationQueue()
+                    NSURLConnection.sendAsynchronousRequest(picReq, queue: queuePic, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+                        if data != nil {
+                            let image = UIImage(data: data)
+                            self.personalImage.setImage(image)
+                        }
+                    })
+                }else{
+                    self.personalImage.setImageNamed("face.jpeg")
+                }
             }else{
-                self.personalImage.setImageNamed("face.jpeg")
+                self.noUser.setText("No connection available")
+                println("adadad")
+                self.switchView(true)
             }
-            
             
         })
         
@@ -74,13 +79,12 @@ class InterfacePersonalDetail: WKInterfaceController {
         
         urlReq = Utility.prepareRestRequest("https://api.parse.com/1/classes/Points?order=gameType&where=\(whereClause!)")
         
-        
         var response: AutoreleasingUnsafeMutablePointer<NSURLResponse?>=nil
         var errReq: NSError?
-        var dataVal: NSData =  NSURLConnection.sendSynchronousRequest(urlReq, returningResponse: response, error:&errReq)!
+        var dataVal: NSData? =  NSURLConnection.sendSynchronousRequest(urlReq, returningResponse: response, error:&errReq)
         if (errReq == nil){
             var err: NSError?
-            var jsonResult: NSDictionary = (NSJSONSerialization.JSONObjectWithData(dataVal, options: NSJSONReadingOptions.MutableContainers, error: &err) as? NSDictionary)!
+            var jsonResult: NSDictionary = (NSJSONSerialization.JSONObjectWithData(dataVal!, options: NSJSONReadingOptions.MutableContainers, error: &err) as? NSDictionary)!
             
             self.infoArray = jsonResult["results"] as! NSArray
             self.infoTable.setNumberOfRows(self.infoArray.count, withRowType: "PersonalRowController")
@@ -91,7 +95,7 @@ class InterfacePersonalDetail: WKInterfaceController {
                 }
             }
         }else{
-            self.noUser.setText("Error connection")
+            self.noUser.setText("No connection available")
             self.switchView(true)
         }
     }

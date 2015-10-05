@@ -16,6 +16,7 @@ class InterfaceControllerSurvival: WKInterfaceController {
     @IBOutlet weak var titleChart: WKInterfaceLabel!
     @IBOutlet weak var chart: WKInterfaceTable!
     
+    @IBOutlet weak var noUser: WKInterfaceLabel!
     var infoArray : NSArray = []
     
     override func awakeWithContext(context: AnyObject?) {
@@ -29,12 +30,6 @@ class InterfaceControllerSurvival: WKInterfaceController {
         var error : NSError?
         var whereClause = (NSString(data: NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &error)!, encoding: NSUTF8StringEncoding))?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        //        var urlReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user&where=\(whereClause!)")!)
-        //
-        //        urlReq.HTTPMethod = "GET"
-        //        urlReq.setValue("7Zn8mV9WPMzBprhPiZDcqOVxlGc6UYNpmTN4qQLs", forHTTPHeaderField: "X-Parse-Application-Id")
-        //        urlReq.setValue("Rv9xdCM7GzTvTz13VeCzE8UEB0UPpmWMC29lAg0k", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        
         var urlReq = Utility.prepareRestRequest("https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user&where=\(whereClause!)")
         
         urlReq.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -42,10 +37,17 @@ class InterfaceControllerSurvival: WKInterfaceController {
         
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(urlReq, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError!) -> Void in
-            var err: NSError
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
-            
-            self.infoArray = jsonResult["results"] as! NSArray
+            if(error==nil){
+                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+                
+                self.infoArray = jsonResult["results"] as! NSArray
+                self.noUser.setHidden(true)
+                self.chart.setHidden(false)
+            }else{
+                self.noUser.setHidden(false)
+                self.chart.setHidden(true)
+                println("\(error.localizedDescription)")
+            }
         })
     }
     
@@ -57,7 +59,9 @@ class InterfaceControllerSurvival: WKInterfaceController {
             if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
                 var chartInfo : NSDictionary = singleRes as! NSDictionary
                 var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
-                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: InterfaceControllerGlobal.ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+                var level : String = chartInfo["level"] as! String
+                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: "Level: \(level)")
+
             }
         }
         super.willActivate()
