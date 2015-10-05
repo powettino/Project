@@ -390,6 +390,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                 if(error != nil){
                     println("Error: \(error?.localizedDescription)")
                     ViewController.userLogged = false
+                    self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
                     
                     UtilityFunction.UIUtility.showAlertWithContent(self, title: "Error", message: "Cannot retrieve information: \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: (nil))
                     
@@ -514,7 +515,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     }
     
     func audioPlayerDidFinishPlaying(AVAudioPlayer!, successfully: Bool) {
-//        println("chiamo handler audio");
+        //        println("chiamo handler audio");
         switch(self.modGame){
         case ModeGame.soft:
             self.counterMessageGame=3
