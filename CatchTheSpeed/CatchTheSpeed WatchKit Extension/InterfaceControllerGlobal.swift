@@ -16,6 +16,8 @@ class InterfaceControllerGlobal: WKInterfaceController {
     @IBOutlet weak var titleChart: WKInterfaceLabel!
     @IBOutlet weak var chart: WKInterfaceTable!
     
+    var infoArray : NSArray = []
+    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         //
@@ -25,37 +27,26 @@ class InterfaceControllerGlobal: WKInterfaceController {
         //            }
         //        }
         
-        //        WKInterfaceController.openParentApplication(["request": "refreshData"],
-        //            reply: { (replyInfo, error) -> Void in
-        //                // TODO: process reply data
-        //                NSLog("Reply: \(replyInfo)")
-        //        })        // Configure interface objects here.
         getChart()
     }
     
     internal func getChart(){
         
-        var urlReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user")!)
+//        var urlReq : NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user")!)
+//        
+//        urlReq.HTTPMethod = "GET"
+//        urlReq.setValue("7Zn8mV9WPMzBprhPiZDcqOVxlGc6UYNpmTN4qQLs", forHTTPHeaderField: "X-Parse-Application-Id")
+//        urlReq.setValue("Rv9xdCM7GzTvTz13VeCzE8UEB0UPpmWMC29lAg0k", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
-        urlReq.HTTPMethod = "GET"
-        urlReq.setValue("7Zn8mV9WPMzBprhPiZDcqOVxlGc6UYNpmTN4qQLs", forHTTPHeaderField: "X-Parse-Application-Id")
-        urlReq.setValue("Rv9xdCM7GzTvTz13VeCzE8UEB0UPpmWMC29lAg0k", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        var urlReq = Utility.prepareRestRequest("https://api.parse.com/1/classes/Points?order=-score&limit=10&include=user")
         
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(urlReq, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError!) -> Void in
             var err: NSError
             //            println("\(response!.description) - \(data) - \(error?.localizedDescription)")
             var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
-            var resultSet : NSArray = jsonResult["results"] as! NSArray
-            self.chart.setNumberOfRows(resultSet.count, withRowType: "ChartRowController")
+            self.infoArray = jsonResult["results"] as! NSArray
             
-            for (index, singleRes) in enumerate(resultSet){
-                if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
-                    var chartInfo : NSDictionary = singleRes as! NSDictionary
-                    var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
-                    row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
-                }
-            }
         })
     }
     
@@ -83,7 +74,15 @@ class InterfaceControllerGlobal: WKInterfaceController {
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
-//        self.getChart()
+        self.chart.setNumberOfRows(self.infoArray.count, withRowType: "ChartRowController")
+        
+        for (index, singleRes) in enumerate(self.infoArray){
+            if let row = self.chart.rowControllerAtIndex(index) as? ChartRowController {
+                var chartInfo : NSDictionary = singleRes as! NSDictionary
+                var user : NSDictionary = (chartInfo["user"] as? NSDictionary)!
+                row.setInfo(String(index+1), playerName: user["name"] as! String, actualPoints: String(chartInfo["score"] as! Int), gameMod: ModeGame(rawValue: (chartInfo["game_type"] as! Int))!.toString())
+            }
+        }
         super.willActivate()
     }
     

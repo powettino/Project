@@ -110,8 +110,8 @@ class Speedo : SKScene{
         self.vetro.size = CGSize(width: self.size.width - self.offset.w - 20, height: self.size.width - self.offset.h - 20);
         
         self.vetro.physicsBody = nil;
-        //                self.vetro.normalTexture = SKTexture(imageNamed: "lightNormalGlass.jpg")
-        //        self.vetro.normalTexture = SKTexture(imageNamed: "brokenGlass.jpg")
+        //        self.vetro.normalTexture = SKTexture(imageNamed: "risorse/normalMaps/lightNormalGlass.jpg")
+        self.vetro.normalTexture = SKTexture(imageNamed: "risorse/normalMaps/brokenGlass.jpg")
         self.vetro.lightingBitMask = 1;
         self.vetro.zPosition = 2
         
@@ -137,8 +137,8 @@ class Speedo : SKScene{
         self.ambientLight = SKLightNode()
         self.ambientLight.name = self.lightNodeName
         self.ambientLight.falloff = 0;
-        //        self.ambientLight.position = CGPoint(x: 250, y: 60)
-        self.ambientLight.position = CGPoint(x: 20, y: 300)
+        self.ambientLight.position = CGPoint(x: 250, y: 60)
+        //        self.ambientLight.position = CGPoint(x: 20, y: 300)
         self.ambientLight.categoryBitMask = 1
         self.addChild(self.ambientLight)
         

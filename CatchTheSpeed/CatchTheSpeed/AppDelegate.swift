@@ -53,37 +53,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication,
         handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?,
         reply: (([NSObject : AnyObject]!) -> Void)!) {
-            
-            if let userInfo = userInfo, request = userInfo["request"] as? String {
-                if request == "refreshData" {
-//                    let coinHelper = CoinHelper()
-//                    let coins = coinHelper.requestPriceSynchronous()
-                    var result : [ChartElement] = []
-                    var query = PFQuery(className:"Points")
-                    query.orderByDescending("score")
-                        .includeKey("user")
-                        //                        .whereKey("Users", matchesQuery: queryUsers!)
-                        .findObjectsInBackgroundWithBlock({ (gameScores: [AnyObject]?, error: NSError?) -> Void in
-                            if error != nil {
-                                println(error)
-                            } else if let infos = gameScores as? [PFObject]{
-                                for infoQuery in infos{
-                                    let score = infoQuery["score"] as! Int
-                                    let level = infoQuery["level"] as! String
-                                    let mod = ViewController.ModeGame(rawValue: infoQuery["game_type"] as! Int)
-                                    
-                                    var user = infoQuery["user"] as! PFUser
-                                    let name = user["name"] as! String
-                                    var tempEl : ChartElement = ChartElement(id: user.objectId!, name: name, score: score, mod: mod!.toString(), level: level, chartPosition: result.count+1)
-                                }
-                            }
-                        })
-                    
-                    reply(["prova": "mah"])
-                    return
-                }
+            let umi = NSUserDefaults.standardUserDefaults().objectForKey("userMinimalInformation") as? String
+            if let userId = umi {
+                reply(["userId" : userId])
+            }else{
+                reply([:])
             }
-            reply([:])
     }
     
     

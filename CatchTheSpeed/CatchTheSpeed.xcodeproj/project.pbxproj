@@ -62,8 +62,6 @@
 		4D405CCF1BBB7AB8007F802B /* budmo-jigglish.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CC81BBB7AB8007F802B /* budmo-jigglish.ttf */; };
 		4D405CD01BBB7AB8007F802B /* Flame.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CC91BBB7AB8007F802B /* Flame.ttf */; };
 		4D405CD11BBB7AB8007F802B /* Flame.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CC91BBB7AB8007F802B /* Flame.ttf */; };
-		4D48B6461BBCC74B00FE639F /* sfondoMenu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4D48B6451BBCC74B00FE639F /* sfondoMenu.jpg */; };
-		4D48B6491BBCC7CD00FE639F /* sfondo5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D48B6481BBCC7CD00FE639F /* sfondo5.png */; };
 		4D48B64B1BBCCD1500FE639F /* InterfaceControllerSoft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D48B64A1BBCCD1500FE639F /* InterfaceControllerSoft.swift */; };
 		4D57E6DB1B6E2BED00D74A84 /* risorse in Resources */ = {isa = PBXBuildFile; fileRef = 4D57E6DA1B6E2BED00D74A84 /* risorse */; };
 		4D57E6E31B6E301600D74A84 /* UtilityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D57E6E21B6E301600D74A84 /* UtilityFunction.swift */; };
@@ -80,6 +78,10 @@
 		4D6A226D1BC0ADA0003E11EF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A22681BC0ADA0003E11EF /* Default@2x.png */; };
 		4D7C28071B8F87DF00BBC8DA /* ChartCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */; };
 		4DA9C5B61B445E6C001BDD9D /* MenuTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */; };
+		4DCEC8021BC2050F0023AA35 /* face.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4DCEC8011BC2050F0023AA35 /* face.jpeg */; };
+		4DCEC8041BC206990023AA35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D405CA51BBB648B007F802B /* Images.xcassets */; };
+		4DCEC8081BC20BFE0023AA35 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCEC8071BC20BFE0023AA35 /* Utility.swift */; };
+		4DCEC80A1BC20E8A0023AA35 /* PersonalRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCEC8091BC20E8A0023AA35 /* PersonalRowController.swift */; };
 		4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1C1AAE23650050B018 /* Speedo.sks */; };
 		4DD1BC1F1AAE23850050B018 /* Speedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1BC1E1AAE23850050B018 /* Speedo.swift */; };
 		EB22B0AA1A6BD2E000FED987 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22B0A91A6BD2E000FED987 /* AppDelegate.swift */; };
@@ -184,8 +186,6 @@
 		4D405CC71BBB7AB8007F802B /* budmo-jiggler.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "budmo-jiggler.ttf"; sourceTree = "<group>"; };
 		4D405CC81BBB7AB8007F802B /* budmo-jigglish.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "budmo-jigglish.ttf"; sourceTree = "<group>"; };
 		4D405CC91BBB7AB8007F802B /* Flame.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Flame.ttf; sourceTree = "<group>"; };
-		4D48B6451BBCC74B00FE639F /* sfondoMenu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sfondoMenu.jpg; sourceTree = "<group>"; };
-		4D48B6481BBCC7CD00FE639F /* sfondo5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sfondo5.png; sourceTree = "<group>"; };
 		4D48B64A1BBCCD1500FE639F /* InterfaceControllerSoft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceControllerSoft.swift; sourceTree = "<group>"; };
 		4D57E6DA1B6E2BED00D74A84 /* risorse */ = {isa = PBXFileReference; lastKnownFileType = folder; path = risorse; sourceTree = "<group>"; };
 		4D57E6E21B6E301600D74A84 /* UtilityFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunction.swift; sourceTree = "<group>"; };
@@ -202,6 +202,9 @@
 		4D6A22681BC0ADA0003E11EF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4D7C28061B8F87DF00BBC8DA /* ChartCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCustomCell.swift; sourceTree = "<group>"; };
 		4DA9C5B51B445E6C001BDD9D /* MenuTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTable.swift; sourceTree = "<group>"; };
+		4DCEC8011BC2050F0023AA35 /* face.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = face.jpeg; sourceTree = "<group>"; };
+		4DCEC8071BC20BFE0023AA35 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		4DCEC8091BC20E8A0023AA35 /* PersonalRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalRowController.swift; sourceTree = "<group>"; };
 		4DD1BC1C1AAE23650050B018 /* Speedo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Speedo.sks; sourceTree = "<group>"; };
 		4DD1BC1E1AAE23850050B018 /* Speedo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedo.swift; sourceTree = "<group>"; };
 		EB22B0A41A6BD2E000FED987 /* CatchTheSpeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchTheSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -386,7 +389,7 @@
 		4D405CD31BBB7B47007F802B /* risorse */ = {
 			isa = PBXGroup;
 			children = (
-				4D48B6471BBCC75200FE639F /* background */,
+				4DCEC8031BC205180023AA35 /* general */,
 				4D405CD41BBB7B52007F802B /* font */,
 			);
 			name = risorse;
@@ -401,15 +404,6 @@
 				4D405CC91BBB7AB8007F802B /* Flame.ttf */,
 			);
 			name = font;
-			sourceTree = "<group>";
-		};
-		4D48B6471BBCC75200FE639F /* background */ = {
-			isa = PBXGroup;
-			children = (
-				4D48B6481BBCC7CD00FE639F /* sfondo5.png */,
-				4D48B6451BBCC74B00FE639F /* sfondoMenu.jpg */,
-			);
-			name = background;
 			sourceTree = "<group>";
 		};
 		4D57E6D21B62B45500D74A84 /* old */ = {
@@ -442,6 +436,7 @@
 		4D6A22611BBCDA5A003E11EF /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				4DCEC8061BC20BE10023AA35 /* utillity */,
 				4D6A22621BBCDA6C003E11EF /* controller */,
 			);
 			name = classes;
@@ -457,6 +452,7 @@
 				4D6A225F1BBCD87F003E11EF /* InterfaceControllerAstonishing.swift */,
 				4D2F61CD1BC0BCB800C7790D /* InterfacePersonalDetail.swift */,
 				4D405CBF1BBB6D77007F802B /* ChartRowController.swift */,
+				4DCEC8091BC20E8A0023AA35 /* PersonalRowController.swift */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -484,6 +480,22 @@
 				4D30E8201B355D7B00C0EE33 /* SmokeBrake.sks */,
 			);
 			name = spritekit;
+			sourceTree = "<group>";
+		};
+		4DCEC8031BC205180023AA35 /* general */ = {
+			isa = PBXGroup;
+			children = (
+				4DCEC8011BC2050F0023AA35 /* face.jpeg */,
+			);
+			name = general;
+			sourceTree = "<group>";
+		};
+		4DCEC8061BC20BE10023AA35 /* utillity */ = {
+			isa = PBXGroup;
+			children = (
+				4DCEC8071BC20BFE0023AA35 /* Utility.swift */,
+			);
+			name = utillity;
 			sourceTree = "<group>";
 		};
 		EB22B09B1A6BD2E000FED987 = {
@@ -679,11 +691,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DCEC8021BC2050F0023AA35 /* face.jpeg in Resources */,
 				4D405CCA1BBB7AB8007F802B /* Blazed.ttf in Resources */,
 				4D405CCE1BBB7AB8007F802B /* budmo-jigglish.ttf in Resources */,
-				4D48B6461BBCC74B00FE639F /* sfondoMenu.jpg in Resources */,
 				4D405CCC1BBB7AB8007F802B /* budmo-jiggler.ttf in Resources */,
-				4D48B6491BBCC7CD00FE639F /* sfondo5.png in Resources */,
 				4D405CAA1BBB648B007F802B /* CatchTheSpeed WatchKit App.app in Resources */,
 				4D405CD01BBB7AB8007F802B /* Flame.ttf in Resources */,
 				4D405CA61BBB648B007F802B /* Images.xcassets in Resources */,
@@ -711,6 +722,7 @@
 				4DD1BC1D1AAE23650050B018 /* Speedo.sks in Resources */,
 				4D6A226D1BC0ADA0003E11EF /* Default@2x.png in Resources */,
 				4D6A226C1BC0ADA0003E11EF /* Default-Portrait-736h@3x.png in Resources */,
+				4DCEC8041BC206990023AA35 /* Images.xcassets in Resources */,
 				4D6A226A1BC0ADA0003E11EF /* Default-667h@2x.png in Resources */,
 				EB22B0B41A6BD2E000FED987 /* LaunchScreen.xib in Resources */,
 				4D57E6DB1B6E2BED00D74A84 /* risorse in Resources */,
@@ -740,6 +752,8 @@
 				4D405CA41BBB648B007F802B /* NotificationController.swift in Sources */,
 				4D48B64B1BBCCD1500FE639F /* InterfaceControllerSoft.swift in Sources */,
 				4D6A225E1BBCD864003E11EF /* InterfaceControllerSurvival.swift in Sources */,
+				4DCEC80A1BC20E8A0023AA35 /* PersonalRowController.swift in Sources */,
+				4DCEC8081BC20BFE0023AA35 /* Utility.swift in Sources */,
 				4D405CC01BBB6D77007F802B /* ChartRowController.swift in Sources */,
 				4D405CA21BBB648B007F802B /* InterfaceControllerGlobal.swift in Sources */,
 			);

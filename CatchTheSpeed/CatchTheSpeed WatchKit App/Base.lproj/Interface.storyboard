@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nok-jB-IJf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
@@ -11,9 +11,9 @@
             <string>Blazed</string>
             <string>Blazed</string>
             <string>Blazed</string>
+            <string>Blazed</string>
         </mutableArray>
         <mutableArray key="Flame.ttf">
-            <string>Flame</string>
             <string>Flame</string>
             <string>Flame</string>
             <string>Flame</string>
@@ -39,6 +39,7 @@
             <string>BudmoJiggler-Regular</string>
             <string>BudmoJiggler-Regular</string>
             <string>BudmoJiggler-Regular</string>
+            <string>BudmoJiggler-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -47,42 +48,14 @@
             <objects>
                 <controller contentMode="right" animationDuration="1" id="AgC-eL-Hgc" customClass="InterfaceControllerGlobal" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
-                        <label alignment="center" text="Global" textAlignment="center" numberOfLines="2" id="vO3-tG-1w8">
+                        <label width="74.5" alignment="center" text="Global" textAlignment="center" numberOfLines="2" id="vO3-tG-1w8">
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>
-                        <group width="1" height="41" alignment="left" animationDuration="1" radius="15" id="PHh-HB-zLV">
-                            <items>
-                                <group width="73" height="1" alignment="left" id="KAf-IS-E1W">
-                                    <items>
-                                        <label width="14" alignment="left" verticalAlignment="center" text="1" textAlignment="left" id="XMQ-LU-qOC">
-                                            <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="font" name="Flame" family="Flame" pointSize="19"/>
-                                        </label>
-                                        <group width="67" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="GXv-NF-VLs">
-                                            <items>
-                                                <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="ogu-9E-9Gb">
-                                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
-                                                </label>
-                                                <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="fsc-6n-f3U">
-                                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
-                                                </label>
-                                            </items>
-                                        </group>
-                                    </items>
-                                </group>
-                                <label width="40" height="1" alignment="right" verticalAlignment="center" text="Score" textAlignment="center" id="Txd-Ti-ow9">
-                                    <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
-                                </label>
-                            </items>
-                        </group>
                         <table alignment="left" backgroundImage="sfondo5.png" id="RRF-id-bhZ">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="nbH-8x-ksp" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="pav-Yb-gPK">
+                                    <group key="rootItem" width="1" height="28" alignment="left" animationDuration="1" radius="15" id="pav-Yb-gPK">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="BF4-8k-3Df">
                                                 <items>
@@ -95,6 +68,8 @@
                                                             <label alignment="center" verticalAlignment="center" text="Player" textAlignment="center" id="5OV-rD-DgR">
                                                                 <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="13"/>
+                                                                <variation key="device=watch38mm" alignment="center"/>
+                                                                <variation key="device=watch42mm" alignment="center"/>
                                                             </label>
                                                             <label width="1" alignment="left" verticalAlignment="center" text="Mod" textAlignment="center" id="1pF-pU-drV">
                                                                 <color key="textColor" red="0.91764705879999997" green="0.98431372549999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -129,6 +104,68 @@
             </objects>
             <point key="canvasLocation" x="-128" y="328"/>
         </scene>
+        <!--Interface Personal Detail-->
+        <scene sceneID="xBt-7f-xaz">
+            <objects>
+                <controller id="nok-jB-IJf" customClass="InterfacePersonalDetail" customModule="CatchTheSpeed_WatchKit_Extension">
+                    <items>
+                        <label width="108.5" height="17" alignment="center" text="Personal" textAlignment="center" numberOfLines="2" id="e4c-X8-chL">
+                            <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
+                        </label>
+                        <group width="1" alignment="left" animationDuration="1" radius="10" id="SG2-1M-27W">
+                            <items>
+                                <imageView width="30" height="30" alignment="center" id="UEa-VO-6nG">
+                                    <color key="tintColor" red="1" green="0.53041738839999997" blue="0.11122614290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </imageView>
+                                <label width="98" height="1" alignment="right" textAlignment="center" id="Xkc-4t-aaE">
+                                    <color key="textColor" red="1" green="0.53041738839999997" blue="0.11122614290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="14"/>
+                                </label>
+                            </items>
+                        </group>
+                        <table alignment="center" verticalAlignment="center" backgroundImage="Default.png" id="U4H-cC-5Gw">
+                            <items>
+                                <tableRow identifier="PersonalRowController" selectable="NO" id="9IU-hP-NIw" customClass="PersonalRowController" customModule="CatchTheSpeed_WatchKit_Extension">
+                                    <group key="rootItem" width="1" height="24" alignment="left" id="jHG-im-48G">
+                                        <items>
+                                            <group width="80" height="28" alignment="center" verticalAlignment="center" layout="vertical" id="zx0-th-xYf">
+                                                <items>
+                                                    <label alignment="center" verticalAlignment="center" text="Soft" textAlignment="center" id="VQ1-Ub-ORt">
+                                                        <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="10"/>
+                                                    </label>
+                                                    <label alignment="center" verticalAlignment="center" text="Level" textAlignment="center" id="yPL-we-QCK">
+                                                        <fontDescription key="font" name="BudmoJiggler-Regular" family="Budmo" pointSize="7"/>
+                                                    </label>
+                                                </items>
+                                            </group>
+                                            <label width="40" alignment="center" verticalAlignment="center" text="Label" textAlignment="center" id="b0l-xt-ELu">
+                                                <fontDescription key="font" name="Flame" family="Flame" pointSize="16"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="level" destination="yPL-we-QCK" id="u64-Zz-C5P"/>
+                                        <outlet property="mod" destination="VQ1-Ub-ORt" id="4hG-7D-DmK"/>
+                                        <outlet property="score" destination="b0l-xt-ELu" id="5bP-uV-ao9"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                        <label width="1" alignment="center" verticalAlignment="center" text="No user logged" textAlignment="center" id="FKe-rQ-Opj"/>
+                    </items>
+                    <connections>
+                        <outlet property="group1" destination="SG2-1M-27W" id="Udv-et-sru"/>
+                        <outlet property="infoTable" destination="U4H-cC-5Gw" id="nmi-hC-wTC"/>
+                        <outlet property="name" destination="Xkc-4t-aaE" id="qVR-2S-owv"/>
+                        <outlet property="noUser" destination="FKe-rQ-Opj" id="00s-2c-XQc"/>
+                        <outlet property="personalImage" destination="UEa-VO-6nG" id="yBD-lu-nvE"/>
+                        <segue destination="AgC-eL-Hgc" kind="relationship" relationship="nextPage" id="mvC-F5-9fY"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-308" y="328"/>
+        </scene>
         <!--Interface Controller Soft-->
         <scene sceneID="lNH-2O-Ovd">
             <objects>
@@ -141,7 +178,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="vD8-Kc-Csd">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="bl3-Id-vQy" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="Lr2-0O-ejl">
+                                    <group key="rootItem" width="1" height="28" alignment="left" animationDuration="1" radius="15" id="Lr2-0O-ejl">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="7ne-5v-eBF">
                                                 <items>
@@ -186,7 +223,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="72" y="334"/>
+            <point key="canvasLocation" x="58" y="328"/>
         </scene>
         <!--Interface Controller Stressing-->
         <scene sceneID="Kkx-Mx-rNq">
@@ -200,7 +237,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="s7b-t6-kjB">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="NRA-6A-IRC" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="Wbd-q0-f5s">
+                                    <group key="rootItem" width="1" height="28" alignment="left" animationDuration="1" radius="15" id="Wbd-q0-f5s">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="sWG-Bt-GX4">
                                                 <items>
@@ -245,21 +282,21 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="255" y="334"/>
+            <point key="canvasLocation" x="245" y="328"/>
         </scene>
         <!--Interface Controller Survival-->
         <scene sceneID="Vvd-38-2Ic">
             <objects>
                 <controller id="6xm-I0-YTZ" customClass="InterfaceControllerSurvival" customModule="CatchTheSpeed_WatchKit_Extension">
                     <items>
-                        <label alignment="center" text="Survival" textAlignment="center" numberOfLines="2" id="iwv-eR-dMH">
+                        <label width="95.5" alignment="center" text="Survival" textAlignment="center" numberOfLines="2" id="iwv-eR-dMH">
                             <color key="textColor" red="1" green="0.0" blue="0.19576055710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Blazed" family="Blazed" pointSize="14"/>
                         </label>
                         <table alignment="left" backgroundImage="sfondo5.png" id="vzy-Dc-vKH">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="Ts3-tX-Wbf" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="aRs-3B-Lrt">
+                                    <group key="rootItem" width="1" height="28" alignment="left" animationDuration="1" radius="15" id="aRs-3B-Lrt">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="8zr-uj-7yP">
                                                 <items>
@@ -304,7 +341,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="445" y="334"/>
+            <point key="canvasLocation" x="430" y="328"/>
         </scene>
         <!--Interface Controller Astonishing-->
         <scene sceneID="OBI-x9-wlv">
@@ -318,7 +355,7 @@
                         <table alignment="left" backgroundImage="sfondo5.png" id="aDG-jX-hKr">
                             <items>
                                 <tableRow identifier="ChartRowController" selectable="NO" id="voB-qp-x4B" customClass="ChartRowController" customModule="CatchTheSpeed_WatchKit_Extension">
-                                    <group key="rootItem" width="1" alignment="left" animationDuration="1" radius="15" id="ACp-3o-Slk">
+                                    <group key="rootItem" width="1" height="28" alignment="left" animationDuration="1" radius="15" id="ACp-3o-Slk">
                                         <items>
                                             <group width="73" height="1" alignment="left" id="3io-MU-cbV">
                                                 <items>
@@ -362,7 +399,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="628" y="334"/>
+            <point key="canvasLocation" x="616" y="328"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">

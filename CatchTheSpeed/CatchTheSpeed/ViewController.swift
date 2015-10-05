@@ -83,6 +83,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }
         set(value){
             NSUserDefaults.standardUserDefaults().setBool(value, forKey: "audioStatus")
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
@@ -93,6 +94,18 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
         }
         set(value){
             NSUserDefaults.standardUserDefaults().setBool(value, forKey: "effectsStatus")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
+    var userMinimalInformation : String {
+        get{
+            let umi = NSUserDefaults.standardUserDefaults().stringForKey("userMinimalInformation")
+            return umi!
+        }
+        set(value){
+            NSUserDefaults.standardUserDefaults().setValue(value, forKey: "userMinimalInformation")
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
@@ -133,6 +146,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                     UtilityFunction.UIUtility.showAlertWithContent(self, title: "Logout", message: "User has successfully logged out", preferredStyle: UIAlertControllerStyle.Alert, actions: [UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: (nil))], animated: true, completion: {finished in
                         self.FBButton.setTitle("Connect", forState: UIControlState.Normal)
                         ViewController.userLogged = false
+                        self.userMinimalInformation = ""
                     })
                 }else{
                     
@@ -149,6 +163,7 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                             ViewController.userLogged = true
                             self.retrieveFBInformation()
                             self.updateRecordArray()
+                            self.userMinimalInformation = PFUser.currentUser()!.objectId!
                         })
                         
                     } else {
@@ -208,12 +223,11 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
                             
                             user.saveInBackgroundWithBlock({(success: Bool, errorSave: NSError?) -> Void in
                                 if success {
-                                    println("salvataggio profilo completato= \(success)")
+                                    println("Nuova immagine recuperata da FB salvata \(success)")
                                 }else{
                                     println(errorSave)
                                 }
                             })
-                            //                            println("recuperata la foto")
                         }
                         else {
                             println("Error: \(error.localizedDescription)")
@@ -356,12 +370,14 @@ class ViewController: UIViewController, ScoreDelegate, StartingActionDelegate, T
     private func checkUserStatus() -> Bool{
         var result : Bool = false;
         UtilityFunction.UIUtility.showActivityIndicator(self.view, tag: 2)
+        self.userMinimalInformation = ""
         if let user = PFUser.currentUser(){
             if(PFFacebookUtils.isLinkedWithUser(user)){
                 NSLog("FAcebook logged")
                 result = true;
             }
             NSLog("Parse logged")
+            self.userMinimalInformation = PFUser.currentUser()!.objectId!
         }
         UtilityFunction.UIUtility.hideActivityIndicator(self.view, tag: 2)
         return result;
