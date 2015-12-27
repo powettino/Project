@@ -650,6 +650,7 @@
 		EB22B09C1A6BD2E000FED987 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = YeApp;
 				TargetAttributes = {
